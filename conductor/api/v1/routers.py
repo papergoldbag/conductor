@@ -24,7 +24,7 @@ async def get_user_by_id(user_id: int):
 
 @users_router.get('/token/', response_model=UsersResponse)
 async def get_user_by_token(user_token: str):
-    user = db.user.pymongo_collection.find_one({'tokens' : {"$in" : user_token}})
+    user = db.user.pymongo_collection.find_one({'tokens' : {"$in" : [user_token,]}})
     if user is None:
         return UsersResponse(status=Statuses.BAD, out={}, err='user not found')
     user = User.parse_document(user)
