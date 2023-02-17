@@ -38,13 +38,13 @@ class UserDBM(BaseInDB):
 
 class QuizDBM(BaseInDB):
     question: str
-    answer: str
-    correct_answer: str
+    answer: Optional[str]
+    correct_answer: Optional[str]
 
 
 class TaskTypes(str, Enum):
     auto_test = 'auto_test'
-    ht_confirmation = 'ht_confirmation'
+    hr_confirmation = 'hr_confirmation'
     feedback = 'feedback'
 
 
