@@ -1,0 +1,13 @@
+[Unit]
+Description=Conductor
+After=network.target
+
+[Service]
+User=conductor
+WorkingDirectory=/home/conductor/conductor
+ExecStart=/home/conductor/conductor/.venv/bin/uvicorn conductor.app.asgi:app --host 127.0.0.1 --port 8080 --workers 4
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
