@@ -31,6 +31,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=12,
                     is_completed=False,
+                    week_num=1,
+                    day_num=1,
                     attachments={"Наш сайт": "http://rscenter.ru/"},
                     quizzes=[
                         QuizDBM(
@@ -52,6 +54,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=15,
                     is_completed=False,
+                    week_num=1,
+                    day_num=2,
                     attachments={},
                     quizzes=[]
                 ),
@@ -62,6 +66,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=15,
                     is_completed=False,
+                    week_num=1,
+                    day_num=3,
                     attachments={},
                     quizzes=[
                         QuizDBM(
@@ -87,6 +93,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=12,
                     is_completed=False,
+                    week_num=1,
+                    day_num=1,
                     attachments={"Наш сайт": "http://rscenter.ru/"},
                     quizzes=[
                         QuizDBM(
@@ -108,6 +116,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=15,
                     is_completed=False,
+                    week_num=1,
+                    day_num=2,
                     attachments={},
                     quizzes=[]
                 ),
@@ -118,6 +128,8 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=15,
                     is_completed=False,
+                    week_num=1,
+                    day_num=3,
                     attachments={},
                     quizzes=[
                         QuizDBM(
@@ -163,6 +175,3 @@ def insert_test_data():
         roadmap_int_id=roadmap2.int_id,
         division_int_id=division2.int_id
     ).document())
-
-
-insert_test_data()

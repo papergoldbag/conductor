@@ -3,6 +3,7 @@ import os
 from random import randint
 
 from fastapi import APIRouter, HTTPException, Body
+from fastapi.openapi.models import Response
 from starlette import status
 
 from conductor.api.schemas.auth import AuthSchema
@@ -25,7 +26,7 @@ def generate_mail_code() -> str:
 
 
 @auth_router.post('', response_model=TokenSchema)
-async def auth(auth_schema: AuthSchema = Body()):
+async def auth(response: Response, auth_schema: AuthSchema = Body()):
     doc = db.mail_code.pymongo_collection.find_one({
         'mail': auth_schema.mail,
         'code': auth_schema.code
@@ -38,6 +39,7 @@ async def auth(auth_schema: AuthSchema = Body()):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='no user')
 
     token = generate_token()
+    response.set_cookie(key="fakesession", value="fake-cookie-session-value")
     db.user.pymongo_collection.update_one({'int_id': user['int_id']}, {'$push': {'tokens': token}})
     return TokenSchema(token=token)
 

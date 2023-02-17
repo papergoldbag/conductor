@@ -55,6 +55,8 @@ class TaskDBM(BaseInDB):
     is_confirmed_by_hr_int_id: Optional[int]
     coins: int
     is_completed: bool
+    week_num: int
+    day_num: int
     attachments: dict[str, str]
     quizzes: list[QuizDBM]
 
