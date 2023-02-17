@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    id: str
+    id: int
     email: str
     tokens: list[str]
     role: str
@@ -26,7 +26,7 @@ class Test(BaseModel):
 
 
 class Task(BaseModel):
-    id: str
+    id: int
     type: str
     title: str
     text: str
@@ -38,7 +38,7 @@ class Task(BaseModel):
 
 
 class Roadmap(BaseModel):
-    id: str
+    id: int
     created: datetime
     title: str
     tasks: dict[int, Task]
