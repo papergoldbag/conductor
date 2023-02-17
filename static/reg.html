@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/card-form.css') }}">
+    <title>Регистрация</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="card">
+            <h2>Регистрация</h2>
+            <form action=".reg" method="post">
+                <input type="text" name="login" required placeholder="E-mail" autocomplete="off">
+                <input type="password" name="password" required placeholder="Пароль" autocomplete="off">
+                <input type="text" name="surname" required placeholder="Фамилия" autocomplete="off">
+                <input type="text" name="name" required placeholder="Имя" autocomplete="off">
+                <input type="date" name="data_birth" required placeholder="Дата рождения" autocomplete="off">
+                <button type="submit" class="primary">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="{{ url_for('static', path='js/reg.js') }}"></script>
+</body>
+</html>

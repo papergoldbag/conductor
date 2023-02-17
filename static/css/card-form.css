@@ -1,0 +1,42 @@
+/* .bg, .fade {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bg {
+    background: url('https://stribuna.ru/upload/iblock/548/2ckvjj44vxgx6honh2f137kzsj9vau4g.jpg');
+} */
+
+body {
+    background: url('../img/auth-bg.jpg'); /* jinja? */
+    background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+}
+
+.card {
+    max-width: 500px;
+    text-align: center;
+}
+
+.card h2 {
+    color: white;
+}
+
+input {
+    width: 47%;
+}
+
+button {
+    width: 47%;
+}
