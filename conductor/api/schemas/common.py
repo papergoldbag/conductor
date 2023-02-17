@@ -1,7 +1,3 @@
-from typing import Any, Optional
-from datetime import date
-
-from pydantic import BaseModel
 from conductor.database.models import *
 
 
@@ -17,13 +13,8 @@ class CommonResponse(BaseModel):
 
 
 class UsersResponse(CommonResponse):
-    out : dict[str, User]
-
-
-class TasksResponse(CommonResponse):
-    out : dict[str, Task]
+    out: dict[str, User]
 
 
 class RoadmapsResponse(CommonResponse):
-    out : dict[str, Roadmap]
-
+    out: dict[str, Roadmap]
