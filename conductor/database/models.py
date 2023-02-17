@@ -15,8 +15,8 @@ class User(BaseModel):
     telegram: str
     whatsapp: str
     vk: str
-    roadmap_id: str
-    division_id: str
+    roadmap_id: int
+    division_id: int
 
 
 class Test(BaseModel):
