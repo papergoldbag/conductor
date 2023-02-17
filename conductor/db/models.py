@@ -59,4 +59,5 @@ class Roadmap(BaseInDB):
 
 
 class MailCode(BaseInDB):
+    mail: str
     code: str

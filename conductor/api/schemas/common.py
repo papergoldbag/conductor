@@ -10,7 +10,7 @@ class Statuses:
 
 class CommonResponse(BaseModel):
     status: str = Statuses.OK
-    out: dict[str, Any]
+    out: dict[str, Any] = {}
     err: Optional[str] = None
 
 

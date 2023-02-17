@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 
+from conductor.db.collections_.mailcode import EmailCodeCollection
 from conductor.db.collections_.user import UserCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
 
@@ -14,5 +15,10 @@ class DB:
         return UserCollection(self.database.get_collection('user'))
      
     @property
-    def roadmap(self) -> UserCollection:
+    def roadmap(self) -> RoadmapCollection:
         return RoadmapCollection(self.database.get_collection('roadmap'))
+
+    @property
+    def mail_code(self) -> EmailCodeCollection:
+        return EmailCodeCollection(self.database.get_collection('email_code'))
+
