@@ -46,11 +46,11 @@ async def get_roadmap_tasks(id : str):
 tasks_router = APIRouter()
 
 
-@roadmaps_router.post('/', response_model=TasksResponse)
+@tasks_router.post('/', response_model=TasksResponse)
 async def create_new_task():
     ...
 
 
-@roadmaps_router.get('/', response_model=TasksResponse)
+@tasks_router.get('/', response_model=TasksResponse)
 async def get_task(id : str):
     ...
