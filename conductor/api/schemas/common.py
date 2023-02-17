@@ -1,5 +1,5 @@
 from typing import Any, Optional
-
+from pydantic import BaseModel
 from conductor.database.models import *
 
 
@@ -62,3 +62,21 @@ class Check(BaseModel):
 
 class CheckResponse(CommonResponse):
     out: Check
+
+
+class UserById(BaseModel):
+    int_id : int
+    email: str
+    role: str
+    position: str
+    birth_date: date
+    description: str
+    telegram: str
+    whatsapp: str
+    vk: str
+    roadmap_int_id: str
+    division_int_id: str
+
+
+class UserByIdResponse(CommonResponse):
+    out: dict[str, UserById]
