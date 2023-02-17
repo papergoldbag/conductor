@@ -2,17 +2,26 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Optional
 
+from bson import ObjectId
+
 from conductor.db.base import BaseInDB, Document
 
 
-class Division(BaseInDB):
+class DivisionDBM(BaseInDB):
     title: str
 
 
-class User(BaseInDB):
+class Roles(str, Enum):
+    hr = 'hr'
+    supervisor = 'supervisor'
+    employee = 'employee'
+
+
+class UserDBM(BaseInDB):
+    fullname: str
     email: str
     tokens: list[str]
-    role: str
+    role: Roles
     coins: int
     position: str
     birth_date: date
@@ -23,8 +32,13 @@ class User(BaseInDB):
     roadmap_int_id: str
     division_int_id: str
 
+    def document(self) -> Document:
+        doc = super().document()
+        doc['role'] = self.role.value
+        return doc
 
-class Quiz(BaseInDB):
+
+class QuizDBM(BaseInDB):
     question: str
     answer: str
     correct_answer: str
@@ -36,12 +50,12 @@ class TaskTypes(str, Enum):
     feedback = 'feedback'
 
 
-class Task(BaseInDB):
+class TaskDBM(BaseInDB):
     type: TaskTypes
     title: str
     text: str
     attachments: dict[str, str]
-    quizzes: list[Quiz]
+    quizzes: list[QuizDBM]
     is_confirmed_by_hr_int_id: Optional[int]
     coins: int
     is_completed: bool
@@ -52,12 +66,12 @@ class Task(BaseInDB):
         return doc
 
 
-class Roadmap(BaseInDB):
+class RoadmapDBM(BaseInDB):
     title: str
-    tasks: dict[int, Task]
+    tasks: dict[int, TaskDBM]
     created_by_int_id: str
 
 
-class MailCode(BaseInDB):
+class MailCodeDBM(BaseInDB):
     mail: str
     code: str

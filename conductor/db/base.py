@@ -25,7 +25,6 @@ class BaseFields:
 
 
 class BaseInDB(BaseModel):
-    oid: Optional[ObjectId] = Field(alias=BaseFields.oid)
     int_id: Optional[int] = Field(alias=BaseFields.int_id)
     created: Optional[datetime] = Field(alias=BaseFields.created)
 

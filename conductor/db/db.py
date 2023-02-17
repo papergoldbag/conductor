@@ -21,4 +21,8 @@ class DB:
     @property
     def mail_code(self) -> EmailCodeCollection:
         return EmailCodeCollection(self.database.get_collection('email_code'))
+    
+    @property
+    def roadmap_templates(self) -> RoadmapCollection:
+        return RoadmapCollection(self.database.get_collection('roadmap_templates'))
 
