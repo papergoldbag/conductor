@@ -56,3 +56,8 @@ class Roadmap(BaseInDB):
     title: str
     tasks: dict[int, Task]
     created_by_int_id: str
+
+
+class MailCode(BaseInDB):
+    code: str
+

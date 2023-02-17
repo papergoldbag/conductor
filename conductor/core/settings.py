@@ -23,6 +23,11 @@ class Settings(BaseSettings):
 
     prod_mode: bool = False
 
+    mailru_login: str
+    mailru_password: str
+    mailru_server: str = 'smtp.mail.ru'
+    mailru_port: int = 465
+
     @property
     def mongo_uri(self) -> str:
         return (
