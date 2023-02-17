@@ -1,10 +1,18 @@
 from datetime import date, datetime
+from enum import Enum
+from typing import Optional
 
+from bson import ObjectId
 from pydantic import BaseModel
 
+from conductor.database.base import BaseInDB, Document
 
-class User(BaseModel):
-    id: str
+
+class Division(BaseInDB):
+    title: str
+
+
+class User(BaseInDB):
     email: str
     tokens: list[str]
     role: str
@@ -15,31 +23,39 @@ class User(BaseModel):
     telegram: str
     whatsapp: str
     vk: str
-    roadmap_id: str
-    division_id: str
+    roadmap_int_id: str
+    division_int_id: str
 
 
-class Test(BaseModel):
+class Quiz(BaseInDB):
     question: str
     answer: str
-    correct: str
+    correct_answer: str
 
 
-class Task(BaseModel):
-    id: str
-    type: str
+class TaskTypes(str, Enum):
+    auto_test = 'auto_test'
+    ht_confirmation = 'ht_confirmation'
+    feedback = 'feedback'
+
+
+class Task(BaseInDB):
+    type: TaskTypes
     title: str
     text: str
     attachments: dict[str, str]
-    test: list[Test]
-    marked_by_hr_id: str
+    quizzes: list[Quiz]
+    is_confirmed_by_hr_int_id: Optional[int]
     coins: int
     is_completed: bool
 
+    def document(self) -> Document:
+        doc = super().document()
+        doc['type'] = self.type.value
+        return doc
 
-class Roadmap(BaseModel):
-    id: str
-    created: datetime
+
+class Roadmap(BaseInDB):
     title: str
     tasks: dict[int, Task]
-    created_by_id: str
+    created_by_int_id: str

@@ -24,7 +24,7 @@ class BaseFields:
         }
 
 
-class BaseDBM(BaseModel):
+class BaseInDB(BaseModel):
     oid: Optional[ObjectId] = Field(alias=BaseFields.oid)
     int_id: Optional[int] = Field(alias=BaseFields.int_id)
     created: Optional[datetime] = Field(alias=BaseFields.created)
@@ -35,7 +35,7 @@ class BaseDBM(BaseModel):
         allow_population_by_field_name = True
 
     @classmethod
-    def parse_document(cls, doc: Document) -> BaseDBM:
+    def parse_document(cls, doc: Document) -> BaseInDB:
         return cls.parse_obj(doc)
 
     def document(self) -> Document:
