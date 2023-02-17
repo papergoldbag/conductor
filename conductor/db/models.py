@@ -1,8 +1,6 @@
-from datetime import date, datetime
+from datetime import datetime
 from enum import Enum
 from typing import Optional
-
-from bson import ObjectId
 
 from conductor.db.base import BaseInDB, Document
 
@@ -29,8 +27,8 @@ class UserDBM(BaseInDB):
     telegram: str
     whatsapp: str
     vk: str
-    roadmap_int_id: Optional[str]
-    division_int_id: str
+    roadmap_int_id: Optional[int]
+    division_int_id: int
 
     def document(self) -> Document:
         doc = super().document()

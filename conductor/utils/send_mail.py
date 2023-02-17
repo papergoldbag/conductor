@@ -6,7 +6,6 @@ from conductor.core.misc import settings
 
 
 def send_mail(to_email: str, subject: str, text: str):
-
     msg = MIMEMultipart()
     msg['From'] = settings.mailru_login
     msg['To'] = to_email

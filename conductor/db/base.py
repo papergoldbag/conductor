@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Optional, Any
 
-from bson import ObjectId
 from pydantic import BaseModel, Field, Extra
 
 Document = dict[str, Any]

@@ -2,8 +2,8 @@ from pymongo import MongoClient
 
 from conductor.db.collections_.division import DivisionCollection
 from conductor.db.collections_.mailcode import EmailCodeCollection
-from conductor.db.collections_.user import UserCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
+from conductor.db.collections_.user import UserCollection
 
 
 class DB:
