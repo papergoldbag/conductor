@@ -54,11 +54,11 @@ class TaskDBM(BaseInDB):
     type: TaskTypes
     title: str
     text: str
-    attachments: dict[str, str]
-    quizzes: list[QuizDBM]
     is_confirmed_by_hr_int_id: Optional[int]
     coins: int
     is_completed: bool
+    attachments: dict[str, str]
+    quizzes: list[QuizDBM]
 
     def document(self) -> Document:
         doc = super().document()
