@@ -19,6 +19,10 @@ class User(BaseModel):
     roadmap_id : str
     division_id : str
 
+class Test(BaseModel):
+    question : str
+    answer : str
+    correct : str
 
 class Task(BaseModel):
     id : str
@@ -26,7 +30,7 @@ class Task(BaseModel):
     title : str
     text : str
     attachments : list[str]
-    test : list[dict[str, str]]
+    test : list[Test]
     marked_completed_by_id : str
     coins : int
 
