@@ -14,5 +14,5 @@ class DB:
         return UserCollection(self.database.get_collection('user'))
      
     @property
-    def roadmap(self) -> UserCollection:
+    def roadmap(self) -> RoadmapCollection:
         return RoadmapCollection(self.database.get_collection('roadmap'))
