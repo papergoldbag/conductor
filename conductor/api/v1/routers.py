@@ -56,8 +56,11 @@ async def create_roadmap(roadmap: CreateRoadmap):
 # TODO
 @roadmaps_router.get('/templates/', response_model=RoadmapsResponse)
 async def get_template_roadmap(template_roadmap_id: int):
-    ...
-
+    roadmap_template = db.roadmap_templates.pymongo_collection.find_one({"int_id" : template_roadmap_id})
+    if roadmap_template is None:
+        return RoadmapsResponse(status=Statuses.BAD, out={}, err="roadmap template not found")
+    roadmap_template = Roadmap.parse_document(roadmap_template)
+    return RoadmapsResponse(out={'roadmap_template':roadmap_template})
 
 tasks_router = APIRouter()
 

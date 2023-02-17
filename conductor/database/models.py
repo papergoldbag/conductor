@@ -26,7 +26,7 @@ class Test(BaseModel):
 
 
 class Task(BaseModel):
-    id: int
+    int_id: int
     type: str
     title: str
     text: str
@@ -38,8 +38,7 @@ class Task(BaseModel):
 
 
 class Roadmap(BaseModel):
-    id: int
-    created: datetime
+    int_id : int
     title: str
     tasks: dict[int, Task]
-    created_by_id: str
+    created_by_int_id: str

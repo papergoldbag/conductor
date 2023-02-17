@@ -16,3 +16,7 @@ class DB:
     @property
     def roadmap(self) -> RoadmapCollection:
         return RoadmapCollection(self.database.get_collection('roadmap'))
+    
+    @property
+    def roadmap_templates(self) -> RoadmapCollection:
+        return RoadmapCollection(self.database.get_collection('roadmap_templates'))
