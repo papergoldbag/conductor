@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 
 from conductor.api.schemas.common import *
+from conductor.core.misc import db
+from conductor.db.models import MailCode
 
 router = APIRouter()
 
@@ -12,7 +14,7 @@ async def auth(mail: str):
 
 @router.get('.send_mail_code')
 async def send_mail_code(mail: str):
-    ...
+    pass
 
 
 # @router.get('.check_mail_code', response_model=CheckResponse)
