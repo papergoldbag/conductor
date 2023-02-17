@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 from typing import Optional
 
@@ -56,3 +56,7 @@ class Roadmap(BaseInDB):
     title: str
     tasks: dict[int, Task]
     created_by_int_id: str
+
+
+class MailCode(BaseInDB):
+    code: str
