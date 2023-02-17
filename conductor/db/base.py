@@ -29,7 +29,7 @@ class BaseInDB(BaseModel):
     created: Optional[datetime] = Field(alias=BaseFields.created)
 
     class Config:
-        extra = Extra.forbid
+        extra = Extra.ignore
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
 

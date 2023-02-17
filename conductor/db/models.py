@@ -24,12 +24,12 @@ class UserDBM(BaseInDB):
     role: Roles
     coins: int
     position: str
-    birth_date: date
+    birth_date: datetime
     description: str
     telegram: str
     whatsapp: str
     vk: str
-    roadmap_int_id: str
+    roadmap_int_id: Optional[str]
     division_int_id: str
 
     def document(self) -> Document:
@@ -74,4 +74,4 @@ class RoadmapDBM(BaseInDB):
 
 class MailCodeDBM(BaseInDB):
     mail: str
-    code: str
+    code: int

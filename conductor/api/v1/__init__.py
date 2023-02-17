@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from conductor.api.v1 import authentication, echo, me
-from conductor.api.v1.authentication import auth_router
+from conductor.api.v1 import auth, echo, me
+from conductor.api.v1.auth import auth_router
 from conductor.api.v1.echo import echo_router
 from conductor.api.v1.me import me_router
 
