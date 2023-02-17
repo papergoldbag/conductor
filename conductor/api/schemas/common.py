@@ -55,3 +55,9 @@ class CreateTask(BaseModel):
     coins: int
 
 
+class Check(BaseModel):
+    checked: bool
+
+
+class CheckResponse(CommonResponse):
+    out: Check
