@@ -68,7 +68,7 @@ class TaskDBM(BaseInDB):
 
 class RoadmapDBM(BaseInDB):
     title: str
-    tasks: dict[int, TaskDBM]
+    tasks: list[TaskDBM]
     created_by_int_id: str
 
 
