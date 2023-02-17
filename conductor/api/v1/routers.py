@@ -9,6 +9,17 @@ users_router = APIRouter()
 async def get_user(id : str):
     ...
 
+
+@users_router.get('/roadmap/', response_model=RoadmapsResponse)
+async def get_user_roadmap(id : str):
+    ...
+
+
+@users_router.get('/events/')
+async def get_user_events(id : str):
+    ...
+
+
 @users_router.post('/', response_model=UsersResponse)
 async def create_user(user : User):
     ...
@@ -21,10 +32,12 @@ roadmaps_router = APIRouter()
 async def get_roadmap(id : str):
     ...
 
+
 @roadmaps_router.post('/', response_model=RoadmapsResponse)
 async def create_new_roadmap(roadmap : Roadmap):
     ...
 
-@roadmaps_router.post('/', response_model=TasksResponse)
+
+@roadmaps_router.post('/tasks/', response_model=TasksResponse)
 async def get_roadmap_tasks(id : str):
     ...
