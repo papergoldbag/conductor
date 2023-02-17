@@ -16,20 +16,19 @@ async def create_user(user: CreateUser):
 async def get_user_by_id(user_id: int):
     user = db.user.pymongo_collection.find_one({'int_id' : user_id})
     if user is None:
-        return UsersResponse(status=Statuses.BAD, out={}, err='user not found')
+        return UserByIdResponse(status=Statuses.BAD, out={}, err='user not found')
     user = User.parse_document(user)
     user_by_id = UserById.parse_obj(user)
     return UserByIdResponse(out={'user':user_by_id})
 
 
-@users_router.get('/token/', response_model=UserByIdResponse)
+@users_router.get('/token/', response_model=UsersResponse)
 async def get_user_by_token(user_token: str):
-    user = db.user.pymongo_collection.find_one()
+    user = db.user.pymongo_collection.find_one({'tokens' : {"$in" : user_token}})
     if user is None:
         return UsersResponse(status=Statuses.BAD, out={}, err='user not found')
     user = User.parse_document(user)
-    user_by_id = UserById.parse_obj(user)
-    return UserByIdResponse(out={'user':user_by_id})
+    return UsersResponse(out={'user':user})
 
 
 # TODO
