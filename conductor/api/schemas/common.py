@@ -1,4 +1,4 @@
-from conductor.database.models import *
+from conductor.db.models import *
 
 
 class Statuses:

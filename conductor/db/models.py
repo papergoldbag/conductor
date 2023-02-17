@@ -1,11 +1,8 @@
-from datetime import date, datetime
+from datetime import date
 from enum import Enum
 from typing import Optional
 
-from bson import ObjectId
-from pydantic import BaseModel
-
-from conductor.database.base import BaseInDB, Document
+from conductor.db.base import BaseInDB, Document
 
 
 class Division(BaseInDB):
