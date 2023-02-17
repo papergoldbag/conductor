@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 
 from conductor.db.collections_.user import UserCollection
+from conductor.db.collections_.roadmap import RoadmapCollection
 
 
 class DB:
@@ -11,3 +12,7 @@ class DB:
     @property
     def user(self) -> UserCollection:
         return UserCollection(self.database.get_collection('user'))
+     
+    @property
+    def roadmap(self) -> UserCollection:
+        return RoadmapCollection(self.database.get_collection('roadmap'))

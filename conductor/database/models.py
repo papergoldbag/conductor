@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    id: int
+    int_id : int
     email: str
     tokens: list[str]
     role: str
@@ -15,8 +15,8 @@ class User(BaseModel):
     telegram: str
     whatsapp: str
     vk: str
-    roadmap_id: int
-    division_id: int
+    roadmap_int_id: str
+    division_int_id: str
 
 
 class Test(BaseModel):
