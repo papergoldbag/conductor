@@ -46,7 +46,7 @@ class Test(BaseModel):
     correct: str
 
 
-class CreateTasks(BaseModel):
+class CreateTask(BaseModel):
     type: str
     title: str
     text: str
