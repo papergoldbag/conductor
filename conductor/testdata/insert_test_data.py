@@ -58,5 +58,37 @@ def insert_test_data():
         division_int_id=division.int_id
     ).document())
 
+    db.user.insert_document(UserDBM(
+        fullname='Денис',
+        email='dbarov3@gmail.com',
+        tokens=[],
+        role=Roles.employee.value,
+        coins=0,
+        position='Python backend dev',
+        birth_date=datetime.now(),
+        description='ZZZ',
+        telegram='asf',
+        whatsapp='asf',
+        vk='asf',
+        roadmap_int_id='asfasf',
+        division_int_id=division.int_id
+    ).document())
+
+    db.user.insert_document(UserDBM(
+        fullname='Илья',
+        email='ilyakhakimov03@gmail.com',
+        tokens=[],
+        role=Roles.employee.value,
+        coins=0,
+        position='Python backend dev',
+        birth_date=datetime.now(),
+        description='ZZZ',
+        telegram='asf',
+        whatsapp='asf',
+        vk='asf',
+        roadmap_int_id='asfasf',
+        division_int_id=division.int_id
+    ).document())
+
 
 insert_test_data()
