@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 
-from conductor.api.dependencies import get_current_user
+from conductor.api.dependencies import get_current_user, get_strict_current_user
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
 from conductor.db.models import RoadmapDBM, UserDBM
@@ -12,7 +12,7 @@ me_router = APIRouter()
 
 
 @me_router.get('.my_roadmap', response_model=Optional[RoadmapResponse])
-async def my_roadmap(user: UserDBM = Depends(get_current_user)):
+async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     if user.roadmap_int_id is None:
@@ -41,5 +41,5 @@ async def my_roadmap(user: UserDBM = Depends(get_current_user)):
 
 
 @me_router.get('.my_profile', response_model=UserDBM)
-async def my_profile(user: UserDBM = Depends(get_current_user)):
+async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     return user

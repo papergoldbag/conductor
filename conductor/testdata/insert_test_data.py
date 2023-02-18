@@ -1,10 +1,12 @@
 from datetime import datetime
 
 from conductor.core.misc import db
-from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM
+from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM, Attachment
 
 
 def insert_test_data():
+    db.drop()
+
     division1 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='РЕМЦ').document())
     )
@@ -31,7 +33,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=1,
-                    attachments={"Наш сайт": "http://rscenter.ru/"},
+                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
                     quizzes=[
                         QuizDBM(
                             question='Первая буква алфавита ?',
@@ -54,7 +56,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=2,
-                    attachments={},
+                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
                     quizzes=[]
                 ),
                 TaskDBM(
@@ -66,7 +68,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=3,
-                    attachments={},
+                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
                     quizzes=[
                         QuizDBM(
                             question='Всё было хорошо ?',
@@ -93,7 +95,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=1,
-                    attachments={"Наш сайт": "http://rscenter.ru/"},
+                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
                     quizzes=[
                         QuizDBM(
                             question='Первая буква алфавита ?',
@@ -116,7 +118,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=2,
-                    attachments={},
+                    attachments=[],
                     quizzes=[]
                 ),
                 TaskDBM(
@@ -128,7 +130,7 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=3,
-                    attachments={},
+                    attachments=[],
                     quizzes=[
                         QuizDBM(
                             question='Всё было хорошо ?',
