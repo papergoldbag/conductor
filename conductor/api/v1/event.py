@@ -1,9 +1,25 @@
+from fastapi import APIRouter, Body, Depends
+from conductor.api.dependencies import make_strict_depends_on_roles
+from conductor.api.schemas.event import CreateEvent
+from conductor.core.misc import db
+from conductor.db.models import EventDBM, Roles, UserDBM
+from typing import Optional
+
 from fastapi import APIRouter
 
-from conductor.core.misc import db
-from conductor.db.models import EventDBM
-
 event_router = APIRouter()
+
+
+@event_router.post('', response_model=EventDBM)
+async def create_event(
+        user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor])),
+        event_to_create: CreateEvent = Body()
+):
+    event = EventDBM(**event_to_create.dict())
+    
+    inserted = EventDBM.parse_document(db.event.insert_document(event.document()))
+
+    return inserted
 
 
 @event_router.get('.events_for_user', response_model=list[EventDBM])

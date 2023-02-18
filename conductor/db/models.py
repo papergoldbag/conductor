@@ -89,5 +89,5 @@ class EventDBM(BaseInDB):
     title: str
     desc: str
     dt: datetime
-    to_user_int_ids: list[int]
+    to_user_int_ids: Optional[list[int]]
     division_int_id: Optional[int]
