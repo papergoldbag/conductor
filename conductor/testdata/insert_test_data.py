@@ -131,6 +131,3 @@ def insert_test_data():
         to_user_int_ids=[0, 1],
         division_int_id=division1.int_id
     ).document())
-
-
-insert_test_data()
