@@ -9,7 +9,6 @@ from conductor.db.collections_.roadmap import RoadmapCollection
 from conductor.db.collections_.roadmap_template import RoadmapTemplateCollection
 from conductor.db.collections_.user import UserCollection
 
-
 log = logging.getLogger(__name__)
 
 

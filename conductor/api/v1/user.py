@@ -1,11 +1,10 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Query
-from fastapi import HTTPException, Body, Request, Header, Response, Cookie
+from fastapi import HTTPException, Body
 from starlette import status
-from conductor.api.schemas.mailcode import OperationStatus
 
-from conductor.api.dependencies import get_current_user_token, make_strict_depends_on_roles, get_current_user
+from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
 from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import UserDBM, Roles
