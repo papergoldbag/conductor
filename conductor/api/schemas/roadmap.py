@@ -1,5 +1,3 @@
-from pydantic import BaseModel
-
 from conductor.db.models import RoadmapDBM, TaskDBM
 
 

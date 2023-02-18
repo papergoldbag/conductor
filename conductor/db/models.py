@@ -25,7 +25,6 @@ class UserDBM(BaseInDB):
     coins: int
     position: str
     birth_date: datetime
-    description: str
     telegram: str
     whatsapp: str
     vk: str
