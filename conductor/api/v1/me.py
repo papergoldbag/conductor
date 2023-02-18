@@ -9,7 +9,7 @@ from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.user import UpdateUser, UserDBMWithDivision
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM
+from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM, DivisionDBM
 
 me_router = APIRouter()
 
@@ -88,6 +88,12 @@ async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     data['division_title'] = division['title']
     user_with_division = UserDBMWithDivision.parse_obj(data)
     return user_with_division
+
+
+@me_router.get('.my_division', response_model=DivisionDBM)
+async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
+    division_doc = db.division.get_document_by_int_id(user.division_int_id)
+    return DivisionDBM.parse_document(division_doc)
 
 
 @me_router.get('.get_task_by_index', response_model=Optional[TaskDBM])
