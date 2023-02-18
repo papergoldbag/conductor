@@ -54,5 +54,9 @@ async def send_mail_code(mail: str):
 
     mail_code = MailCodeDBM(mail=mail, code=generate_mail_code())
     doc = db.mail_code.insert_document(mail_code.document())
-    send_mail(mail_code.mail, 'Код авторизации', str(mail_code.code))
+    send_mail(
+        mail_code.mail,
+        'Вход в систему Conductor',
+        f'Никому не сообщайте свой код {mail_code.code}'
+    )
     return OperationStatus(is_done=True)
