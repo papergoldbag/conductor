@@ -7,7 +7,7 @@ from starlette import status
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
 from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
-from conductor.db.models import UserDBM, Roles
+from conductor.db.models import RoadmapDBM, UserDBM, Roles
 from conductor.utils.send_mail import send_mail
 
 user_router = APIRouter()
@@ -20,7 +20,13 @@ async def create_user(
 ):
     if user_to_create.role in (Roles.supervisor, Roles.hr) and user.role == Roles.hr:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor')
-    user_ = UserDBM(tokens=[], coins=0, **user_to_create.dict())
+    roadmap_template = db.roadmap_template.get_document_by_int_id(user_to_create.roadmap_template_int_id)
+    roadmap_template['created_by_int_id'] = user.int_id
+    roadmap = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap_template))
+    to_create = user_to_create.dict()
+    to_create.pop('roadmap_template_int_id')
+    to_create['roadmap_int_id'] = roadmap.int_id
+    user_ = UserDBM(tokens=[], coins=0, **to_create)
     inserted = UserDBM.parse_document(db.user.insert_document(user_.document()))
 
     send_mail(user_.email, f'Приглашение', f'Входите в систему Кондуктор {settings.site_url}')

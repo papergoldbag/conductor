@@ -12,7 +12,7 @@ class CreateUser(BaseModel):
     role: Roles
     position: str
     birth_date: datetime
-    roadmap_int_id: Optional[int]
+    roadmap_template_int_id: int
     division_int_id: int
 
 
