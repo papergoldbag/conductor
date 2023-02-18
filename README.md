@@ -13,7 +13,7 @@
 
 <h4>Особенность проекта в следующем:</h4>
 <ul>
-    <li>Полная асинхронность</li>
+    <li>Гибкость системы ролей</li>
     <li>Полная адаптивность сайта/приложения</li>
     <li>Плавная смена темы в ночную/дневную</li>  
 </ul>
@@ -21,23 +21,27 @@
 
 <h4>Основной стек технологий:</h4>
 <ul>
-    <li>Python3.10, FastAPI, SqlAlchemy, async databases</li>
-	<li>PostgreSQL</li>
+    <li>python3.11, FastAPI, mongodb, pymongo, nginx, ubuntu22, certbot, pydantic</li>
+	<li>MongoDB</li>
 	<li>HTML/CSS/JS</li>
-	<li>Kotlin, okHttp, Epoxy</li>
  </ul>
 
 
 <h4>Демо</h4>
-<p>Демо сервиса доступно по адресу: http://31.172.66.226:8080/</p>
-<p>Реквизиты тестового пользователя: login: <b>Ivan</b>, пароль: <b>Ivan</b></p>
+<p>Демо сервиса доступно по адресу: https://divarteam.ru/</p>
+<p>Реквизиты тестового пользователя</p>
+<p>Руководитель: <b>Ivan</b> - <b>1</b></p>
+<p>HR: <b>Ivan</b> - <b>1</b></p>
+<p>Сотрудник: <b>Ivan</b> - <b>1</b></p>
 
 
 СРЕДА ЗАПУСКА
 ------------
-1) развертывание сервиса производится на Ubuntu 20
-2) требуется для запуска ASGI(uvicorn)
-3) требуется установленная СУБД PostgreSQL
+1) Ubuntu 22
+2) ASGI(uvicorn)
+3) MongoDB,
+4) Nginx
+5) Python3.11
 
 
 УСТАНОВКА
@@ -47,57 +51,108 @@
 ~~~
 sudo apt update
 sudo apt upgrade
-sudo apt install software-properties-common -y
+apt autoremove
 sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt install python3.10
-sudo apt install python3.10-venv
-sudo apt install postgresql postgresql-contrib
+sudo apt install python3.11
 ~~~
-Настройка python приложения
+Создаём пользователя
 ~~~
-adduser psb
-su - psb
-python3.10 -m venv venv
-git clone git@github.com:papergoldbag/psb.git
-cd psb
-source ./venv/bin/activate
-pip install -r requirements
+adduser conductor
+usermod -aG sudo conductor
+su - conductor
+~~~
+
+Установка poetry
+~~~
+curl -sSL https://install.python-poetry.org | python3 -
+echo 'export PATH="/home/conductor/.local/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/home/conductor/.local/bin:$PATH"' >> ~/.profile
+poetry config virtualenvs.in-project true
+exec "$SHELL"
+poetry --version
+~~~
+
+Установка репозитория
+~~~
+git clone git@github.com:papergoldbag/conductor.git
+cd conductor
+poetry env use python3.11
+poetry install
+~~~
+
+Нужно создать файл .env и поместить туда
+~~~
+mongo_user = "..."
+mongo_password = "..."
+mongo_host = "..."
+mongo_port = ...
+mongo_auth_db = "..."
+mongo_db_name = "..."
+
+mailru_login = '...'
+mailru_password = '.'
 ~~~
 
 
 ### База данных
-Необходимо создать пустую базу данных, а подключение к базе прописать в app/core/settings.py
+Установка
 ~~~
-sudo systemctl start postgresql
-sudo -i -u postgres
-psql
-CREATE DATABASE psb encoding 'UTF-8';
-CREATE USER psb with password '123...';
-\q
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl daemon-reload
+sudo systemctl enable mongod
+sudo systemctl restart mongod
+~~~
+
+Создание доступа
+~~~
+mongosh
+use admin
+db.createUser({
+  user: "admin",
+  pwd: passwordPrompt(),
+  roles:[{role: "userAdminAnyDatabase" , db:"admin"}]
+})
+db.createUser(
+{
+  user: "root",
+  pwd: passwordPrompt(),
+  roles: ["root"]
+})
+db.createUser(
+{
+  user: "conductor",
+  pwd: passwordPrompt(),
+  roles: [
+  {role: "readWrite", db: "production"}
+  ]
+})
 ~~~
 
 
 ### Приложение как сервис
-Нужно создать файл psb.service с текстом ниже и поместить его в /etc/systemd/system/
+Нужно создать файл conductor.service и поместить его в /etc/systemd/system/
 ~~~
-[Unit]
-Description=psb
-After=network.target
+sudo cp ./conductor.service /etc/systemd/system/conductor.service
+sudo systemctl start conductor
+~~~
 
-[Service]
-User=psb
-WorkingDirectory=/home/psb/psb
-ExecStart=/home/psb/psb/venv/bin/python3.10 /home/psb/psb/start.py
-Environment="PYTHONPATH=/home/psb/psb/venv/"
-RestartSec=10
-Restart=always
 
-[Install]
-WantedBy=multi-user.target
+### Настройка Proxy Nginx
+Установка
 ~~~
-И после этого выполните в терминале команду ниже
+sudo apt install nginx
 ~~~
-sudo systemctl start psb
+Конфигурация
+~~~
+rm -rf /etc/nginx/sites-enabled/default
+sudo cp ./conductor.nginx /etc/nginx/sites-enabled/conductor
+~~~
+Перезапуск
+~~~
+sudo systemctl restart nginx
 ~~~
 
 
@@ -107,8 +162,3 @@ sudo systemctl start psb
 <h4>Арсен Сабирзянов - Backend https://t.me/arpakit </h4>
 <h4>Илья Хакимов - Frontend https://t.me/ilyakhakimov03 </h4>
 <h4>Рустам Афанасьев - Project manager, Analytic https://t.me/rcr_tg </h4>
-
-
-
-<h3>Android Client</h3>
-https://github.com/BrightOS/Newton-PSB-Divar-Android
