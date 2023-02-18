@@ -36,6 +36,8 @@ async def get_user_by_int_id(
     user = db.user.get_document_by_int_id(user_int_id)
     if user is None:
         return None
+    division = db.division.pymongo_collection.find_one({'int_id': user['division_int_id']})
+    user['division_title'] = division['title']
     return SensitiveUser.parse_obj(user)
 
 
