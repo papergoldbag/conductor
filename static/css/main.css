@@ -27,6 +27,10 @@ body {
     /* overflow: auto; */
 }
 
+.task-card {
+    cursor: pointer; 
+}
+
 .wrapper {
     width: 100%;
     /* max-width: 1000px; */

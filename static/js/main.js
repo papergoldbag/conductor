@@ -19,6 +19,19 @@ window.onload = () => {
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
 
+    function jsTaskCards() {
+        tasksCards = document.querySelectorAll("nav .task-card")
+        console.log(tasksCards)
+        for (let i = 0; i < tasksCards.length; i++) {
+            tasksCards[i].addEventListener("click", function() {
+                let week = this.getAttribute("data-week")
+                let day = this.getAttribute("data-day")
+                
+                //console.log(week, day)
+            })
+        }
+    }
+
     function jsRoadmap() {
         dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
 
@@ -79,7 +92,7 @@ window.onload = () => {
                 for (let task of day.tasks) {
                     //console.log(task)
                     htm +=  `
-                    <div class="task card purple">
+                    <div class="task card purple task-card" data-week='${task.week_num}' data-day='${task.day_num}'>
                     <div class="task-title" style="color: white;">
                         ${task.title}
                     </div>
@@ -104,6 +117,7 @@ window.onload = () => {
         console.log(htm)
         roadmapHTML.innerHTML = htm
         jsRoadmap()
+        jsTaskCards()
     }
 
     loadRoadmap()
