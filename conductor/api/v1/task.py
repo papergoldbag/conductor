@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 
@@ -71,3 +73,39 @@ async def make_confirmation(
     )
 
     return True
+
+
+@task_router.get(".user_roadmap", response_model=Optional[RoadmapDBM])
+async def user_tasks(
+        user_int_id: int,
+        current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+):
+    user_doc = db.user.get_document_by_int_id(user_int_id)
+    if user_doc is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f'no user with id={user_int_id}')
+    user = UserDBM.parse_document(user_doc)
+
+    user_roadmap_doc = db.roadmap.get_document_by_int_id(user.roadmap_int_id)
+    if user_roadmap_doc is None:
+        return None
+    user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
+
+    return user_roadmap
+
+
+@task_router.get(".user_tasks", response_model=list[TaskDBM])
+async def user_tasks(
+        user_int_id: int,
+        current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+):
+    user_doc = db.user.get_document_by_int_id(user_int_id)
+    if user_doc is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f'no user with id={user_int_id}')
+    user = UserDBM.parse_document(user_doc)
+
+    user_roadmap_doc = db.roadmap.get_document_by_int_id(user.roadmap_int_id)
+    if user_roadmap_doc is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user doesnt have this roadmap')
+    user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
+
+    return [task for task in user_roadmap.tasks]
