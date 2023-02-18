@@ -45,3 +45,6 @@ class BaseCollection:
         if doc is None:
             return False
         return True
+
+    def update_document_by_int_id(self, id_: int, set_: Document):
+        self.pymongo_collection.update_one({BaseFields.int_id: id_}, {'$set': set_})

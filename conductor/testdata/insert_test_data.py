@@ -22,41 +22,47 @@ def insert_test_data():
 
     roadmap1 = RoadmapDBM.parse_document(
         db.roadmap.insert_document(RoadmapDBM(
-            title='',
+            title='Путь начинающего',
             tasks=[
                 TaskDBM(
                     type=TaskTypes.auto_test,
-                    title='Прочитайте данные статьи',
-                    text='Прочитайте данные статьи и пройдите тест ниже',
-                    is_confirmed_by_hr_int_id=123,
-                    coins=12,
+                    title='Ознакомиться с сайтом Россмолодёжы',
+                    text=(
+                        'Сперва вам требуется посетить сайт россмолодёжы, '
+                        'который указан в приложние, затем пройти тест'
+                    ),
+                    is_confirmed_by_hr_int_id=None,
+                    coins=5,
                     is_completed=False,
                     week_num=1,
                     day_num=1,
-                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
+                    attachments=[Attachment(title="Наш сайт", url="https://myrosmol.ru/")],
                     quizzes=[
                         QuizDBM(
-                            question='Первая буква алфавита ?',
+                            question='Какого цвета наш логотип ?',
                             answer=None,
-                            correct_answer='A'
+                            correct_answer='Фиолетовый'
                         ),
                         QuizDBM(
-                            question='Вторая буква алфавита ?',
+                            question='Какая почта на сайте Россмолодёжи ?',
                             answer=None,
-                            correct_answer='Б'
+                            correct_answer='Op@fadm.gov.ru'
                         )
                     ]
                 ),
                 TaskDBM(
                     type=TaskTypes.hr_confirmation,
                     title='Подпишите документы',
-                    text='Требуется придти и подписать документы',
-                    is_confirmed_by_hr_int_id=123,
+                    text=(
+                        'Требуется придти в офис в 6 отдел и подписать документы по новому трудовому кодексу, '
+                        'маршрут можете посмотреть в приложении'
+                    ),
+                    is_confirmed_by_hr_int_id=None,
                     coins=15,
                     is_completed=False,
                     week_num=1,
                     day_num=2,
-                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
+                    attachments=[Attachment(title="Маршрут", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
                     quizzes=[]
                 ),
                 TaskDBM(
@@ -68,76 +74,8 @@ def insert_test_data():
                     is_completed=False,
                     week_num=1,
                     day_num=3,
-                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
-                    quizzes=[
-                        QuizDBM(
-                            question='Всё было хорошо ?',
-                            answer=None,
-                            correct_answer=None
-                        )
-                    ]
-                )
-            ],
-            created_by_int_id=123
-        ).document())
-    )
-
-    roadmap2 = RoadmapDBM.parse_document(
-        db.roadmap.insert_document(RoadmapDBM(
-            title='',
-            tasks=[
-                TaskDBM(
-                    type=TaskTypes.auto_test,
-                    title='Прочитайте данные статьи',
-                    text='Прочитайте данные статьи и пройдите тест ниже',
-                    is_confirmed_by_hr_int_id=123,
-                    coins=12,
-                    is_completed=False,
-                    week_num=1,
-                    day_num=1,
-                    attachments=[Attachment(title="Наш сайт", url="http://rscenter.ru/")],
-                    quizzes=[
-                        QuizDBM(
-                            question='Первая буква алфавита ?',
-                            answer=None,
-                            correct_answer='A'
-                        ),
-                        QuizDBM(
-                            question='Вторая буква алфавита ?',
-                            answer=None,
-                            correct_answer='Б'
-                        )
-                    ]
-                ),
-                TaskDBM(
-                    type=TaskTypes.hr_confirmation,
-                    title='Подпишите документы',
-                    text='Требуется придти и подписать документы',
-                    is_confirmed_by_hr_int_id=123,
-                    coins=15,
-                    is_completed=False,
-                    week_num=1,
-                    day_num=2,
-                    attachments=[],
+                    attachments=[Attachment(title="Наш сайт", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
                     quizzes=[]
-                ),
-                TaskDBM(
-                    type=TaskTypes.feedback,
-                    title='Дайте обратную связь о том, как провели данный день',
-                    text='Нужно пройти опрос ниже )',
-                    is_confirmed_by_hr_int_id=123,
-                    coins=15,
-                    is_completed=False,
-                    week_num=1,
-                    day_num=3,
-                    attachments=[],
-                    quizzes=[
-                        QuizDBM(
-                            question='Всё было хорошо ?',
-                            answer=None,
-                            correct_answer=None
-                        )
-                    ]
                 )
             ],
             created_by_int_id=123
