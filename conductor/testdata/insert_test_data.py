@@ -107,7 +107,7 @@ def insert_test_data():
     db.user.insert_document(UserDBM(
         fullname='Денис',
         email='dbarov3@gmail.com',
-        tokens=[],
+        tokens=['123'],
         role=Roles.employee.value,
         coins=20,
         position='Android Kotlin Developer',
