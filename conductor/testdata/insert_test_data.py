@@ -151,12 +151,20 @@ def insert_test_data():
     )
     roadmap1_doc = roadmap1.document()
     roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
     roadmap2 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
     roadmap3 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
     roadmap4 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
     roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
 
     db.user.insert_document(UserDBM(
