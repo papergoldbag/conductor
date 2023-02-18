@@ -7,5 +7,5 @@ user_router = APIRouter()
 
 
 @user_router.post(".create")
-def echo(user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))):
+def create_user(user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))):
     return {}
