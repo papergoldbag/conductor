@@ -5,7 +5,7 @@ from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM
 
 
 def insert_test_data():
-    # db.drop()
+    db.drop()
 
     division1 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='РЕМЦ').document())
