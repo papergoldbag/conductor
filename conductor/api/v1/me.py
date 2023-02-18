@@ -90,7 +90,7 @@ async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     return user_with_division
 
 
-@me_router.get('.my_division', response_model=DivisionDBM)
+@me_router.get('.division', response_model=DivisionDBM)
 async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     division_doc = db.division.get_document_by_int_id(user.division_int_id)
     return DivisionDBM.parse_document(division_doc)
