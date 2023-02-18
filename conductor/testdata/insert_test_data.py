@@ -257,6 +257,10 @@ def insert_test_data():
             created_by_int_id=123
         ).document())
     )
+
+
+    db.roadmap_template.insert_document(roadmap1.document())
+
     roadmap1_doc = roadmap1.document()
     roadmap1_doc.pop('int_id', None)
     roadmap1_doc.pop('_id', None)
