@@ -17,11 +17,12 @@ auth_router = APIRouter()
 
 
 def generate_token() -> str:
-    return str(randint(1, 10))
+    res = binascii.hexlify(os.urandom(20)).decode() + str(randint(10000, 1000000))
+    return res[:128]
 
 
 def generate_mail_code() -> str:
-    return f'{randint(1, 9)}{randint(1, 9)}{randint(1, 9)}{randint(1, 9)}'
+    return str(randint(1, 9))
 
 
 @auth_router.post('', response_model=TokenSchema)
