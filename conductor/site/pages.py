@@ -21,3 +21,10 @@ async def roadmap(r: Request, user=Depends(get_current_user)):
     if not user:
         return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse("roadmap.html", {'request': r})
+
+
+@pages_router.get('/sign_out')
+async def roadmap(r: Request, user=Depends(get_current_user)):
+    r = RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
+    r.delete_cookie('token')
+    return r
