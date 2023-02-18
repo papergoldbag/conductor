@@ -1,3 +1,5 @@
+import logging
+
 from pymongo import MongoClient
 
 from conductor.db.collections_.division import DivisionCollection
@@ -6,6 +8,8 @@ from conductor.db.collections_.mailcode import EmailCodeCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
 from conductor.db.collections_.roadmap_template import RoadmapTemplateCollection
 from conductor.db.collections_.user import UserCollection
+
+log = logging.getLogger(__name__)
 
 
 class DB:
@@ -28,6 +32,11 @@ class DB:
             self.roadmap_template,
             self.event
         ]
+
+    def ensure_indexes(self):
+        for collection in self.collections:
+            collection.ensure_indexes()
+        log.info('indexes were ensured')
 
     def drop(self):
         for col in self.collections:
