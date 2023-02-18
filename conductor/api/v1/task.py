@@ -17,11 +17,11 @@ async def get_tasks_by_week_day(
     if current_user.roadmap_int_id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
 
-    doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
-    if doc is None:
+    roadmap_doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
+    if roadmap_doc is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
 
-    roadmap = RoadmapDBM.parse_document(doc)
+    roadmap = RoadmapDBM.parse_document(roadmap_doc)
     tasks_for_week_day = []
     for t in roadmap.tasks:
         if t.week_num == week_num and t.day_num == day_num:
