@@ -23,6 +23,9 @@ async def send_quizz(
     passed = 0
     roadmap = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
     roadmap = RoadmapDBM.parse_obj(roadmap)
+    task_type = roadmap.tasks[send_answers_.task_num].type 
+    if task_type == 'hr_confirmation':
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user cant answer hr confirmation task')
     for i in range(len(quizz:=roadmap.tasks[send_answers_.task_num].quizzes)):
         if quizz[i].correct_answer == send_answers_.answers[i]:
             passed+=1
