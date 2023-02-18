@@ -132,5 +132,3 @@ def insert_test_data():
         division_int_id=division1.int_id
     ).document())
 
-
-insert_test_data()

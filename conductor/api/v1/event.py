@@ -1,12 +1,9 @@
 from fastapi import APIRouter
-from conductor.api.dependencies import get_strict_current_user
 from conductor.core.misc import db
-from conductor.db.models import EventDBM, UserDBM
+from conductor.db.models import EventDBM
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Query
-from fastapi import HTTPException, Body
-from starlette import status
+from fastapi import APIRouter
 
 event_router = APIRouter()
 

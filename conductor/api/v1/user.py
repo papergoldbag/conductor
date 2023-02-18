@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, Query
 from fastapi import HTTPException, Body
 from starlette import status
+from conductor.api.schemas.mailcode import OperationStatus
 
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
 from conductor.api.schemas.user import CreateUser, SensitiveUser
@@ -49,3 +50,19 @@ async def get_users(
     else:
         users = db.user.pymongo_collection.find({'division_int_id': division_int_id})
     return [SensitiveUser.parse_obj(user) for user in users]
+
+
+
+
+@user_router.get('.sign_out', response_model=OperationStatus)
+async def signout(
+    token: str
+    ):
+    user = db.user.pymongo_collection.find_one({"token" : {"$in" : [token]}})
+    if user is None:
+        return None
+    user = UserDBM.parse_document(user)
+    tokens : list[str] = user.tokens
+    tokens.remove(token)
+    db.user.pymongo_collection.find_one_and_update({"int_id" : user.int_id}, {"$set" : {"tokens" : tokens}})
+    return {'is_done' : True}
