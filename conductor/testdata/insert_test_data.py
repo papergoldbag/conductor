@@ -133,15 +133,15 @@ def insert_test_data():
                         QuizDBM(
                             question='Вам нравятся ваши условия ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='1'
                         ), QuizDBM(
                             question='Вы бы хотели что-то поменять в отношение к вам ваших сотрудников ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='2'
                         ), QuizDBM(
                             question='Что вам больше всего не понравилось на первых днях ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='3'
                         )
                     ]
                 )
@@ -149,6 +149,10 @@ def insert_test_data():
             created_by_int_id=123
         ).document())
     )
+    roadmap2 = db.roadmap.insert_document(roadmap1.document())
+    roadmap3 = db.roadmap.insert_document(roadmap1.document())
+    roadmap4 = db.roadmap.insert_document(roadmap1.document())
+    roadmap5 = db.roadmap.insert_document(roadmap1.document())
 
     db.user.insert_document(UserDBM(
         fullname='Илья',
@@ -176,7 +180,7 @@ def insert_test_data():
         telegram='https://t.me/BrightOS',
         whatsapp=None,
         vk='https://vk.com/brightos',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap2.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -191,7 +195,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap3.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -206,7 +210,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap4.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -221,7 +225,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap5.int_id,
         division_int_id=division1.int_id
     ).document())
 
