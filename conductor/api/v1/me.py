@@ -19,7 +19,7 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     if user.roadmap_int_id is None:
-        return {}
+        return None
     roadmap_dbm = RoadmapDBM.parse_document(db.roadmap.get_document_by_int_id(user.roadmap_int_id))
 
     week_to_days = {}

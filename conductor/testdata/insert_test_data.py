@@ -302,7 +302,7 @@ def insert_test_data():
         fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
         tokens=['1'],
-        role=Roles.employee,
+        role=Roles.supervisor,
         coins=0,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
