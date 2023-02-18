@@ -1,13 +1,11 @@
 import logging
 
-from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.types import ParseMode
-from aiogram.utils.executor import Executor
+from aiogram.types import BotCommand
 
-from conductor.core.misc import settings
 from conductor.core.setup_logging import setup_logging
+from conductor_bot.consts import executor, dp, bot
 from conductor_bot.handlers.user import register_user_handlers
+from conductor_bot.utils import send_to_admins
 
 logger = logging.getLogger(__name__)
 
@@ -20,12 +18,22 @@ def register_all_handlers(dp):
     register_user_handlers(dp)
 
 
+async def on_startup(*args, **kwargs):
+    logger.info('on_startup')
+    bot.set_my_commands(BotCommand('start', 'Начать'))
+    await send_to_admins('Старт')
+
+
+async def on_shutdown(*args, **kwargs):
+    logger.info('on_shutdown')
+    await send_to_admins('Конец')
+
+
 def main():
     setup_logging()
 
-    bot = Bot(token=settings.tg_bot_token, parse_mode=ParseMode.HTML)
-    dp = Dispatcher(bot, storage=MemoryStorage())
-    executor = Executor(dispatcher=dp, skip_updates=True)
+    executor.on_startup(on_startup)
+    executor.on_startup(on_shutdown)
 
     register_all_filters(dp)
     register_all_handlers(dp)

@@ -5,8 +5,7 @@ from fastapi import HTTPException, Body
 from starlette import status
 
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
-from conductor.api.schemas.user import CreateUser, SensitiveUser, UpdateUser
-from conductor.api.schemas.mailcode import OperationStatus
+from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import RoadmapDBM, UserDBM, Roles
 from conductor.utils.send_mail import send_mail
@@ -83,4 +82,3 @@ async def get_users(
         user_doc['division_title'] = division_int_id_to_title[user_doc['division_int_id']]
         res.append(SensitiveUser.parse_obj(user_doc))
     return res
-
