@@ -12,39 +12,34 @@ window.onload = () => {
     // }
 
     // headerMenu.addEventListener("click", headerMenuLogic)
-    let raw_roadmap = {}
     let roadmap = []
-    // let roadmap = {
-    //     1: [],
-    //     2: [],
-    //     3: [],
-    //     4: [],
-    //     5: [],
-    //     6: [],
-    //     7: [],
-    //     8: [],
-    //     9: [],
-    //     10: []
-    // }
+    let roadmapHTML = document.querySelector(".roadmap")
+    let dropdownTriggers
+    console.log(roadmapHTML)
+    roadmapHTML.innerHTML += "<h1>test</h1>"
 
-    const dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
+    //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
 
-    for (let i = 0; i < dropdownTriggers.length; i++) {
-        dropdownTriggers[i].addEventListener("click", function() {
-            let flag = (this.getAttribute("data-isopen") === 'true')
-            console.log(flag)
-            console.log(this.nextElementSibling)
-            if (flag) {
-                this.nextElementSibling.style.display = "none"
-            } else {
-                this.nextElementSibling.style.display = "block"
-            }
-            this.setAttribute("data-isopen", (!flag).toString())
-            console.log(this)
-        })
-    }
+    function jsRoadmap(roadmap) {
+        dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
 
+        for (let i = 0; i < dropdownTriggers.length; i++) {
+            dropdownTriggers[i].addEventListener("click", function() {
+                let flag = (this.getAttribute("data-isopen") === 'true')
+                console.log(flag)
+                console.log(this.nextElementSibling)
+                if (flag) {
+                    this.nextElementSibling.style.display = "none"
+                } else {
+                    this.nextElementSibling.style.display = "block"
+                }
+                this.setAttribute("data-isopen", (!flag).toString())
+                console.log(this)
+            })
+        }
+    }
+    
     async function loadRoadmap() {
         const settings = {
             method: 'GET',
@@ -56,26 +51,73 @@ window.onload = () => {
         fetch("/api/v1/me.my_roadmap", settings)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            // for (let task of data.tasks) {
-            //     roadmap[task.week_num].push(task)
-            // }
-            for (let week of data.weeks) {
-                roadmap[week] = []
-            }
-            for (let [week, arrDay] of data.week_to_days) {
-                console.log(week, arrDay)
-                // for (let day of arrDay) {
-                //     let o = {day: []}
-                //     roadmap[week].push( o )
-                // }
-            }
+            roadmap = data.easy_view
+            //console.log(roadmap)
+            drawRoadmap(roadmap)
         })
-        console.log(roadmap) 
-        // for (let arr of roadmap) {
-        //     arr.sort((a, b) => a.day_num)
-        // }
+    }
+
+    function drawRoadmap(roadmap) {
+        //console.log(roadmap[1][1][0][1]) // неделя -> день -> таск
+        // roadmapHTML.innerHTML += 'test'
+        console.log(roadmap)
+        
+        for (const [week, weekArr] of Object.entries(roadmap)) {
+            roadmapHTML.innerHTML += '<div class="dropdown-trigger" data-isopen="true"><b>Неделя '+week+'</b></div>';
+            roadmapHTML.innerHTML += '<div class="dropdown-content">';
+
+
+                    // <div class="card grey dropdown">
+                    //     <div class="dropdown-trigger" data-isopen="true">
+                    //         <b>День 1</b>
+                    //     </div>
+                    //     <div class="dropdown-content"></div>
+
+            //console.log(week, weekArr)
+            roadmapHTML.innerHTML += 'hi'
+            /*
+            
+            for (const [day, tasks] of Object.entries(weekArr)) {
+                roadmapHTML.innerHTML += "test"+day;
+                //roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
+                //roadmapHTML.innerHTML += '<div class="dropdown-content">';
+                
+                for (let task of tasks) {
+                    console.log(task)
+                    roadmapHTML.innerHTML += `
+                        <div class="task card purple">
+                        <div class="task-title" style="color: white;">
+                            ${task.title}
+                        </div>
+                        <div class="task-status">
+                            <div class="task-status-isdone" style="color: white;">
+                                <input type="checkbox" disabled style="color: white;">Не пройдено
+                            </div>
+                            <div class="task-status-reward" style="color: white;">
+                                +500
+                            </div>
+                        </div>
+                        </div>
+                    `
+                }
+                roadmapHTML.innerHTML += '</div>';
+                
+            }
+            */
+            // weekNum = week
+            // for (const [day, tasks] of Object.entries(weekArr)) {
+            //     dayNum = day
+            //     // console.log("dayweek", day, week)
+            //     for (const [] of Object.entries(day)) {
+            //         console.log(weekNum+"+"+dayNum, task)
+            //     }
+            // }
+            roadmapHTML.innerHTML += '</div>';
+        }
+        
+        jsRoadmap()
     }
 
     loadRoadmap()
+    //console.log(roadmap)
 }
