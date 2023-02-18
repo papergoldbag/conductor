@@ -22,104 +22,26 @@
                 <img src="/static/img/logo.png" height="20px" style="margin-left: 10px; margin-top: 10px; margin-right: 5px;" alt="logo"/>   <!-- height: 20px -->
                 <div class="header-links">
                     <a href="/roadmap"><button class="secondary">Roadmap</button></a>
-                    <button class="secondary">События</button>
-                    <button class="secondary">Сеть</button>
+                    <a href="/events"><button class="secondary">События</button></a>
+                    <a href="/network"><button class="secondary">Сеть</button></a>
                 </div>
             </div>
             <div class="wrapper-right">
                 <!-- <div class="user-photo"></div> -->
                 <a href="/static/app.apk" style="margin-top: 17px;">Скачать приложение</a>
-                <a href="/static/profile"><button class="primary">Профиль</button></a>
+                <a href="/profile"><button class="primary">Профиль</button></a>
                 <a href="/sign_out"><button class="secondary">Выйти</button></a>
             </div>
         </div>
     </header>
     <div class="content">
-        <!-- <nav>
-            <div class="card dropdown">
-                <div class="dropdown-trigger" data-isopen="false">
-                    <b>Неделя 1</b>
-                </div>
-                <div class="dropdown-content">
-                    <div class="card grey dropdown">
-                        <div class="dropdown-trigger" data-isopen="false">
-                            <b>День 1</b>
-                        </div>
-                        <div class="dropdown-content">
-                            <div class="task card purple">
-                                <div class="task-title" style="color: white;">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex deleniti distinctio cum! Minus repellendus a iste, id iure aliquam ullam saepe illum esse odit omnis quisquam harum assumenda, eius consequuntur?
-                                </div>
-                                <div class="task-status">
-                                    <div class="task-status-isdone" style="color: white;">
-                                        <input type="checkbox" disabled style="color: white;">Не пройдено
-                                    </div>
-                                    <div class="task-status-reward" style="color: white;">
-                                        +500
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="task card purple-border">
-                                <div class="task-title">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex deleniti distinctio cum! Minus repellendus a iste, id iure aliquam ullam saepe illum esse odit omnis quisquam harum assumenda, eius consequuntur?
-                                </div>
-                                <div class="task-status">
-                                    <div class="task-status-isdone">
-                                        <input type="checkbox" disabled>Не пройдено
-                                    </div>
-                                    <div class="task-status-reward">
-                                        +500
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card grey dropdown">
-                        <div class="dropdown-trigger" data-isopen="false">
-                            <b>День 2</b>
-                        </div>
-                        <div class="dropdown-content">
-                            <div class="task card purple">
-                                <div class="task-title" style="color: white;">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex deleniti distinctio cum! Minus repellendus a iste, id iure aliquam ullam saepe illum esse odit omnis quisquam harum assumenda, eius consequuntur?
-                                </div>
-                                <div class="task-status">
-                                    <div class="task-status-isdone" style="color: white;">
-                                        <input type="checkbox" disabled style="color: white;">Не пройдено
-                                    </div>
-                                    <div class="task-status-reward" style="color: white;">
-                                        +500
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="task card purple-border">
-                                <div class="task-title">
-                                    Lorem ipsum 
-                                </div>
-                                <div class="task-status">
-                                    <div class="task-status-isdone">
-                                        <input type="checkbox" disabled>Не пройдено
-                                    </div>
-                                    <div class="task-status-reward">
-                                        +500
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav> -->
         <main style="width: 100%;">
             <div class="profile card grey" style="width: 95%;">
-                <h1>Пупкин Василий Иванович</h1>
+                <h1 id="fullname">Пупкин Василий Иванович</h1>
                 <div>
-                    <div style="background: lime; border-radius: 15px; display: inline; padding: 5px; color: white;">Сотрудник</div>
-                    <span class="profile-date">01.02.1963</span>
-                    <span class="profile-date">Подразделение</span>
+                    <div id="role" style="background: lime; border-radius: 15px; display: inline; padding: 5px; color: white;">Сотрудник</div>
+                    <span id="date">01.02.1963</span>
+                    <span id="division">Подразделение</span>
                 </div>
                 <div style="margin-top: 10px;">
                     <p>О себе</p>
@@ -127,17 +49,17 @@
                     <div style="display: flex">
                         <div style="width: 50%;">
                             <p>Telegram</p>
-                            <input style="width: 90%;">
+                            <input id="telegram" style="width: 90%;">
                         </div>
                         <div style="width: 50%;">
                             <p>WhatsApp</p>
-                            <input style="width: 90%;">
+                            <input id="whatsapp" style="width: 90%;">
                         </div>
                     </div>
                     <div style="display: flex">
                         <div style="width: 50%;">
                             <p>VK</p>
-                            <input style="width: 90%;">
+                            <input id="vk" style="width: 90%;">
                         </div>
                         <div style="width: 50%;">
                             <button class="secondary" style="width: 90%; margin-top: 30px;">Сохранить изменения</button>
