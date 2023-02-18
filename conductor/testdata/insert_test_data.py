@@ -7,6 +7,8 @@ from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM
 
 def insert_test_data():
     db.drop()
+    for collection in db.database.list_collections():
+        db.database.get_collection(collection.get('name')).drop()
 
     division1 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='РЕМЦ').document())
@@ -148,3 +150,7 @@ def insert_test_data():
         to_user_int_ids=[0, 1],
         division_int_id=division1.int_id
     ).document())
+
+
+if __name__ == '__main__':
+    insert_test_data()
