@@ -1,0 +1,13 @@
+[Unit]
+Description=conductor_bot
+After=network.target
+
+[Service]
+User=conductor
+WorkingDirectory=/home/conductor/conductor
+ExecStart=/home/conductor/conductor/.venv/bin/python3 /home/conductor/conductor/conductor_bot/main.py
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

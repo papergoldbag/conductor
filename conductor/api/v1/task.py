@@ -64,4 +64,10 @@ async def make_confirmation(
         {'$set': {'tasks': [t.dict() for t in tasks]}}
     )
 
+    to_user = UserDBM.parse_document(user_doc)
+    db.user.update_document_by_int_id(
+        to_user.int_id,
+        {'coins': to_user.coins + task.coins}
+    )
+
     return True

@@ -113,3 +113,26 @@ async def get_my_events(
 ):
     events = db.event.pymongo_collection.find({'division_int_id': {'$in': [current_user.division_int_id]}})
     return [EventDBM.parse_document(event) for event in events]
+
+
+# def define_progress(user_int_id: int) -> int:
+#     user = UserDBM.parse_document(db.user.pymongo_collection.find_one({'int_id': user_int_id}))
+#     if user.roadmap_int_id is None:
+#         raise 0
+#
+#     roadmap_of_user = RoadmapDBM.parse_document(db.roadmap.get_document_by_int_id(user.roadmap_int_id))
+#     len_tasks = len(roadmap_of_user.tasks)
+#     done = 0
+#     for task in roadmap_of_user.tasks:
+#         if task.is_completed:
+#             if task.is_good is not None:
+#                 pass
+#             elif task.is_good is True:
+#                 pass
+#             else:
+#                 pass
+
+
+@me_router.get('.progress')
+async def progress():
+    pass
