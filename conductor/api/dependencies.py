@@ -9,19 +9,16 @@ from conductor.core.misc import db
 from conductor.db.models import UserDBM
 
 
-def get_current_user(*, token: str = Header(None), req: Request) -> UserDBM:
+def get_current_user(*, token: str = Header(None), req: Request) -> Optional[UserDBM]:
     token_cookie: str = req.cookies.get('token')
     if not token and not token_cookie:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Invalid auth'
-        )
+        return None
 
     token = token if token else token_cookie
 
     user = db.user.pymongo_collection.find_one({'tokens': {"$in": [token]}})
     if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='bad token')
+        return None
     return UserDBM.parse_document(user)
 
 

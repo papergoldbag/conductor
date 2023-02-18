@@ -9,6 +9,7 @@ from conductor.api.v1 import api_v1_router
 from conductor.core.events import on_startup, on_shutdown
 from conductor.core.settings import settings
 from conductor.core.setup_logging import setup_logging
+from conductor.site.pages import pages_router
 
 log = logging.getLogger(__name__)
 
@@ -41,5 +42,6 @@ def create_app() -> FastAPI:
     app.add_event_handler("shutdown", on_shutdown)
 
     app.include_router(api_v1_router, prefix=settings.api_prefix)
+    app.include_router(pages_router)
 
     return app

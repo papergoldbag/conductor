@@ -1,6 +1,5 @@
 # extensions
 *.log
-*.png
 *.conf
 *.json
 
@@ -11,6 +10,7 @@ cache
 logs
 .pytest_cache
 examples
+venv
 
 # files
 test.py

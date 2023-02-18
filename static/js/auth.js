@@ -32,7 +32,7 @@ window.onload = () => {
                 },
                 body: JSON.stringify(user)
             }
-            fetch("https://divarteam.ru/api/v1/auth", settings)
+            fetch("/api/v1/auth", settings)
             .then(data => {
                 console.log(data)
             })
@@ -54,7 +54,7 @@ window.onload = () => {
                 // }
             }
             // проверка мыла
-            let url = "https://divarteam.ru/api/v1/auth.send_mail_code?mail=" + mail
+            let url = "/api/v1/auth.send_mail_code?mail=" + mail
             console.log(url)
             await fetch(url, settings)
         } else {
