@@ -52,7 +52,7 @@ window.onload = () => {
         .then(response => response.json())
         .then(data => {
             roadmap = data.easy_view
-            //console.log(roadmap)
+            console.log(data.easy_view)
             drawRoadmap(roadmap)
         })
     }
@@ -60,65 +60,18 @@ window.onload = () => {
     function drawRoadmap(roadmap) {
         //console.log(roadmap[1][1][0][1]) // неделя -> день -> таск
         // roadmapHTML.innerHTML += 'test'
-        console.log(roadmap)
+        //console.log(roadmap)
         let htm = ""
-        
+        /*
         for (const [week, weekArr] of Object.entries(roadmap)) {
-            htm.innerHTML += '<div class="dropdown-trigger" data-isopen="true"><b>Неделя '+week+'</b></div>';
-            htm.innerHTML += "test"+week;
-            htm.innerHTML += '<div class="dropdown-content">'; //
-
-                    // <div class="card grey dropdown">
-                    //     <div class="dropdown-trigger" data-isopen="true">
-                    //         <b>День 1</b>
-                    //     </div>
-                    //     <div class="dropdown-content"></div>
-
-            //console.log(week, weekArr)
-            // roadmapHTML.innerHTML += 'hi'//
-            
             
             for (const [day, tasks] of Object.entries(weekArr)) {
-
-                htm.innerHTML += '<div class="dropdown-content">';
-                //roadmapHTML.innerHTML += "test"+day;
-                //roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
-                //roadmapHTML.innerHTML += '<div class="dropdown-content">';
-                /*
-                for (let task of tasks) {
-                    console.log(task)
-                    roadmapHTML.innerHTML += `
-                        <div class="task card purple">
-                        <div class="task-title" style="color: white;">
-                            ${task.title}
-                        </div>
-                        <div class="task-status">
-                            <div class="task-status-isdone" style="color: white;">
-                                <input type="checkbox" disabled style="color: white;">Не пройдено
-                            </div>
-                            <div class="task-status-reward" style="color: white;">
-                                +500
-                            </div>
-                        </div>
-                        </div>
-                    `
-                }
-                roadmapHTML.innerHTML += '</div>';
-                */
+                
+                
             }
-            
-            // weekNum = week
-            // for (const [day, tasks] of Object.entries(weekArr)) {
-            //     dayNum = day
-            //     // console.log("dayweek", day, week)
-            //     for (const [] of Object.entries(day)) {
-            //         console.log(weekNum+"+"+dayNum, task)
-            //     }
-            // }
-            // roadmapHTML.innerHTML += '</div>';//
         }
-        htm.innerHTML += '</div>';
         jsRoadmap()
+        */
     }
 
     loadRoadmap()
