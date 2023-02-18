@@ -22,10 +22,22 @@ window.onload = () => {
 
     function drawMain(task) {
         console.log(task)
+        let taskType = task.type
         htm = `
         <h1>${task.title}</h1>
         <p style="margin-top: 10px;">${task.text}</p>
         `
+        if (taskType == "auto_test") {
+            htm += `
+                <div style="margin-top: 10px;">
+                    <h2 style="display: inline;">Тестирование</h2>
+                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                </div>
+                <div class="quizz">
+            `
+        } else if (taskType == "hr_confirmation") {
+
+        } //else if (taskType == )
         // <div style="margin-top: 10px;">
         //     <h2 style="display: inline;">Тестирование</h2>
         //     <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+100500</div>
@@ -124,7 +136,7 @@ window.onload = () => {
                             <input type="checkbox" disabled style="color: white;">Не пройдено
                         </div>
                         <div class="task-status-reward" style="color: white;">
-                            +500
+                            +${task.coins}
                         </div>
                         </div>
                     </div>
@@ -137,7 +149,7 @@ window.onload = () => {
             }
             htm += `</div>`
         }
-        console.log(htm)
+        //console.log(htm)
         roadmapHTML.innerHTML = htm
         jsRoadmap()
         jsTaskCards()
