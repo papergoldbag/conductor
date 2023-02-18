@@ -66,7 +66,7 @@ class TaskDBM(BaseModel):
     attachments: list[Attachment]
     quizzes: list[QuizDBM]
 
-    def dict(self, *args, **kwargs) -> Document:
+    def dict(self, *args, **kwargs):
         doc = super().dict(*args, **kwargs)
         doc['type'] = self.type.value
         return doc
