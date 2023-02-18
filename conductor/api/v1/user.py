@@ -12,7 +12,7 @@ user_router = APIRouter()
 
 
 @user_router.post(".create", response_model=UserDBM)
-def create_user(
+async def create_user(
         user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor])),
         user_to_create: CreateUser = Body()
 ):
@@ -24,3 +24,13 @@ def create_user(
     send_mail(user_.email, f'Приглашение', f'Входите в систему Кондуктор {settings.site_url}')
 
     return inserted
+
+
+@user_router.get('.by_int_id')
+async def get_user_by_int_id():
+    pass
+
+
+@user_router.get('')
+async def get_users():
+    pass
