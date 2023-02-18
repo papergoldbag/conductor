@@ -1,12 +1,12 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette import status
 
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, UserDBM
+from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM
 
 me_router = APIRouter()
 
@@ -67,3 +67,23 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
 @me_router.get('.my_profile', response_model=UserDBM)
 async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     return user
+
+
+@me_router.post('.get_task_by_index', response_model=Optional[TaskDBM])
+async def get_task_by_index(
+        index: int = Query(),
+        current_user: UserDBM = Depends(get_strict_current_user),
+):
+    if current_user.roadmap_int_id is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
+
+    doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
+    if doc is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
+
+    roadmap = RoadmapDBM.parse_document(doc)
+    for task in roadmap.tasks:
+        if task.index == index:
+            return task
+    return None
+
