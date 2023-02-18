@@ -16,16 +16,63 @@ window.onload = () => {
     let roadmapHTML = document.querySelector(".roadmap")
     let dropdownTriggers
     let mainHTML = document.querySelector("main")
+    let asideHTML = document.querySelector("aside")
 
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
 
-    function drawMain(task) {
+    function drawMainAndAside(task) {
         console.log(task)
+        let taskType = task.type
         htm = `
         <h1>${task.title}</h1>
         <p style="margin-top: 10px;">${task.text}</p>
         `
+        if (taskType == "auto_test") {
+            htm += `
+                <div style="margin-top: 10px;">
+                    <h2 style="display: inline;">Тестирование</h2>
+                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                </div>
+                <div class="quizz">
+            `
+            for (let i = 0; i < task.quizzes.length; i++) {
+                htm += `
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                <div class="quizz-question">
+                    ${i+1}) ${task.quizzes[i].question}
+                </div>
+                <div class="question-answer">
+                    <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                </div>
+                </div>
+                `
+            }
+
+            htm += `</div><button class="primary" style="float: right;">Завершить тест</button>`
+        } else if (taskType == "hr_confirmation") {
+            if (task.is_completed) {
+                htm += `<input type="checkbox" checked disabled><span>Ваш HR проверил это задание</span>`
+            } else {
+                htm += `<input type="checkbox" disabled><span>Ваш HR ещё не проверил это задание</span>`
+            }
+        } else if (taskType == "feedback") {
+            htm +=  `
+            <div style="margin-top: 10px;">
+                <h2 style="display: inline;">Обратный отзыв</h2>
+                <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+            </div>
+            <div class="quizz-elem card grey" style="padding: 15px;">
+            <div class="quizz-question">
+                Обратный отзыв
+            </div>
+            <div class="question-answer">
+                <input type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
+            </div>
+            </div> 
+            <button class="primary" style="float: right;">Завершить тест</button>
+            `
+        }
         // <div style="margin-top: 10px;">
         //     <h2 style="display: inline;">Тестирование</h2>
         //     <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+100500</div>
@@ -35,10 +82,10 @@ window.onload = () => {
     }
 
     async function loadRoadmapWeekDay(week, day) {
-        fetch(`/api/v1/taskweek_day_tasks?week_num=${week}&day_num=${day}`)
+        fetch(`/api/v1/task.week_day_tasks?week_num=${week}&day_num=${day}`)
         .then(response => response.json())
         .then(data => {
-            drawMain(data[0])
+            drawMainAndAside(data[0])
         })
     }
 
@@ -120,11 +167,26 @@ window.onload = () => {
                         ${task.title}
                     </div>
                     <div class="task-status">
-                        <div class="task-status-isdone" style="color: white;">
-                            <input type="checkbox" disabled style="color: white;">Не пройдено
-                        </div>
+                        <div class="task-status-isdone" style="color: white; display: flex">
+                            <input type="checkbox" disabled`;
+                            // task.is_completed = true
+                            if (task.is_completed) {
+                                htm += ' checked>';
+                                // task.is_good = true
+                                if (task.is_good != null) {
+                                    if (task.is_good) {
+                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: lime'></div>`
+                                    } else {
+                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: tomato'></div>`
+                                    }
+                                }
+                            } else {
+                                htm += '>'
+                            }
+                            //htm += ` style="color: white;">
+                        htm += `</div>
                         <div class="task-status-reward" style="color: white;">
-                            +500
+                            +${task.coins}
                         </div>
                         </div>
                     </div>
@@ -137,7 +199,7 @@ window.onload = () => {
             }
             htm += `</div>`
         }
-        console.log(htm)
+        //console.log(htm)
         roadmapHTML.innerHTML = htm
         jsRoadmap()
         jsTaskCards()
