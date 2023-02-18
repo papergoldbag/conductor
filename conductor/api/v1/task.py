@@ -48,14 +48,14 @@ async def make_confirmation(
     user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
 
     tasks = user_roadmap.tasks
-    task = None
+    found_task = None
     for t in tasks:
         if t.index == task_index:
-            task = t
-            task.is_completed = True
-            task.is_confirmed_by_int_id = current_user.int_id
+            found_task = t
+            found_task.is_completed = True
+            found_task.is_confirmed_by_int_id = current_user.int_id
 
-    if task is None:
+    if found_task is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='user doesnt have task with this index in roadmap')
 
@@ -67,7 +67,7 @@ async def make_confirmation(
     to_user = UserDBM.parse_document(user_doc)
     db.user.update_document_by_int_id(
         to_user.int_id,
-        {'coins': to_user.coins + task.coins}
+        {'coins': to_user.coins + found_task.coins}
     )
 
     return True
