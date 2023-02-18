@@ -19,9 +19,11 @@ async def create_user(
         user_to_create: CreateUser = Body()
 ):
     if user_to_create.role in (Roles.supervisor, Roles.hr) and user.role == Roles.hr:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor')
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor or hr')
     roadmap_template = db.roadmap_template.get_document_by_int_id(user_to_create.roadmap_template_int_id)
     roadmap_template['created_by_int_id'] = user.int_id
+    roadmap_template.pop('int_id', None)
+    roadmap_template.pop('created', None)    
     roadmap = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap_template))
     to_create = user_to_create.dict()
     to_create.pop('roadmap_template_int_id')
