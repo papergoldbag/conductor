@@ -155,8 +155,11 @@ sudo cp ./conductor.nginx /etc/nginx/sites-enabled/conductor
 sudo systemctl restart nginx
 ~~~
 
+### Запуск системы через Docker
+Систему также возможно запустить через Docker
 
-РАЗРАБОТЧИКИ
+
+### РАЗРАБОТЧИКИ
 <h4>Иван Ермолов - Data-Scientist https://t.me/ivan_20190721 </h4>
 <h4>Денис Шайхльбарин - Android https://t.me/BrightOS </h4>
 <h4>Арсен Сабирзянов - Backend https://t.me/arpakit </h4>
