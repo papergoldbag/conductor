@@ -22,6 +22,7 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
     week_to_days = {}
     days = []
     weeks = []
+    day_to_tasks = {}
     for task in roadmap_dbm.tasks:
         weeks.append(task.week_num)
         days.append(task.day_num)
@@ -29,6 +30,18 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
             week_to_days[task.week_num] = []
         if task.day_num:
             week_to_days[task.week_num].append(task.day_num)
+        if task.day_num not in day_to_tasks:
+            day_to_tasks[task.day_num] = []
+        day_to_tasks[task.day_num].append(task)
+
+    #  dict[int, dict[int, list[TaskDBM]]]
+    easy_view = {}
+    for week, days in week_to_days.items():
+        easy_view[week] = {}
+        for day in days:
+            easy_view[week][day] = []
+            for task in day_to_tasks[day]:
+                easy_view[week][day].append(task)
 
     data = roadmap_dbm.dict()
 
@@ -36,6 +49,7 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
         weeks=list(sorted(set(weeks))),
         days=list(sorted(days)),
         week_to_days=week_to_days,
+        easy_view=easy_view,
         **data
     )
 
