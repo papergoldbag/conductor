@@ -22,10 +22,14 @@ def get_current_user(*, token: str = Header(None), req: Request) -> Optional[Use
     return UserDBM.parse_document(user)
 
 
-def make_depends_on_role(role: str):
-    def wrapper(current_user: Optional[UserDBM] = Depends(get_current_user)) -> UserDBM:
-        if current_user is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='no user')
+def get_strict_current_user(user: UserDBM = Depends(get_current_user)) -> UserDBM:
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='no user')
+    return user
+
+
+def make_strict_depends_on_role(role: str):
+    def wrapper(current_user: UserDBM = Depends(get_strict_current_user)) -> UserDBM:
         if current_user.role != role:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f'u r not {role}')
         return current_user

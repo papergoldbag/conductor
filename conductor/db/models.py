@@ -2,6 +2,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
+from pydantic import BaseModel
+
 from conductor.db.base import BaseInDB, Document
 
 
@@ -36,7 +38,7 @@ class UserDBM(BaseInDB):
         return doc
 
 
-class QuizDBM(BaseInDB):
+class QuizDBM(BaseModel):
     question: str
     answer: Optional[str]
     correct_answer: Optional[str]
@@ -48,7 +50,12 @@ class TaskTypes(str, Enum):
     feedback = 'feedback'
 
 
-class TaskDBM(BaseInDB):
+class Attachment(BaseModel):
+    title: str
+    url: str
+
+
+class TaskDBM(BaseModel):
     type: TaskTypes
     title: str
     text: str
@@ -57,11 +64,11 @@ class TaskDBM(BaseInDB):
     is_completed: bool
     week_num: int
     day_num: int
-    attachments: dict[str, str]
+    attachments: list[Attachment]
     quizzes: list[QuizDBM]
 
-    def document(self) -> Document:
-        doc = super().document()
+    def dict(self, *args, **kwargs) -> Document:
+        doc = super().dict(*args, **kwargs)
         doc['type'] = self.type.value
         return doc
 
