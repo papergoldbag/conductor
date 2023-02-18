@@ -3,15 +3,15 @@ from pydantic import BaseModel
 
 from conductor.api.dependencies import make_strict_depends_on_roles
 from conductor.api.schemas.roadmap_template import CreateRoadmapTemplate
-from conductor.db.models import RoadmapDBM, UserDBM, Roles, TaskDBM
 from conductor.core.misc import db
+from conductor.db.models import RoadmapDBM, UserDBM, Roles, TaskDBM
 
 roadmap_template_router = APIRouter()
 
 
 @roadmap_template_router.get('', response_model=list[RoadmapDBM])
 async def get_all_roadmap_templates(
-    user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+        user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
 ):
     templates = db.roadmap_template.get_all_docs()
     return [RoadmapDBM.parse_document(x) for x in templates]
@@ -24,7 +24,7 @@ class MiniRoadmapTemplate(BaseModel):
 
 @roadmap_template_router.get('.mini', response_model=list[MiniRoadmapTemplate])
 async def get_mini_roadmap_templates(
-    user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+        user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
 ):
     templates = db.roadmap_template.get_all_docs()
     return [MiniRoadmapTemplate.parse_obj(x) for x in templates]

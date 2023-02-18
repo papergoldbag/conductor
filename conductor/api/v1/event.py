@@ -1,11 +1,10 @@
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter
+from fastapi import Body, Depends
+
 from conductor.api.dependencies import make_strict_depends_on_roles
 from conductor.api.schemas.event import CreateEvent
 from conductor.core.misc import db
 from conductor.db.models import EventDBM, Roles, UserDBM
-from typing import Optional
-
-from fastapi import APIRouter
 
 event_router = APIRouter()
 

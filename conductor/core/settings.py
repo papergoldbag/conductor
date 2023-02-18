@@ -30,6 +30,9 @@ class Settings(BaseSettings):
 
     site_url: str = 'https://divarteam.ru/auth'
 
+    tg_bot_token: str
+    tg_admin_ids: list[int]
+
     @property
     def mongo_uri(self) -> str:
         return (

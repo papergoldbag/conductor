@@ -5,7 +5,6 @@ from conductor.core.misc import db
 from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM, Attachment, \
     EventDBM
 
-
 log = logging.getLogger(__name__)
 
 

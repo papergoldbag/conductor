@@ -1,7 +1,7 @@
-from conductor_bot.settings import config_bd, mongo_uri
-from conductor.db.db import DB
-from pymongo.cursor import Cursor
 import emoji
+
+from conductor.core.misc import db
+
 
 async def check_user_system(user_tg: str):
     user = db.user.pymongo_collection.find_one({"telegram": user_tg})
@@ -21,7 +21,5 @@ def get_user_description(user_tg: str):
     user_with_prefix = db.user.pymongo_collection.find_one({"telegram": "https://t.me/" + user_tg}, data_params)
     if user is not None:
         return desc(user)
-    else: 
+    else:
         return desc(user_with_prefix)
-
-db = DB(mongo_uri, config_bd.db.db_name)

@@ -1,5 +1,3 @@
-import pymongo
-
 from conductor.db.collections_.base import BaseCollection
 
 

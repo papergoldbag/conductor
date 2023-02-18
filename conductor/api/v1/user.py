@@ -5,8 +5,7 @@ from fastapi import HTTPException, Body
 from starlette import status
 
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
-from conductor.api.schemas.user import CreateUser, SensitiveUser, UpdateUser
-from conductor.api.schemas.mailcode import OperationStatus
+from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import RoadmapDBM, UserDBM, Roles
 from conductor.utils.send_mail import send_mail
@@ -19,6 +18,9 @@ async def create_user(
         user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor])),
         user_to_create: CreateUser = Body()
 ):
+    if db.user.pymongo_collection.find_one({'email': user_to_create.email}) is not None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user exists')
+
     if user_to_create.role in (Roles.supervisor.value, Roles.hr.value) and user.role == Roles.hr:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor or hr')
 
@@ -83,4 +85,3 @@ async def get_users(
         user_doc['division_title'] = division_int_id_to_title[user_doc['division_int_id']]
         res.append(SensitiveUser.parse_obj(user_doc))
     return res
-
