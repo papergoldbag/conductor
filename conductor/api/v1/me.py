@@ -111,5 +111,5 @@ async def get_task_by_index(
 async def get_my_events(
         current_user: UserDBM = Depends(get_strict_current_user),
 ):
-    events = db.event.pymongo_collection.find({'to_user_int_ids': {'$in': [current_user.int_id]}})
+    events = db.event.pymongo_collection.find({'division_int_id': {'$in': [current_user.division_int_id]}})
     return [EventDBM.parse_document(event) for event in events]
