@@ -61,11 +61,12 @@ window.onload = () => {
         //console.log(roadmap[1][1][0][1]) // неделя -> день -> массив тасков
         // roadmapHTML.innerHTML += 'test'
         console.log(roadmap)
+        let htm = ""
         
         for (const [week, weekArr] of Object.entries(roadmap)) {
-            roadmapHTML.innerHTML += '<div class="dropdown-trigger" data-isopen="true"><b>Неделя '+week+'</b></div>';
-            roadmapHTML.innerHTML += '<div class="dropdown-content">';
-
+            htm.innerHTML += '<div class="dropdown-trigger" data-isopen="true"><b>Неделя '+week+'</b></div>';
+            htm.innerHTML += "test"+week;
+            htm.innerHTML += '<div class="dropdown-content">'; //
 
                     // <div class="card grey dropdown">
                     //     <div class="dropdown-trigger" data-isopen="true">
@@ -74,6 +75,7 @@ window.onload = () => {
                     //     <div class="dropdown-content"></div>
 
             //console.log(week, weekArr)
+<<<<<<< HEAD
             roadmapHTML.innerHTML += 'hi'
 
             
@@ -81,6 +83,18 @@ window.onload = () => {
                 roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
                 roadmapHTML.innerHTML += '<div class="dropdown-content">';
                 
+=======
+            // roadmapHTML.innerHTML += 'hi'//
+            
+            
+            for (const [day, tasks] of Object.entries(weekArr)) {
+
+                htm.innerHTML += '<div class="dropdown-content">';
+                //roadmapHTML.innerHTML += "test"+day;
+                //roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
+                //roadmapHTML.innerHTML += '<div class="dropdown-content">';
+                /*
+>>>>>>> origin/front
                 for (let task of tasks) {
                     console.log(task)
                     roadmapHTML.innerHTML += `
@@ -100,8 +114,9 @@ window.onload = () => {
                     `
                 }
                 roadmapHTML.innerHTML += '</div>';
-                
+                */
             }
+<<<<<<< HEAD
 
             weekNum = week
             for (const [day, tasks] of Object.entries(weekArr)) {
@@ -112,8 +127,20 @@ window.onload = () => {
                 }
             }
             roadmapHTML.innerHTML += '</div>';
+=======
+            
+            // weekNum = week
+            // for (const [day, tasks] of Object.entries(weekArr)) {
+            //     dayNum = day
+            //     // console.log("dayweek", day, week)
+            //     for (const [] of Object.entries(day)) {
+            //         console.log(weekNum+"+"+dayNum, task)
+            //     }
+            // }
+            // roadmapHTML.innerHTML += '</div>';//
+>>>>>>> origin/front
         }
-        
+        htm.innerHTML += '</div>';
         jsRoadmap()
     }
 
