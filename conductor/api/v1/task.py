@@ -36,30 +36,32 @@ async def make_confirmation(
         task_index: int,
         current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
 ):
-    user = db.user.get_document_by_int_id(user_int_id)
-    if user is None:
-        return None
-    user: UserDBM = UserDBM.parse_document(user)
-    if user.roadmap_int_id is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
+    user_doc = db.user.get_document_by_int_id(user_int_id)
+    if user_doc is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f'no user with id={user_int_id}')
 
-    doc = db.roadmap.get_document_by_int_id(user.roadmap_int_id)
-    if doc is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
+    user: UserDBM = UserDBM.parse_document(user_doc)
 
-    roadmap = RoadmapDBM.parse_document(doc)
-    tasks:list[TaskDBM] = roadmap.tasks
+    user_roadmap_doc = db.roadmap.get_document_by_int_id(user.roadmap_int_id)
+    if user_roadmap_doc is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user doesnt have this roadmap')
+    user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
+
+    tasks = user_roadmap.tasks
     task = None
     for t in tasks:
         if t.index == task_index:
             task = t
             task.is_completed = True
+            task.is_confirmed_by_int_id = current_user.int_id
 
     if task is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='user doesnt have task with this index in roadmap')
 
-    db.roadmap.pymongo_collection.find_one_and_update({'int_id': roadmap.int_id},
-                                                      {'$set': {'tasks': [t.dict() for t in tasks]}})
+    db.roadmap.pymongo_collection.find_one_and_update(
+        {'int_id': user_roadmap.int_id},
+        {'$set': {'tasks': [t.dict() for t in tasks]}}
+    )
 
     return True

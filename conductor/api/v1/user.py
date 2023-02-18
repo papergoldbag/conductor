@@ -19,26 +19,33 @@ async def create_user(
         user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor])),
         user_to_create: CreateUser = Body()
 ):
-    if user_to_create.role in (Roles.supervisor, Roles.hr) and user.role == Roles.hr:
+    if user_to_create.role in (Roles.supervisor.value, Roles.hr.value) and user.role == Roles.hr:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor or hr')
 
+    if user_to_create.role not in (Roles.supervisor.value, Roles.hr.value, Roles.employee.value):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad role')
+
     roadmap_template = db.roadmap_template.get_document_by_int_id(user_to_create.roadmap_template_int_id)
+    if roadmap_template is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='no roadmap_template_int_id')
+
     roadmap_template['created_by_int_id'] = user.int_id
     roadmap_template.pop('int_id', None)
-    roadmap_template.pop('created', None)    
+    roadmap_template.pop('created', None)
+    roadmap_template.pop('_id', None)
 
     roadmap = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap_template))
 
-    to_create_dict = user_to_create.dict()
-    to_create_dict.pop('roadmap_template_int_id')
-    to_create_dict['roadmap_int_id'] = roadmap.int_id
-    user_ = UserDBM(tokens=[], coins=0, **to_create_dict)
+    user_to_create_dict = user_to_create.dict()
+    user_to_create_dict.pop('roadmap_template_int_id')
+    user_to_create_dict['roadmap_int_id'] = roadmap.int_id
+    user_ = UserDBM(tokens=[], coins=0, **user_to_create_dict)
     inserted_user = UserDBM.parse_document(db.user.insert_document(user_.document()))
 
     send_mail(
         user_.email,
-        f'Приглашение в кондуктор',
-        f'Входите в систему Кондуктор https://divarteam.ru/ {settings.site_url}'
+        f'Приглашение в conductor',
+        f'Входите в систему Кондуктор {settings.site_url}'
     )
 
     return inserted_user

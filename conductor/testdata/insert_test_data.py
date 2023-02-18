@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from conductor.core.misc import db
@@ -5,10 +6,11 @@ from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM
     EventDBM
 
 
+log = logging.getLogger(__name__)
+
+
 def insert_test_data():
     db.drop()
-    for collection in db.database.list_collections():
-        db.database.get_collection(collection.get('name')).drop()
 
     division1 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='РЕМЦ').document())
@@ -23,7 +25,22 @@ def insert_test_data():
         db.division.insert_document(DivisionDBM(title='ЦСМС').document())
     )
 
-    roadmap1 = RoadmapDBM.parse_document(
+    owner = db.user.insert_document(UserDBM(
+        fullname='Дмитрий Алексеевич',
+        email='dmitry@gmail.com',
+        tokens=['6'],
+        role=Roles.supervisor,
+        coins=0,
+        position='Project Manger PART A12',
+        birth_date=datetime(year=2003, month=1, day=17),
+        telegram=None,
+        whatsapp=None,
+        vk=None,
+        roadmap_int_id=None,
+        division_int_id=division1.int_id
+    ).document())
+
+    template_roadmap = RoadmapDBM.parse_document(
         db.roadmap.insert_document(RoadmapDBM(
             title='Путь начинающего',
             tasks=[
@@ -254,35 +271,38 @@ def insert_test_data():
                     ]
                 )
             ],
-            created_by_int_id=123
+            created_by_int_id=owner['int_id']
         ).document())
     )
 
+    db.roadmap_template.insert_document(template_roadmap.document())
 
-    db.roadmap_template.insert_document(roadmap1.document())
-
-    roadmap1_doc = roadmap1.document()
+    roadmap1_doc = template_roadmap.document()
     roadmap1_doc.pop('int_id', None)
     roadmap1_doc.pop('_id', None)
+    roadmap1_doc.pop('created', None)
 
     roadmap2 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
     roadmap1_doc.pop('_id', None)
+    roadmap1_doc.pop('created', None)
 
     roadmap3 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
     roadmap1_doc.pop('_id', None)
+    roadmap1_doc.pop('created', None)
 
     roadmap4 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
     roadmap1_doc.pop('int_id', None)
     roadmap1_doc.pop('_id', None)
+    roadmap1_doc.pop('created', None)
 
     roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
 
     db.user.insert_document(UserDBM(
         fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
-        tokens=['123'],
+        tokens=['1'],
         role=Roles.employee,
         coins=0,
         position='HTML/CSS/JS developer',
@@ -290,14 +310,14 @@ def insert_test_data():
         telegram='https://t.me/PirateThunder',
         whatsapp=None,
         vk='https://vk.com/ilyakhakimov03',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=template_roadmap.int_id,
         division_int_id=division1.int_id,
     ).document())
 
     db.user.insert_document(UserDBM(
         fullname='Денис',
         email='dbarov3@gmail.com',
-        tokens=['123'],
+        tokens=['2'],
         role=Roles.hr,
         coins=20,
         position='Android Kotlin Developer',
@@ -312,7 +332,7 @@ def insert_test_data():
     db.user.insert_document(UserDBM(
         fullname='Арсен',
         email='sabarsenrash@gmail.com',
-        tokens=['123'],
+        tokens=['3'],
         role=Roles.supervisor,
         coins=20,
         position='Python Backend Developer',
@@ -327,7 +347,7 @@ def insert_test_data():
     db.user.insert_document(UserDBM(
         fullname='Рустам Афанасьев',
         email='rosutamu.afanasev@gmail.com',
-        tokens=['123'],
+        tokens=['4'],
         role=Roles.supervisor,
         coins=20,
         position='Python Backend Developer',
@@ -342,7 +362,7 @@ def insert_test_data():
     db.user.insert_document(UserDBM(
         fullname='Иван Ермолов',
         email='ivan.afanasev@gmail.com',
-        tokens=['123'],
+        tokens=['5'],
         role=Roles.employee,
         coins=20,
         position='Python Backend Developer',
@@ -367,6 +387,14 @@ def insert_test_data():
         dt=datetime.now() + timedelta(days=9),
         division_int_id=division1.int_id
     ).document())
+    db.event.insert_document(EventDBM(
+        title='Coffee brake с командой',
+        desc='Встреча будет в кафе у уровня 9',
+        dt=datetime.now() + timedelta(days=4),
+        division_int_id=division1.int_id
+    ).document())
+
+    log.info('test_data were inserted')
 
 
 if __name__ == '__main__':

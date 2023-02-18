@@ -11,16 +11,20 @@ from conductor.db.base import BaseFields, Document, BaseInDB
 
 class BaseCollection:
     def __init__(self, pymongo_collection: Collection):
-        self.pymongo_collection = pymongo_collection
+        self.__pymongo_collection = pymongo_collection
+
+    @property
+    def pymongo_collection(self):
+        return self.__pymongo_collection
 
     def ensure_indexes(self):
-        self.pymongo_collection.create_index(
+        self.__pymongo_collection.create_index(
             [("int_id", pymongo.ASCENDING)],
             unique=True
         )
 
     def generate_int_id(self) -> int:
-        docs = list(self.pymongo_collection.find())
+        docs = list(self.__pymongo_collection.find())
         if not docs:
             return 0
         docs.sort(key=lambda d: d[BaseFields.int_id], reverse=True)
@@ -33,7 +37,7 @@ class BaseCollection:
             document[BaseFields.created] = datetime.utcnow()
         if BaseFields.oid in document and not isinstance(document[BaseFields.oid], ObjectId):
             del document[BaseFields.oid]
-        inserted: InsertOneResult = self.pymongo_collection.insert_one(document)
+        inserted: InsertOneResult = self.__pymongo_collection.insert_one(document)
         document[BaseFields.oid] = inserted.inserted_id
 
         return document
@@ -41,16 +45,16 @@ class BaseCollection:
     def get_document_by_int_id(
             self, int_id: int
     ) -> Optional[Document]:
-        return self.pymongo_collection.find_one({BaseFields.int_id: int_id})
+        return self.__pymongo_collection.find_one({BaseFields.int_id: int_id})
 
     def get_all_docs(self) -> list[Document]:
-        return [doc for doc in self.pymongo_collection.find()]
+        return [doc for doc in self.__pymongo_collection.find()]
 
     def int_id_exists(self, int_id: Optional[int]) -> bool:
-        doc = self.pymongo_collection.find_one({BaseFields.int_id: int_id})
+        doc = self.__pymongo_collection.find_one({BaseFields.int_id: int_id})
         if doc is None:
             return False
         return True
 
     def update_document_by_int_id(self, id_: int, set_: Document):
-        self.pymongo_collection.update_one({BaseFields.int_id: id_}, {'$set': set_})
+        self.__pymongo_collection.update_one({BaseFields.int_id: id_}, {'$set': set_})

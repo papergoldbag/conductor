@@ -28,7 +28,7 @@ class UserDBM(BaseInDB):
     telegram: Optional[str]
     whatsapp: Optional[str]
     vk: Optional[str]
-    roadmap_int_id: int
+    roadmap_int_id: Optional[int]
     division_int_id: int
 
     def document(self) -> Document:
@@ -59,7 +59,7 @@ class TaskDBM(BaseModel):
     type: TaskTypes
     title: str
     text: str
-    is_confirmed_by_hr_int_id: Optional[int]
+    is_confirmed_by_int_id: Optional[int]
     coins: int
     is_completed: bool
     is_good: Optional[bool]

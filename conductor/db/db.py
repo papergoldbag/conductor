@@ -14,15 +14,15 @@ log = logging.getLogger(__name__)
 
 class DB:
     def __init__(self, mongo_uri: str, db_name: str):
-        self.client = MongoClient(mongo_uri)
-        self.database = self.client.get_database(db_name)
+        self.__mongo_client = MongoClient(mongo_uri)
+        self.__mongo_database = self.__mongo_client.get_database(db_name)
 
-        self.user = UserCollection(self.database.get_collection('user'))
-        self.roadmap = RoadmapCollection(self.database.get_collection('roadmap'))
-        self.mail_code = EmailCodeCollection(self.database.get_collection('email_code'))
-        self.division = DivisionCollection(self.database.get_collection('division'))
-        self.roadmap_template = RoadmapTemplateCollection(self.database.get_collection('roadmap_template'))
-        self.event = EventCollection(self.database.get_collection('event'))
+        self.user = UserCollection(self.__mongo_database.get_collection('user'))
+        self.roadmap = RoadmapCollection(self.__mongo_database.get_collection('roadmap'))
+        self.mail_code = EmailCodeCollection(self.__mongo_database.get_collection('email_code'))
+        self.division = DivisionCollection(self.__mongo_database.get_collection('division'))
+        self.roadmap_template = RoadmapTemplateCollection(self.__mongo_database.get_collection('roadmap_template'))
+        self.event = EventCollection(self.__mongo_database.get_collection('event'))
 
         self.collections = [
             self.user,
@@ -41,3 +41,5 @@ class DB:
     def drop(self):
         for col in self.collections:
             col.pymongo_collection.drop()
+        for collection in self.__mongo_database.list_collections():
+            self.__mongo_database.get_collection(collection.get('name')).drop()
