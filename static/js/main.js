@@ -15,13 +15,11 @@ window.onload = () => {
     let roadmap = []
     let roadmapHTML = document.querySelector(".roadmap")
     let dropdownTriggers
-    console.log(roadmapHTML)
-    roadmapHTML.innerHTML += "<h1>test</h1>"
 
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
 
-    function jsRoadmap(roadmap) {
+    function jsRoadmap() {
         dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
 
         for (let i = 0; i < dropdownTriggers.length; i++) {
@@ -51,105 +49,61 @@ window.onload = () => {
         fetch("/api/v1/me.my_roadmap", settings)
         .then(response => response.json())
         .then(data => {
-            roadmap = data.easy_view
-            console.log(data.easy_view)
+            roadmap = data.easy_view2
             drawRoadmap(roadmap)
         })
     }
 
     function drawRoadmap(roadmap) {
-        //console.log(roadmap[1][1][0][1]) // неделя -> день -> массив тасков
-        // roadmapHTML.innerHTML += 'test'
-        //console.log(roadmap)
-        let htm = ""
-        /*
-        for (const [week, weekArr] of Object.entries(roadmap)) {
-<<<<<<< HEAD
-            
-            for (const [day, tasks] of Object.entries(weekArr)) {
-                
-                
-            }
-=======
-            htm.innerHTML += '<div class="dropdown-trigger" data-isopen="true"><b>Неделя '+week+'</b></div>';
-            htm.innerHTML += "test"+week;
-            htm.innerHTML += '<div class="dropdown-content">'; //
+        weeks = roadmap.weeks
+        htm = ""
 
-                    // <div class="card grey dropdown">
-                    //     <div class="dropdown-trigger" data-isopen="true">
-                    //         <b>День 1</b>
-                    //     </div>
-                    //     <div class="dropdown-content"></div>
+        for (let week of weeks) {
+            weekNumber = week.week
+            htm += `
+            <div class="dropdown-trigger" data-isopen="true">
+                <b>Неделя ${weekNumber}</b>
+            </div>
+            <div class="dropdown-content">
+            `
 
-            //console.log(week, weekArr)
-<<<<<<< HEAD
-            roadmapHTML.innerHTML += 'hi'
-
-            
-            for (const [day, tasks] of Object.entries(weekArr)) {
-                roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
-                roadmapHTML.innerHTML += '<div class="dropdown-content">';
-                
-=======
-            // roadmapHTML.innerHTML += 'hi'//
-            
-            
-            for (const [day, tasks] of Object.entries(weekArr)) {
-
-                htm.innerHTML += '<div class="dropdown-content">';
-                //roadmapHTML.innerHTML += "test"+day;
-                //roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
-                //roadmapHTML.innerHTML += '<div class="dropdown-content">';
-                /*
->>>>>>> origin/front
-                for (let task of tasks) {
-                    console.log(task)
-                    roadmapHTML.innerHTML += `
-                        <div class="task card purple">
-                        <div class="task-title" style="color: white;">
-                            ${task.title}
+            for (let day of week.days) {
+                dayNumber = day.day
+                htm += `
+                <div class="card grey dropdown">
+                <div class="dropdown-trigger" data-isopen="true">
+                    <b>День ${dayNumber}</b>
+                </div>
+                <div class="dropdown-content">
+                `
+                for (let task of day.tasks) {
+                    //console.log(task)
+                    htm +=  `
+                    <div class="task card purple">
+                    <div class="task-title" style="color: white;">
+                        ${task.title}
+                    </div>
+                    <div class="task-status">
+                        <div class="task-status-isdone" style="color: white;">
+                            <input type="checkbox" disabled style="color: white;">Не пройдено
                         </div>
-                        <div class="task-status">
-                            <div class="task-status-isdone" style="color: white;">
-                                <input type="checkbox" disabled style="color: white;">Не пройдено
-                            </div>
-                            <div class="task-status-reward" style="color: white;">
-                                +500
-                            </div>
+                        <div class="task-status-reward" style="color: white;">
+                            +500
                         </div>
                         </div>
+                    </div>
                     `
                 }
-                roadmapHTML.innerHTML += '</div>';
-                */
+                htm += `
+                </div>
+                </div>
+                `
             }
-<<<<<<< HEAD
-
-            weekNum = week
-            for (const [day, tasks] of Object.entries(weekArr)) {
-                dayNum = day
-                // console.log("dayweek", day, week)
-                for (const [] of Object.entries(day)) {
-                    console.log(weekNum+"+"+dayNum, task)
-                }
-            }
-            roadmapHTML.innerHTML += '</div>';
-=======
-            
-            // weekNum = week
-            // for (const [day, tasks] of Object.entries(weekArr)) {
-            //     dayNum = day
-            //     // console.log("dayweek", day, week)
-            //     for (const [] of Object.entries(day)) {
-            //         console.log(weekNum+"+"+dayNum, task)
-            //     }
-            // }
-            // roadmapHTML.innerHTML += '</div>';//
->>>>>>> origin/front
->>>>>>> 5f99cfbfa1624adaf17fb287eb6f3f2cb0a180f2
+            htm += `</div>`
         }
+        console.log(htm)
+        roadmapHTML.innerHTML = htm
         jsRoadmap()
-        */
     }
 
     loadRoadmap()
