@@ -16,13 +16,11 @@ async def create_event(
         event_to_create: CreateEvent = Body()
 ):
     event = EventDBM(**event_to_create.dict())
-    
     inserted = EventDBM.parse_document(db.event.insert_document(event.document()))
-
     return inserted
 
 
-@event_router.get('.events_for_user', response_model=list[EventDBM])
+@event_router.get('.get_events_by_user_int_id', response_model=list[EventDBM])
 async def get_events_for_user(
         user_int_id: int
 ):
@@ -30,7 +28,7 @@ async def get_events_for_user(
     return [EventDBM.parse_document(event) for event in events]
 
 
-@event_router.get('.events_for_division', response_model=list[EventDBM])
+@event_router.get('.get_events_by_division_int_id', response_model=list[EventDBM])
 async def events_for_division(
         division_int_id: int
 ):
