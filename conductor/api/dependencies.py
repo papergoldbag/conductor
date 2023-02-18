@@ -1,7 +1,6 @@
 from typing import Optional
 
-from fastapi import Security, Depends, HTTPException, Header
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi import Depends, HTTPException, Header
 from starlette import status
 from starlette.requests import Request
 
@@ -28,10 +27,10 @@ def get_strict_current_user(user: UserDBM = Depends(get_current_user)) -> UserDB
     return user
 
 
-def make_strict_depends_on_role(role: str):
+def make_strict_depends_on_roles(roles: list[str]):
     def wrapper(current_user: UserDBM = Depends(get_strict_current_user)) -> UserDBM:
-        if current_user.role != role:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f'u r not {role}')
+        if current_user.role not in roles:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f'u r not {roles}')
         return current_user
 
     return wrapper

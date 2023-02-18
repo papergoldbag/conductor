@@ -22,9 +22,9 @@ def create_app() -> FastAPI:
     if not os.path.exists(settings.static_dir_path):
         os.mkdir(settings.static_dir_path)
         log.info('static dir was created')
-    if not settings.prod_mode:
-        app.mount("/static", StaticFiles(directory=settings.static_dir_path), name="static")
-        log.info('FastAPI app StaticFiles was activated')
+
+    app.mount("/static", StaticFiles(directory=settings.static_dir_path), name="static")
+    log.info('FastAPI app StaticFiles was activated')
 
     if not os.path.exists(settings.templates_dir_path):
         os.mkdir(settings.templates_dir_path)

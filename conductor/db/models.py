@@ -25,10 +25,9 @@ class UserDBM(BaseInDB):
     coins: int
     position: str
     birth_date: datetime
-    description: str
-    telegram: str
-    whatsapp: str
-    vk: str
+    telegram: Optional[str]
+    whatsapp: Optional[str]
+    vk: Optional[str]
     roadmap_int_id: Optional[int]
     division_int_id: int
 
@@ -56,6 +55,7 @@ class Attachment(BaseModel):
 
 
 class TaskDBM(BaseModel):
+    index: int
     type: TaskTypes
     title: str
     text: str
@@ -67,7 +67,7 @@ class TaskDBM(BaseModel):
     attachments: list[Attachment]
     quizzes: list[QuizDBM]
 
-    def dict(self, *args, **kwargs) -> Document:
+    def dict(self, *args, **kwargs):
         doc = super().dict(*args, **kwargs)
         doc['type'] = self.type.value
         return doc
@@ -82,3 +82,11 @@ class RoadmapDBM(BaseInDB):
 class MailCodeDBM(BaseInDB):
     mail: str
     code: int
+
+
+class EventDBM(BaseInDB):
+    title: str
+    desc: str
+    dt: datetime
+    to_user_int_ids: list[int]
+    division_int_id: Optional[int]

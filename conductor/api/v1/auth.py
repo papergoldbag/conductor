@@ -1,6 +1,5 @@
 import binascii
 import os
-from datetime import datetime, timedelta
 from random import randint
 
 from fastapi import APIRouter, HTTPException, Body
@@ -47,6 +46,10 @@ async def auth(response: Response, auth_schema: AuthSchema = Body()):
 
 @auth_router.get('.send_mail_code', response_model=OperationStatus)
 async def send_mail_code(mail: str):
+    user = db.user.pymongo_collection.find_one({'email': mail.strip()})
+    if not user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='no user')
+
     mail_code = MailCodeDBM(mail=mail, code=generate_mail_code())
     doc = db.mail_code.insert_document(mail_code.document())
     send_mail(mail_code.mail, 'Код авторизации', str(mail_code.code))

@@ -1,12 +1,12 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette import status
 
-from conductor.api.dependencies import get_current_user, get_strict_current_user
+from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, UserDBM
+from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM
 
 me_router = APIRouter()
 
@@ -43,6 +43,15 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
             for task in day_to_tasks[day]:
                 easy_view[week][day].append(task)
 
+    easy_view2 = {'weeks': []}
+    for week, days in week_to_days.items():
+        to_append = {'week': week, 'days': []}
+        for day in week_to_days[week]:
+            to_append['days'].append({'day': day, 'tasks': []})
+            for task in day_to_tasks[day]:
+                to_append['days'][-1]['tasks'].append(task)
+        easy_view2['weeks'].append(to_append)
+
     data = roadmap_dbm.dict()
 
     return RoadmapResponse(
@@ -50,6 +59,7 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
         days=list(sorted(days)),
         week_to_days=week_to_days,
         easy_view=easy_view,
+        easy_view2=easy_view2,
         **data
     )
 
@@ -57,3 +67,30 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
 @me_router.get('.my_profile', response_model=UserDBM)
 async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     return user
+
+
+@me_router.get('.get_task_by_index', response_model=Optional[TaskDBM])
+async def get_task_by_index(
+        index: int = Query(),
+        current_user: UserDBM = Depends(get_strict_current_user),
+):
+    if current_user.roadmap_int_id is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
+
+    doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
+    if doc is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
+
+    roadmap = RoadmapDBM.parse_document(doc)
+    for task in roadmap.tasks:
+        if task.index == index:
+            return task
+    return None
+
+
+@me_router.get('.get_my_events', response_model=list[EventDBM])
+async def get_my_events(
+        current_user: UserDBM = Depends(get_strict_current_user),
+):
+    events = db.event.pymongo_collection.find({'to_user_int_ids': {'$in': [current_user.int_id]}})
+    return [EventDBM.parse_document(event) for event in events]
