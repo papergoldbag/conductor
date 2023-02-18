@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from fastapi import HTTPException, Body
 from starlette import status
 from pydantic import BaseModel
 
-from conductor.api.dependencies import make_strict_depends_on_roles
-from conductor.api.schemas.user import CreateUser
+from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
+from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import UserDBM, Roles
 from conductor.utils.send_mail import send_mail
@@ -29,36 +29,24 @@ async def create_user(
     return inserted
 
 
-class SensetiveUser(BaseModel):
-    fullname: str
-    email: str
-    role: Roles
-    coins: int
-    position: str
-    birth_date: datetime
-    telegram: Optional[str]
-    whatsapp: Optional[str]
-    vk: Optional[str]
-    roadmap_int_id: Optional[int]
-    division_int_id: int
-
-
-@user_router.get('.by_int_id', response_model=SensetiveUser)
-async def get_user_by_int_id(user_int_id: int):
+@user_router.get('.by_int_id', response_model=Optional[SensitiveUser])
+async def get_user_by_int_id(
+        current_user=Depends(get_current_user),
+        user_int_id: int = Query()
+):
     user = db.user.get_document_by_int_id(user_int_id)
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user not found')
-    return SensetiveUser.parse_obj(user)
+        return None
+    return SensitiveUser.parse_obj(user)
 
 
-
-@user_router.get('', response_model=list[SensetiveUser])
-async def get_users(division_int_id: Optional[int] = None):
+@user_router.get('', response_model=list[SensitiveUser])
+async def get_users(
+        current_user=Depends(get_current_user),
+        division_int_id: Optional[int] = Query(None)
+):
     if division_int_id is None:
         users = db.user.get_all_docs()
     else:
         users = db.user.pymongo_collection.find({'division_int_id': division_int_id})
-    resp = []
-    for user in users:
-        resp.append(SensetiveUser.parse_obj(user))
-    return resp
+    return [SensitiveUser.parse_obj(user) for user in users]
