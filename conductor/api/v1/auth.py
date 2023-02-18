@@ -17,8 +17,7 @@ auth_router = APIRouter()
 
 
 def generate_token() -> str:
-    res = binascii.hexlify(os.urandom(20)).decode() + str(randint(10000, 1000000))
-    return res[:128]
+    return str(randint(1, 10))
 
 
 def generate_mail_code() -> str:
