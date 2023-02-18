@@ -6,6 +6,7 @@ from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
 from conductor.db.base import BaseFields, Document, BaseInDB
+from conductor.db.models import QuizDBM
 
 
 class BaseCollection:
@@ -28,6 +29,7 @@ class BaseCollection:
             del document[BaseFields.oid]
         inserted: InsertOneResult = self.pymongo_collection.insert_one(document)
         document[BaseFields.oid] = inserted.inserted_id
+
         return document
 
     def get_document_by_int_id(
