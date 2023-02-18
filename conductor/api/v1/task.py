@@ -29,7 +29,6 @@ async def get_tasks_by_week_day(
     return tasks_for_week_day
 
 
-
 @task_router.get(".confirmation")
 async def make_confirmation(
     user_int_id: int,
