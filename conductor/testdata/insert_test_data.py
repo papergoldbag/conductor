@@ -133,15 +133,123 @@ def insert_test_data():
                         QuizDBM(
                             question='Вам нравятся ваши условия ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='1'
                         ), QuizDBM(
                             question='Вы бы хотели что-то поменять в отношение к вам ваших сотрудников ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='2'
                         ), QuizDBM(
                             question='Что вам больше всего не понравилось на первых днях ?',
                             answer=None,
-                            correct_answer=None
+                            correct_answer='3'
+                        )
+                    ]
+                ),
+                TaskDBM(
+                    index=3,
+                    type=TaskTypes.auto_test,
+                    title='Просто пройдите этот тест ))',
+                    text='''Просто пройдите данный тест''',
+                    is_confirmed_by_hr_int_id=None,
+                    coins=20,
+                    is_completed=False,
+                    is_good=None,
+                    week_num=1,
+                    day_num=4,
+                    attachments=[],
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ), QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        ), QuizDBM(
+                            question='3',
+                            answer=None,
+                            correct_answer='3'
+                        ), QuizDBM(
+                            question='4',
+                            answer=None,
+                            correct_answer='4'
+                        ), QuizDBM(
+                            question='5',
+                            answer=None,
+                            correct_answer='5'
+                        )
+                    ]
+                ),
+                TaskDBM(
+                    index=4,
+                    type=TaskTypes.auto_test,
+                    title='Просто пройдите этот тест ))',
+                    text='''Просто пройдите данный тест''',
+                    is_confirmed_by_hr_int_id=None,
+                    coins=20,
+                    is_completed=False,
+                    is_good=None,
+                    week_num=1,
+                    day_num=5,
+                    attachments=[],
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ), QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        ), QuizDBM(
+                            question='3',
+                            answer=None,
+                            correct_answer='3'
+                        ), QuizDBM(
+                            question='4',
+                            answer=None,
+                            correct_answer='4'
+                        ), QuizDBM(
+                            question='5',
+                            answer=None,
+                            correct_answer='5'
+                        )
+                    ]
+                ),
+                TaskDBM(
+                    index=5,
+                    type=TaskTypes.auto_test,
+                    title='Просто пройдите этот тест ))',
+                    text='''Просто пройдите данный тест''',
+                    is_confirmed_by_hr_int_id=None,
+                    coins=20,
+                    is_completed=False,
+                    is_good=None,
+                    week_num=2,
+                    day_num=1,
+                    attachments=[],
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ), QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        ), QuizDBM(
+                            question='3',
+                            answer=None,
+                            correct_answer='3'
+                        ), QuizDBM(
+                            question='4',
+                            answer=None,
+                            correct_answer='4'
+                        ), QuizDBM(
+                            question='5',
+                            answer=None,
+                            correct_answer='5'
                         )
                     ]
                 )
@@ -149,13 +257,30 @@ def insert_test_data():
             created_by_int_id=123
         ).document())
     )
+    roadmap1_doc = roadmap1.document()
+    roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
+    roadmap2 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
+    roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
+    roadmap3 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
+    roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
+    roadmap4 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
+    roadmap1_doc.pop('int_id', None)
+    roadmap1_doc.pop('_id', None)
+
+    roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
 
     db.user.insert_document(UserDBM(
-        fullname='Илья',
+        fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
         tokens=['123'],
         role=Roles.employee,
-        coins=5,
+        coins=0,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
         telegram='https://t.me/PirateThunder',
@@ -176,7 +301,7 @@ def insert_test_data():
         telegram='https://t.me/BrightOS',
         whatsapp=None,
         vk='https://vk.com/brightos',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap2.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -191,7 +316,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap3.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -206,7 +331,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap4.int_id,
         division_int_id=division1.int_id
     ).document())
 
@@ -221,7 +346,7 @@ def insert_test_data():
         telegram='https://t.me/arpakit',
         whatsapp=None,
         vk='https://vk.com/arpakit',
-        roadmap_int_id=roadmap1.int_id,
+        roadmap_int_id=roadmap5.int_id,
         division_int_id=division1.int_id
     ).document())
 

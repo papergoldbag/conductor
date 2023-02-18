@@ -24,7 +24,7 @@ window.onload = () => {
     //console.log(dropdownTriggers)
 
     async function sendTest(curTaskId, arr) {
-        console.log(curTaskId)
+        console.log(curTaskId)  
         console.log(arr)
         for (let x of arr) {
             if (x == '') return
@@ -295,6 +295,19 @@ window.onload = () => {
         jsTaskCards()
     }
 
+    async function checkRole() {
+        console.log('test')
+        fetch("/api/v1/me.my_profile")
+        .then(data => data.json())
+        .then(data => {
+            let role = data.role
+            if (role == 'hr') {
+                document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
+            }
+        })
+    }
+
+    checkRole()
     loadRoadmap()
     //console.log(roadmap)
 }
