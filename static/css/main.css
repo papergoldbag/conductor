@@ -113,6 +113,9 @@ header > .wrapper > .wrapper-left {
     margin-right: 10px;
     background: lightgrey;
 }
+.user-photo:hover {
+    cursor: pointer;
+}
 
 /* .fictive-header {
     height: var(--header-height);
@@ -123,6 +126,7 @@ header > .wrapper > .wrapper-left {
     left: 0;
     top: var(--header-height);
     /* height: calc(100% - var(--footer-height)); */
+    width: 100%;
     height: 100%;
     display: flex;
     /* display: flex; */

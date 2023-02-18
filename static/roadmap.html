@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}"> -->
     <link rel="stylesheet" href="../static/css/main.css">
-    <title>Профиль</title>
+    <title>Roadmap</title>
 </head>
 <body>
     <header>
@@ -20,7 +20,7 @@
                 </div> -->
                 <img src="../static/img/logo.png" height="30px" style="margin-left: 10px; margin-top: 10px; margin-right: 5px;" alt="logo"/>   <!-- height: 20px -->
                 <div class="header-links">
-                    <button class="secondary">Roadmap</button>
+                    <button class="primary" style="color: white">Roadmap</button>
                     <button class="secondary">События</button>
                     <button class="secondary">Сеть</button>
                 </div>
@@ -33,14 +33,14 @@
         </div>
     </header>
     <div class="content">
-        <!-- <nav>
-            <div class="card dropdown">
-                <div class="dropdown-trigger" data-isopen="false">
+        <nav>
+            <div class="card dropdown"> <!-- dropdown класс символически -->
+                <div class="dropdown-trigger" data-isopen="true">
                     <b>Неделя 1</b>
                 </div>
                 <div class="dropdown-content">
                     <div class="card grey dropdown">
-                        <div class="dropdown-trigger" data-isopen="false">
+                        <div class="dropdown-trigger" data-isopen="true">
                             <b>День 1</b>
                         </div>
                         <div class="dropdown-content">
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="card grey dropdown">
-                        <div class="dropdown-trigger" data-isopen="false">
+                        <div class="dropdown-trigger" data-isopen="true">
                             <b>День 2</b>
                         </div>
                         <div class="dropdown-content">
@@ -110,41 +110,106 @@
                     </div>
                 </div>
             </div>
-        </nav> -->
-        <main style="width: 100%;">
-            <div class="profile card grey" style="width: 95%;">
-                <h1>Пупкин Василий Иванович</h1>
-                <div>
-                    <div style="background: lime; border-radius: 15px; display: inline; padding: 5px; color: white;">Сотрудник</div>
-                    <span class="profile-date">01.02.1963</span>
-                    <span class="profile-date">Подразделение</span>
-                </div>
-                <div style="margin-top: 10px;">
-                    <p>О себе</p>
-                    <input value="Люблю пьесы" style="width: 95%;">
-                    <div style="display: flex">
-                        <div style="width: 50%;">
-                            <p>Telegram</p>
-                            <input style="width: 90%;">
-                        </div>
-                        <div style="width: 50%;">
-                            <p>WhatsApp</p>
-                            <input style="width: 90%;">
-                        </div>
-                    </div>
-                    <div style="display: flex">
-                        <div style="width: 50%;">
-                            <p>VK</p>
-                            <input style="width: 90%;">
-                        </div>
-                        <div style="width: 50%;">
-                            <button class="secondary" style="width: 90%; margin-top: 30px;">Сохранить изменения</button>
-                        </div>
-                    </div>
-                </div>
+        </nav>
+        <main>
+            <h1>Lorem ipsum</h1>
+            <p style="margin-top: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui fugiat, minus vero necessitatibus magni accusantium accusamus id enim adipisci tempore quae iure quod fuga in voluptates dignissimos laudantium quibusdam recusandae?</p>
+            <div style="margin-top: 10px;">
+                <h2 style="display: inline;">Тестирование</h2>
+                <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+100500</div>
             </div>
+            <div class="quizz">
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        1) Сколько процентов НДС РФ?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        2) Какой год не вернуть?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        1) Сколько процентов НДС РФ?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        2) Какой год не вернуть?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        1) Сколько процентов НДС РФ?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        2) Какой год не вернуть?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        1) Сколько процентов НДС РФ?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        2) Какой год не вернуть?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        1) Сколько процентов НДС РФ?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div>
+
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        2) Какой год не вернуть?
+                    </div>
+                    <div class="question-answer">
+                        <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                </div> 
+            </div>
+
+            <button class="primary" style="float: right;">Завершить тест</button>
         </main>
-        <!-- <aside>
+        <aside>
             <div class="links card purple">
                 <b style="color: white;">Полезные ссылки</b>
                 <div class="links-list">
@@ -152,12 +217,13 @@
                     <button class="secondary">Бланк документа</button>
                 </div>
             </div>
-        </aside> -->
+        </aside>
     </div>
     <!-- <footer>
         footer
     </footer> -->
     <!-- <script src="{{ url_for('static', path='js/main.js') }}"></script> -->
-    <script src="../static/js/auth.js"></script>
+    <!-- <script src="../static/js/auth.js"></script> -->
+    <script src="../static/js/main.js"></script>
 </body>
 </html>

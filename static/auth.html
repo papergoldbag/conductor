@@ -17,15 +17,15 @@
     <div class="wrapper">
         <div class="card">
             <h2>Вход</h2>
-            <form action=".auth" method="post">
+            <form action="https://divarteam.ru/api/v1/auth" method="post" onsubmit="return false;">
                 <div>
                     <!-- <p>1) Введите свой email для получения SMS-кода:</p> -->
-                    <input type="text" name="email" required placeholder="E-mail" autocomplete="off">
-                    <button class="secondary">Получить код</button>
+                    <input class="email" type="text" name="email" required placeholder="E-mail" autocomplete="off">
+                    <button class="codeSendButton" type="button" class="secondary">Получить код</button>
                 </div>
                 <div>
                     <!-- <p>2) Введите ваш код:</p> -->
-                    <input name="password" required placeholder="XXXX" autocomplete="off">
+                    <input class="code" name="code" required placeholder="XXXX" autocomplete="off">
                     <button type="submit" class="primary">Войти</button>
                 </div>
             </form>
