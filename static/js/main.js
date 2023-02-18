@@ -16,10 +16,41 @@ window.onload = () => {
     let roadmapHTML = document.querySelector(".roadmap")
     let dropdownTriggers
     let mainHTML = document.querySelector("main")
-    let asideHTML = document.querySelector("aside")
+    let asideHTML = document.querySelector("aside .links-list")
+
+    let curTaskId
 
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
+
+    async function sendTest(curTaskId, arr) {
+        console.log(curTaskId)
+        console.log(arr)
+        for (let x of arr) {
+            if (x == '') return
+        }
+        json = {
+            task_num: curTaskId,
+            answers: arr
+        }
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(json)
+        }
+        
+        fetch("/api/v1/send_answers.send_quizz", settings)
+        .then(data => {
+            console.log(data)
+            if (data.status == 200) {
+                location.reload()
+            } else {
+                alert('Ошибка')
+            }
+        })
+    }
 
     function drawMainAndAside(task) {
         console.log(task)
@@ -43,13 +74,13 @@ window.onload = () => {
                     ${i+1}) ${task.quizzes[i].question}
                 </div>
                 <div class="question-answer">
-                    <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                    <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
                 </div>
                 </div>
                 `
             }
 
-            htm += `</div><button class="primary" style="float: right;">Завершить тест</button>`
+            htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
         } else if (taskType == "hr_confirmation") {
             if (task.is_completed) {
                 htm += `<input type="checkbox" checked disabled><span>Ваш HR проверил это задание</span>`
@@ -67,10 +98,10 @@ window.onload = () => {
                 Обратный отзыв
             </div>
             <div class="question-answer">
-                <input type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
+                <input class="question-answer-input" type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
             </div>
             </div> 
-            <button class="primary" style="float: right;">Завершить тест</button>
+            <button class="primary sendTestButton" style="float: right;">Завершить тест</button>
             `
         }
         // <div style="margin-top: 10px;">
@@ -79,6 +110,26 @@ window.onload = () => {
         // </div>
         // `
         mainHTML.innerHTML = htm
+
+        if (taskType != 'hr_confirmation') {
+            let sendTestButton = document.querySelector('main .sendTestButton')
+            sendTestButton.addEventListener('click', () => {
+                let inputs = document.querySelectorAll('.question-answer-input')
+                //console.log(inputs)
+                let arr = []
+                for (let input of inputs) {
+                    arr.push(input.value)
+                }
+                sendTest(curTaskId, arr)
+            })
+        }
+
+        htm = ""
+        for (let link of task.attachments) {
+            //console.log(link)
+            htm += `<a style='text-decoration: none' href=${link.url}><button class="secondary">${link.title}</button></a>`
+        }
+        asideHTML.innerHTML = htm
     }
 
     async function loadRoadmapWeekDay(week, day) {
@@ -96,7 +147,10 @@ window.onload = () => {
             tasksCards[i].addEventListener("click", function() {
                 let week = this.getAttribute("data-week")
                 let day = this.getAttribute("data-day")
+                let id = this.getAttribute("data-id")
 
+                curTaskId = id
+                //console.log(curTaskId)
                 loadRoadmapWeekDay(week, day)
             })
         }
@@ -162,7 +216,7 @@ window.onload = () => {
                 for (let task of day.tasks) {
                     //console.log(task)
                     htm +=  `
-                    <div class="task card purple task-card" data-week='${task.week_num}' data-day='${task.day_num}'>
+                    <div class="task card purple task-card" data-week='${task.week_num}' data-day='${task.day_num}' data-id=${task.index}>
                     <div class="task-title" style="color: white;">
                         ${task.title}
                     </div>
