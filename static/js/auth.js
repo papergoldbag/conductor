@@ -34,7 +34,11 @@ window.onload = () => {
             }
             fetch("/api/v1/auth", settings)
             .then(data => {
-                console.log(data)
+                if (data.status == 200) {
+                    console.log('ok')
+                } else {
+                    console.log(':(')
+                }
             })
         } else {
             alert("Некорректный email!")
