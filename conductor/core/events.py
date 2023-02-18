@@ -7,6 +7,7 @@ log = logging.getLogger(__name__)
 
 
 async def on_startup():
+    print(1)
     insert_test_data()
     db.ensure_indexes()
 
