@@ -37,8 +37,11 @@ async def send_quizz(
             passed += 1
         quizzes_[i].answer = send_quizz_.answers[i]
 
+    user_roadmap.tasks[send_quizz_.task_num].is_completed = True
     if passed >= len(user_roadmap.tasks[send_quizz_.task_num].quizzes) // 2:
-        user_roadmap.tasks[send_quizz_.task_num].is_completed = True
+        user_roadmap.tasks[send_quizz_.task_num].is_good = True
+    else:
+        user_roadmap.tasks[send_quizz_.task_num].is_good = False
 
     db.roadmap.update_document_by_int_id(user_roadmap.int_id, user_roadmap.document())
 
