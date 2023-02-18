@@ -9,6 +9,7 @@ from conductor.api.v1.roadmap_template import roadmap_template_router
 from conductor.api.v1.task import task_router
 from conductor.api.v1.event import event_router
 from conductor.api.v1.user import user_router
+from conductor.api.v1.role import role_router
 
 api_v1_router = APIRouter(prefix='/v1')
 api_v1_router.include_router(echo_router, prefix='/echo', tags=['echo'])
@@ -20,3 +21,4 @@ api_v1_router.include_router(roadmap_template_router, prefix='/roadmap_template'
 api_v1_router.include_router(quizz_router, prefix='/send_answers', tags=['Send Answers'])
 api_v1_router.include_router(task_router, prefix='/task', tags=['Task'])
 api_v1_router.include_router(event_router, prefix='/event', tags=['Event'])
+api_v1_router.include_router(role_router, prefix='/roles', tags=['Roles'])
