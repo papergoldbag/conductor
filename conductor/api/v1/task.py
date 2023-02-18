@@ -76,7 +76,7 @@ async def make_confirmation(
 
 
 @task_router.get(".user_roadmap", response_model=Optional[RoadmapDBM])
-async def user_tasks(
+async def user_roadmap(
         user_int_id: int,
         current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
 ):
