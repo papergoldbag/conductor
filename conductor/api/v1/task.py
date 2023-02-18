@@ -7,7 +7,7 @@ from conductor.db.models import RoadmapDBM, Roles, UserDBM, TaskDBM
 task_router = APIRouter()
 
 
-@task_router.get('week_day_tasks', response_model=list[TaskDBM])
+@task_router.get('.week_day_tasks', response_model=list[TaskDBM])
 async def get_tasks_by_week_day(
     week_num: int,
     day_num: int,
