@@ -17,6 +17,10 @@ window.onload = () => {
     let dropdownTriggers
     let mainHTML = document.querySelector("main")
     let asideHTML = document.querySelector("aside .links-list")
+    let bober = document.querySelector(".bober")
+    bober.addEventListener("click", () => {
+        alert('Человекоцентричность. Работаем не для всех, а для каждого')
+    })
 
     let curTaskId
 
@@ -258,7 +262,7 @@ window.onload = () => {
                     </div>
                     <div class="task-status">
                         <div class="task-status-isdone" style="color: white; display: flex">
-                            <input type="checkbox" disabled`;
+                            <input type="checkbox" onclick="return false;"`;
                             // task.is_completed = true
                             if (task.is_completed) {
                                 htm += ' checked>';
@@ -296,12 +300,14 @@ window.onload = () => {
     }
 
     async function checkRole() {
-        console.log('test')
+        //console.log('test')
         fetch("/api/v1/me.my_profile")
         .then(data => data.json())
         .then(data => {
             let role = data.role
-            if (role == 'hr') {
+            //console.log(role)
+            //role = 'it'
+            if (role === 'hr') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
         })

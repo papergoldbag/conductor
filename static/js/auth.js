@@ -13,7 +13,7 @@ window.onload = () => {
     async function validateAuth(event) {
         // return validateEmail(mail)
         event.preventDefault()
-        //console.log("lol")
+        console.log("lol")
         let formData = new FormData(form)
 
         // validate formData
