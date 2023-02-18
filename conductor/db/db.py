@@ -7,6 +7,7 @@ from conductor.db.collections_.event import EventCollection
 from conductor.db.collections_.mailcode import EmailCodeCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
 from conductor.db.collections_.roadmap_template import RoadmapTemplateCollection
+from conductor.db.collections_.shop import ShopCollection
 from conductor.db.collections_.user import UserCollection
 
 log = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ class DB:
         self.division = DivisionCollection(self.database.get_collection('division'))
         self.roadmap_template = RoadmapTemplateCollection(self.database.get_collection('roadmap_template'))
         self.event = EventCollection(self.database.get_collection('event'))
+        self.shop = ShopCollection(self.database.get_collection('shop'))
 
         self.collections = [
             self.user,
@@ -30,7 +32,8 @@ class DB:
             self.mail_code,
             self.division,
             self.roadmap_template,
-            self.event
+            self.event,
+            self.shop
         ]
 
     def ensure_indexes(self):

@@ -91,3 +91,9 @@ class EventDBM(BaseInDB):
     dt: datetime
     to_user_int_ids: Optional[list[int]]
     division_int_id: Optional[int]
+
+
+class ShopDBM(BaseInDB):
+    title: str
+    description: str
+    cost: int
