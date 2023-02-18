@@ -7,7 +7,8 @@ log = logging.getLogger(__name__)
 
 
 async def on_startup():
-    insert_test_data()
+    if settings.prod_mode:
+        insert_test_data()
 
 
 async def on_shutdown():
