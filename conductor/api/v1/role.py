@@ -21,7 +21,7 @@ class RolesWithTitleResponseSchema(BaseModel):
     roles: dict[Roles, str]
 
 
-@role_router.get('.roles_with_title', response_model=RolesResponseSchema)
+@role_router.get('.roles_with_title', response_model=RolesWithTitleResponseSchema)
 async def get_roles():
     return RolesWithTitleResponseSchema(roles={
         Roles.employee: 'Сотрудник', Roles.hr: 'HR', Roles.supervisor: "Руководитель"
