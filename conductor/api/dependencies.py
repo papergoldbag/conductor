@@ -24,8 +24,10 @@ def get_current_user(*, token: str = Header(None), req: Request) -> Optional[Use
 
 def make_depends_on_role(role: str):
     def wrapper(current_user: Optional[UserDBM] = Depends(get_current_user)) -> UserDBM:
+        if current_user is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='no user')
         if current_user.role != role:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='u r not hr')
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f'u r not {role}')
         return current_user
 
     return wrapper

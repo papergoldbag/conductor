@@ -6,7 +6,7 @@ from starlette.responses import RedirectResponse
 from conductor.api.dependencies import get_current_user
 from conductor.core.misc import templates
 
-pages_router = APIRouter(tags=['pages'])
+pages_router = APIRouter(tags=['pages'], include_in_schema=False)
 
 
 @pages_router.get('/')
