@@ -68,6 +68,9 @@ header > .wrapper {
 header > .wrapper > .wrapper-left {
     display: flex;
 }
+header > .wrapper > .wrapper-right {
+    display: flex;
+}
 
 .menu-button {
     position: relative;
