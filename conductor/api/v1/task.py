@@ -106,6 +106,6 @@ async def user_tasks(
     user_roadmap_doc = db.roadmap.get_document_by_int_id(user.roadmap_int_id)
     if user_roadmap_doc is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user doesnt have this roadmap')
-    user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
+    user_roadmap_dbm = RoadmapDBM.parse_document(user_roadmap_doc)
 
-    return [task for task in user_roadmap.tasks]
+    return [task for task in user_roadmap_dbm.tasks]
