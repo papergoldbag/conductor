@@ -37,7 +37,7 @@ async def create_user(
 
     send_mail(
         user_.email,
-        f'Приглашение в кондукртор',
+        f'Приглашение в кондуктор',
         f'Входите в систему Кондуктор https://divarteam.ru/ {settings.site_url}'
     )
 

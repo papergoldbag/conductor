@@ -39,7 +39,7 @@ async def make_confirmation(
     user = db.user.get_document_by_int_id(user_int_id)
     if user is None:
         return None
-    user = UserDBM.parse_document(user)
+    user: UserDBM = UserDBM.parse_document(user)
     if user.roadmap_int_id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
 
@@ -48,7 +48,7 @@ async def make_confirmation(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
 
     roadmap = RoadmapDBM.parse_document(doc)
-    tasks = roadmap.tasks
+    tasks:list[TaskDBM] = roadmap.tasks
     task = None
     for t in tasks:
         if t.index == task_index:

@@ -28,7 +28,7 @@ class UserDBM(BaseInDB):
     telegram: Optional[str]
     whatsapp: Optional[str]
     vk: Optional[str]
-    roadmap_int_id: Optional[int]
+    roadmap_int_id: int
     division_int_id: int
 
     def document(self) -> Document:
