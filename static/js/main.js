@@ -35,9 +35,25 @@ window.onload = () => {
                 </div>
                 <div class="quizz">
             `
+            for (let i = 0; i < task.quizzes.length; i++) {
+                htm += `
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                <div class="quizz-question">
+                    ${i+1}) ${task.quizzes[i].question}
+                </div>
+                <div class="question-answer">
+                    <input type="text" placeholder="Поле для ответа" style="width: 100%">
+                </div>
+                </div>
+                `
+            }
+
+            htm += `</div>`
         } else if (taskType == "hr_confirmation") {
 
-        } //else if (taskType == )
+        } else if (taskType == "feedback") {
+
+        }
         // <div style="margin-top: 10px;">
         //     <h2 style="display: inline;">Тестирование</h2>
         //     <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+100500</div>
@@ -47,7 +63,7 @@ window.onload = () => {
     }
 
     async function loadRoadmapWeekDay(week, day) {
-        fetch(`/api/v1/taskweek_day_tasks?week_num=${week}&day_num=${day}`)
+        fetch(`/api/v1/task.week_day_tasks?week_num=${week}&day_num=${day}`)
         .then(response => response.json())
         .then(data => {
             drawMain(data[0])
