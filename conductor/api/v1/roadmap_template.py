@@ -12,7 +12,7 @@ async def get_all_roadmap_templates():
     pass
 
 
-@roadmap_template_router.post('.create', deprecated=True)
+@roadmap_template_router.get('.create', deprecated=True)
 async def create_roadmap_template(
         roadmap_template_to_create: CreateRoadmapTemplate,
         user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
