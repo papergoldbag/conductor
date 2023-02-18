@@ -22,6 +22,10 @@ html, body {
     height: 100%;
 }
 
+input[type=checkbox] {
+    accent-color: red;
+}
+
 body {
     font-family: 'GT Eesti Pro Display', sans-serif;
     /* overflow: auto; */

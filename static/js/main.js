@@ -16,10 +16,42 @@ window.onload = () => {
     let roadmapHTML = document.querySelector(".roadmap")
     let dropdownTriggers
     let mainHTML = document.querySelector("main")
-    let asideHTML = document.querySelector("aside")
+    let asideHTML = document.querySelector("aside .links-list")
+
+    let curTaskId
 
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
+
+    async function sendTest(curTaskId, arr) {
+        console.log(curTaskId)
+        console.log(arr)
+        for (let x of arr) {
+            if (x == '') return
+        }
+        json = {
+            task_num: curTaskId,
+            answers: arr
+        }
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(json)
+        }
+        console.log(json)
+        
+        fetch("/api/v1/send_answers.send_quizz", settings)
+        .then(data => {
+            console.log(data)
+            if (data.status == 200) {
+                location.reload()
+            } else {
+                alert('Ошибка')
+            }
+        })
+    }
 
     function drawMainAndAside(task) {
         console.log(task)
@@ -29,27 +61,29 @@ window.onload = () => {
         <p style="margin-top: 10px;">${task.text}</p>
         `
         if (taskType == "auto_test") {
-            htm += `
-                <div style="margin-top: 10px;">
-                    <h2 style="display: inline;">Тестирование</h2>
-                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
-                </div>
-                <div class="quizz">
-            `
-            for (let i = 0; i < task.quizzes.length; i++) {
+            if (!task.is_completed) {
                 htm += `
-                <div class="quizz-elem card grey" style="padding: 15px;">
-                <div class="quizz-question">
-                    ${i+1}) ${task.quizzes[i].question}
-                </div>
-                <div class="question-answer">
-                    <input type="text" placeholder="Поле для ответа" style="width: 100%">
-                </div>
-                </div>
+                    <div style="margin-top: 10px;">
+                        <h2 style="display: inline;">Тестирование</h2>
+                        <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                    </div>
+                    <div class="quizz">
                 `
-            }
+                for (let i = 0; i < task.quizzes.length; i++) {
+                    htm += `
+                    <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        ${i+1}) ${task.quizzes[i].question}
+                    </div>
+                    <div class="question-answer">
+                        <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                    </div>
+                    `
+                }
 
-            htm += `</div><button class="primary" style="float: right;">Завершить тест</button>`
+                htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
+            }
         } else if (taskType == "hr_confirmation") {
             if (task.is_completed) {
                 htm += `<input type="checkbox" checked disabled><span>Ваш HR проверил это задание</span>`
@@ -57,21 +91,49 @@ window.onload = () => {
                 htm += `<input type="checkbox" disabled><span>Ваш HR ещё не проверил это задание</span>`
             }
         } else if (taskType == "feedback") {
-            htm +=  `
-            <div style="margin-top: 10px;">
-                <h2 style="display: inline;">Обратный отзыв</h2>
-                <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
-            </div>
-            <div class="quizz-elem card grey" style="padding: 15px;">
-            <div class="quizz-question">
-                Обратный отзыв
-            </div>
-            <div class="question-answer">
-                <input type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
-            </div>
-            </div> 
-            <button class="primary" style="float: right;">Завершить тест</button>
-            `
+            if (!task.is_completed) {
+                htm += `
+                    <div style="margin-top: 10px;">
+                        <h2 style="display: inline;">Тестирование</h2>
+                        <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                    </div>
+                    <div class="quizz">
+                `
+                for (let i = 0; i < task.quizzes.length; i++) {
+                    htm += `
+                    <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        ${i+1}) ${task.quizzes[i].question}
+                    </div>
+                    <div class="question-answer">
+                        <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                    </div>
+                    `
+                }
+
+                htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
+                /*
+                htm +=  `
+                <div style="margin-top: 10px;">
+                    <h2 style="display: inline;">Обратный отзыв</h2>
+                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                </div>
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                <div class="quizz-question">
+                    Обратный отзыв
+                </div>
+                <div class="question-answer">
+                    <input class="question-answer-input" type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
+                </div>
+                </div> 
+                <button class="primary sendTestButton" style="float: right;">Завершить тест</button>
+                `*/
+            }
+        }
+        console.log(task.is_completed)
+        if (task.is_completed) {
+            htm += "<h1>Задание уже выполнено!</h1>"
         }
         // <div style="margin-top: 10px;">
         //     <h2 style="display: inline;">Тестирование</h2>
@@ -79,6 +141,26 @@ window.onload = () => {
         // </div>
         // `
         mainHTML.innerHTML = htm
+
+        if (taskType != 'hr_confirmation' && !task.is_completed) {
+            let sendTestButton = document.querySelector('main .sendTestButton')
+            sendTestButton.addEventListener('click', () => {
+                let inputs = document.querySelectorAll('.question-answer-input')
+                //console.log(inputs)
+                let arr = []
+                for (let input of inputs) {
+                    arr.push(input.value)
+                }
+                sendTest(curTaskId, arr)
+            })
+        }
+
+        htm = ""
+        for (let link of task.attachments) {
+            //console.log(link)
+            htm += `<a style='text-decoration: none' href=${link.url}><button class="secondary">${link.title}</button></a>`
+        }
+        asideHTML.innerHTML = htm
     }
 
     async function loadRoadmapWeekDay(week, day) {
@@ -96,8 +178,16 @@ window.onload = () => {
             tasksCards[i].addEventListener("click", function() {
                 let week = this.getAttribute("data-week")
                 let day = this.getAttribute("data-day")
-
-                loadRoadmapWeekDay(week, day)
+                let id = this.getAttribute("data-id")
+                let is_completed = (this.getAttribute("data-iscompleted") === 'true')
+                console.log(is_completed)
+                // if (!is_completed) {
+                    curTaskId = id
+                    //console.log(curTaskId)
+                    loadRoadmapWeekDay(week, day)
+                // } else {
+                    
+                // }
             })
         }
     }
@@ -162,7 +252,7 @@ window.onload = () => {
                 for (let task of day.tasks) {
                     //console.log(task)
                     htm +=  `
-                    <div class="task card purple task-card" data-week='${task.week_num}' data-day='${task.day_num}'>
+                    <div class="task card purple task-card" data-iscompleted=${task.is_completed} data-week='${task.week_num}' data-day='${task.day_num}' data-id=${task.index}>
                     <div class="task-title" style="color: white;">
                         ${task.title}
                     </div>

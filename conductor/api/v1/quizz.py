@@ -17,17 +17,17 @@ async def send_quizz(
         current_user: UserDBM = Depends(get_strict_current_user),
 ):
     if current_user.roadmap_int_id is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user doesnt have any roadmap')
 
     passed = 0
     user_roadmap: RoadmapDBM = RoadmapDBM.parse_obj(db.roadmap.get_document_by_int_id(current_user.roadmap_int_id))
 
     if 0 > send_quizz_.task_num or send_quizz_.task_num >= len(user_roadmap.tasks):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='no task num')
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='no task num')
     task_type = user_roadmap.tasks[send_quizz_.task_num].type
 
     if len(user_roadmap.tasks[send_quizz_.task_num].quizzes) != len(send_quizz_.answers):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='bad len')
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad len')
 
     if task_type == TaskTypes.hr_confirmation:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user cant answer hr confirmation task')

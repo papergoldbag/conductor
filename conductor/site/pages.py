@@ -31,6 +31,13 @@ async def roadmap(r: Request, user=Depends(get_current_user)):
     return templates.TemplateResponse("roadmap.html", {'request': r})
 
 
+@pages_router.get('/adduser')
+async def adduser(r: Request, user=Depends(get_current_user)):
+    if not user:
+        return RedirectResponse('/adduser', status_code=status.HTTP_302_FOUND)
+    return templates.TemplateResponse("adduser.html", {'request': r})
+
+
 @pages_router.get('/sign_out')
 async def roadmap(
         r: Request,
@@ -40,12 +47,12 @@ async def roadmap(
     token2 = r.cookies.get('token')
 
     if token1 is not None:
-        db.user.pymongo_collection.update(
+        db.user.pymongo_collection.update_one(
             {'int_id': user.int_id},
             {'$pull': {'tokens': token1}}
         )
     if token2 is not None:
-        db.user.pymongo_collection.update(
+        db.user.pymongo_collection.update_one(
             {'int_id': user.int_id},
             {'$pull': {'tokens': token2}}
         )

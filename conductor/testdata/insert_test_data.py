@@ -19,7 +19,7 @@ def insert_test_data():
     division3 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='Роспатриот').document())
     )
-    division3 = DivisionDBM.parse_document(
+    division4 = DivisionDBM.parse_document(
         db.division.insert_document(DivisionDBM(title='ЦСМС').document())
     )
 
@@ -84,7 +84,18 @@ def insert_test_data():
                     week_num=1,
                     day_num=3,
                     attachments=[Attachment(title="Наш сайт", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
-                    quizzes=[]
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ),
+                        QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        )
+                    ]
                 )
             ],
             created_by_int_id=123
@@ -96,12 +107,12 @@ def insert_test_data():
         email='ilyakhakimov03@gmail.com',
         tokens=['123'],
         role=Roles.employee.value,
-        coins=0,
+        coins=5,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
-        telegram=None,
+        telegram='https://t.me/PirateThunder',
         whatsapp=None,
-        vk=None,
+        vk='https://vk.com/ilyakhakimov03',
         roadmap_int_id=roadmap1.int_id,
         division_int_id=division1.int_id,
     ).document())
