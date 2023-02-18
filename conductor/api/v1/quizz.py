@@ -12,7 +12,7 @@ from conductor.db.models import RoadmapDBM, UserDBM
 quizz_router = APIRouter()
 
 
-@quizz_router.post('.send_quizz', response_model=Optional[RoadmapResponse], deprecated=True)
+@quizz_router.post('.send_quizz', response_model=Optional[RoadmapDBM])
 async def send_quizz(
         send_answers_: SendAnswers = Body(),
         current_user: UserDBM = Depends(get_strict_current_user),
@@ -20,7 +20,15 @@ async def send_quizz(
     if current_user.roadmap_int_id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have roadmap')
 
+    passed = 0
     roadmap = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
     roadmap = RoadmapDBM.parse_obj(roadmap)
+    for i in range(len(quizz:=roadmap.tasks[send_answers_.task_num].quizzes)):
+        if quizz[i].correct_answer == send_answers_.answers[i]:
+            passed+=1
+        quizz[i].answer = send_answers_.answers[i]
 
-    print(roadmap)
+    if passed >= len(roadmap.tasks[send_answers_.task_num].quizzes)//2:
+        roadmap.tasks[send_answers_.task_num].is_completed = True
+
+    return roadmap
