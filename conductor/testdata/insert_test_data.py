@@ -84,7 +84,18 @@ def insert_test_data():
                     week_num=1,
                     day_num=3,
                     attachments=[Attachment(title="Наш сайт", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
-                    quizzes=[]
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ),
+                        QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        )
+                    ]
                 )
             ],
             created_by_int_id=123
