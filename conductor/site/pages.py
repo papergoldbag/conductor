@@ -31,6 +31,13 @@ async def roadmap(r: Request, user=Depends(get_current_user)):
     return templates.TemplateResponse("roadmap.html", {'request': r})
 
 
+@pages_router.get('/profile')
+async def roadmap(r: Request, user=Depends(get_current_user)):
+    if not user:
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
+    return templates.TemplateResponse("profile.html", {'request': r})
+
+
 @pages_router.get('/adduser')
 async def adduser(r: Request, user=Depends(get_current_user)):
     if not user:
