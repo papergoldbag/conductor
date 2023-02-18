@@ -29,6 +29,10 @@ class DB:
             self.event
         ]
 
+    def ensure_indexes(self):
+        for collection in self.collections:
+            collection.ensure_indexes()
+
     def drop(self):
         for col in self.collections:
             col.pymongo_collection.drop()

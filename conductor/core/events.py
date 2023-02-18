@@ -1,6 +1,6 @@
 import logging
 
-from conductor.core.misc import settings
+from conductor.core.misc import settings, db
 from conductor.testdata.insert_test_data import insert_test_data
 
 log = logging.getLogger(__name__)
@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
 
 async def on_startup():
     insert_test_data()
+    db.ensure_indexes()
 
 
 async def on_shutdown():

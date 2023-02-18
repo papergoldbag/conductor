@@ -112,10 +112,24 @@ def insert_test_data():
         coins=20,
         position='Android Kotlin Developer',
         birth_date=datetime(year=2003, month=3, day=27),
-        description='Я занимаюсь разработкой около 3 лет и мне это нравится',
         telegram='https://t.me/BrightOS',
         whatsapp=None,
         vk='https://vk.com/brightos',
+        roadmap_int_id=roadmap1.int_id,
+        division_int_id=division1.int_id
+    ).document())
+
+    db.user.insert_document(UserDBM(
+        fullname='Арсен',
+        email='sabarsenrash@gmail.com',
+        tokens=['123'],
+        role=Roles.employee.value,
+        coins=20,
+        position='Python Backend Developer',
+        birth_date=datetime(year=2003, month=1, day=17),
+        telegram='https://t.me/arpakit',
+        whatsapp=None,
+        vk='https://vk.com/arpakit',
         roadmap_int_id=roadmap1.int_id,
         division_int_id=division1.int_id
     ).document())
