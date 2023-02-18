@@ -52,6 +52,8 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
         for day in week_to_days[week]:
             to_append['days'].append({'day': day, 'tasks': []})
             for task in day_to_tasks[day]:
+                if task.week_num != week:
+                    continue
                 to_append['days'][-1]['tasks'].append(task)
         easy_view2['weeks'].append(to_append)
 
