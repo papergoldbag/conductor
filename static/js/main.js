@@ -263,7 +263,7 @@ window.onload = () => {
                             if (task.is_completed) {
                                 htm += ' checked>';
                                 // task.is_good = true
-                                if (task.is_good != null) {
+                                if (task.is_good != null && task.type != 'feedback') {
                                     if (task.is_good) {
                                         htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: lime'></div>`
                                     } else {
