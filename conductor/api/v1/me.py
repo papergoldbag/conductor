@@ -71,19 +71,19 @@ async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
 
 @me_router.get('.get_task_by_index', response_model=Optional[TaskDBM])
 async def get_task_by_index(
-        index: int = Query(),
+        task_index: int = Query(),
         current_user: UserDBM = Depends(get_strict_current_user),
 ):
     if current_user.roadmap_int_id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have any roadmap')
 
-    doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
-    if doc is None:
+    roadmap_doc = db.roadmap.get_document_by_int_id(current_user.roadmap_int_id)
+    if roadmap_doc is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='user doesnt have this roadmap')
 
-    roadmap = RoadmapDBM.parse_document(doc)
+    roadmap = RoadmapDBM.parse_document(roadmap_doc)
     for task in roadmap.tasks:
-        if task.index == index:
+        if task.index == task_index:
             return task
     return None
 

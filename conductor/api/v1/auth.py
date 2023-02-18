@@ -2,15 +2,16 @@ import binascii
 import os
 from random import randint
 
-from fastapi import APIRouter, HTTPException, Body
+from fastapi import APIRouter, HTTPException, Body, Depends
 from fastapi import Response
 from starlette import status
-
+from conductor.api.dependencies import get_strict_current_user
+from fastapi import APIRouter, Depends, HTTPException
 from conductor.api.schemas.auth import AuthSchema
 from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.token import TokenSchema
 from conductor.core.misc import db
-from conductor.db.models import MailCodeDBM
+from conductor.db.models import MailCodeDBM, UserDBM
 from conductor.utils.send_mail import send_mail
 
 auth_router = APIRouter()
@@ -22,7 +23,7 @@ def generate_token() -> str:
 
 
 def generate_mail_code() -> str:
-    return f'{randint(1, 9)}{randint(1, 9)}{randint(1, 9)}{randint(1, 9)}'
+    return str(randint(1, 9))
 
 
 @auth_router.post('', response_model=TokenSchema)
