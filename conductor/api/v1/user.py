@@ -45,7 +45,17 @@ async def get_users(
         division_int_id: Optional[int] = Query(None)
 ):
     if division_int_id is None:
-        users = db.user.get_all_docs()
+        user_docs = db.user.get_all_docs()
     else:
-        users = db.user.pymongo_collection.find({'division_int_id': division_int_id})
-    return [SensitiveUser.parse_obj(user) for user in users]
+        user_docs = db.user.pymongo_collection.find({'division_int_id': division_int_id})
+
+    division_int_id_to_title = {}
+    for division in db.division.pymongo_collection.find():
+        division_int_id_to_title[division['int_id']] = division
+
+    res = []
+    for user_doc in user_docs:
+        user_doc['division_title'] = division_int_id_to_title[user_doc['division_int_id']]
+        res.append(SensitiveUser.parse_obj(user_doc))
+    return res
+

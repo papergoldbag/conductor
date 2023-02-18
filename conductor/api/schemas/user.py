@@ -29,3 +29,4 @@ class SensitiveUser(BaseModel):
     vk: Optional[str]
     roadmap_int_id: Optional[int]
     division_int_id: int
+    division_title: str
