@@ -20,12 +20,16 @@
             <form action="/api/v1/auth" method="post" onsubmit="return false;">
                 <div>
                     <!-- <p>1) Введите свой email для получения SMS-кода:</p> -->
-                    <input class="email" type="text" name="email" required placeholder="E-mail" autocomplete="off">
-                    <button class="codeSendButton" type="button" class="secondary">Получить код</button>
+                    <label>
+                        <input class="email" type="text" name="email" required placeholder="E-mail" autocomplete="off">
+                    </label>
+                    <button ZZtype="button" class="secondary">Получить код</button>
                 </div>
                 <div>
                     <!-- <p>2) Введите ваш код:</p> -->
-                    <input class="code" name="code" required placeholder="XXXX" autocomplete="off">
+                    <label>
+                        <input class="code" name="code" required placeholder="XXXX" autocomplete="off">
+                    </label>
                     <button type="submit" class="primary">Войти</button>
                 </div>
             </form>

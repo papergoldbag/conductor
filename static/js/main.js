@@ -58,7 +58,7 @@ window.onload = () => {
     }
 
     function drawRoadmap(roadmap) {
-        //console.log(roadmap[1][1][0][1]) // неделя -> день -> таск
+        //console.log(roadmap[1][1][0][1]) // неделя -> день -> массив тасков
         // roadmapHTML.innerHTML += 'test'
         console.log(roadmap)
         
@@ -75,12 +75,11 @@ window.onload = () => {
 
             //console.log(week, weekArr)
             roadmapHTML.innerHTML += 'hi'
-            /*
+
             
             for (const [day, tasks] of Object.entries(weekArr)) {
-                roadmapHTML.innerHTML += "test"+day;
-                //roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
-                //roadmapHTML.innerHTML += '<div class="dropdown-content">';
+                roadmapHTML.innerHTML += '<div class="card grey dropdown"><div class="dropdown-trigger" data-isopen="true"><b>День '+day+'</b></div>'
+                roadmapHTML.innerHTML += '<div class="dropdown-content">';
                 
                 for (let task of tasks) {
                     console.log(task)
@@ -103,15 +102,15 @@ window.onload = () => {
                 roadmapHTML.innerHTML += '</div>';
                 
             }
-            */
-            // weekNum = week
-            // for (const [day, tasks] of Object.entries(weekArr)) {
-            //     dayNum = day
-            //     // console.log("dayweek", day, week)
-            //     for (const [] of Object.entries(day)) {
-            //         console.log(weekNum+"+"+dayNum, task)
-            //     }
-            // }
+
+            weekNum = week
+            for (const [day, tasks] of Object.entries(weekArr)) {
+                dayNum = day
+                // console.log("dayweek", day, week)
+                for (const [] of Object.entries(day)) {
+                    console.log(weekNum+"+"+dayNum, task)
+                }
+            }
             roadmapHTML.innerHTML += '</div>';
         }
         
