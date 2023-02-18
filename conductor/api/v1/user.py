@@ -10,7 +10,7 @@ from conductor.core.misc import db
 user_router = APIRouter()
 
 
-@user_router.post(".create")
+@user_router.post(".create", response_model=UserDBM)
 def create_user(user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor])), user_to_create: CreateUser = None):
     if user_to_create.role in ('supervisor', 'hr') and user.role == 'hr':
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor')
