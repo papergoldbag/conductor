@@ -3,13 +3,15 @@ from fastapi import APIRouter, Depends
 from conductor.api.dependencies import make_strict_depends_on_roles
 from conductor.api.schemas.roadmap_template import CreateRoadmapTemplate
 from conductor.db.models import RoadmapDBM, UserDBM, Roles, TaskDBM
+from conductor.core.misc import db
 
 roadmap_template_router = APIRouter()
 
 
 @roadmap_template_router.get('', response_model=list[RoadmapDBM])
 async def get_all_roadmap_templates():
-    pass
+    templates = db.roadmap_template.get_all_docs()
+    return [RoadmapDBM.parse_document(x) for x in templates]
 
 
 @roadmap_template_router.get('.create', deprecated=True)
