@@ -4,6 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette import status
 
 from conductor.api.dependencies import get_strict_current_user
+from conductor.api.dependencies import get_current_user
+from conductor.api.schemas.mailcode import OperationStatus
+from conductor.api.schemas.user import UpdateUser
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
 from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM
@@ -63,6 +66,16 @@ async def my_roadmap(user: UserDBM = Depends(get_strict_current_user)):
         **data
     )
 
+@me_router.post('.change_contacts', response_model=OperationStatus)
+async def change_user_contacts(
+        contacts: UpdateUser,
+        current_user: UserDBM = Depends(get_current_user)
+):
+    _user = current_user.document()
+    for k,v in contacts:
+        _user[k] = v
+    db.user.update_document_by_int_id(current_user.int_id, _user)
+    return OperationStatus(is_done=True)
 
 @me_router.get('.my_profile', response_model=UserDBM)
 async def my_profile(user: UserDBM = Depends(get_strict_current_user)):

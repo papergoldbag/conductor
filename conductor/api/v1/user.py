@@ -5,7 +5,8 @@ from fastapi import HTTPException, Body
 from starlette import status
 
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
-from conductor.api.schemas.user import CreateUser, SensitiveUser
+from conductor.api.schemas.user import CreateUser, SensitiveUser, UpdateUser
+from conductor.api.schemas.mailcode import OperationStatus
 from conductor.core.misc import db, settings
 from conductor.db.models import RoadmapDBM, UserDBM, Roles
 from conductor.utils.send_mail import send_mail

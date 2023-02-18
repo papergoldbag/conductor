@@ -16,6 +16,12 @@ class CreateUser(BaseModel):
     division_int_id: int
 
 
+class UpdateUser(BaseModel):
+    telegram: Optional[str]
+    whatsapp: Optional[str]
+    vk: Optional[str]
+
+
 class SensitiveUser(BaseModel):
     int_id: int
     fullname: str
