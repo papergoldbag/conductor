@@ -77,3 +77,7 @@ async def get_users(
         res.append(SensitiveUser.parse_obj(user_doc))
     return res
 
+
+@user_router.get('.roles')
+async def get_roles():
+    return {'roles' : [Roles.employee, Roles.hr, Roles.supervisor]}
