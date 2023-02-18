@@ -51,7 +51,7 @@ async def get_users(
 
     division_int_id_to_title = {}
     for division in db.division.pymongo_collection.find():
-        division_int_id_to_title[division['int_id']] = division
+        division_int_id_to_title[division['int_id']] = division['title']
 
     res = []
     for user_doc in user_docs:
