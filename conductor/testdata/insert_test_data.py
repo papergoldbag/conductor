@@ -87,7 +87,7 @@ def insert_test_data():
     )
 
     db.user.insert_document(UserDBM(
-        fullname='https://vk.com/ilyakhakimov03',
+        fullname='Илья',
         email='ilyakhakimov03@gmail.com',
         tokens=[],
         role=Roles.employee.value,
