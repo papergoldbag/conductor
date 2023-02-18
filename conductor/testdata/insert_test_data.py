@@ -114,20 +114,22 @@ def insert_test_data():
         whatsapp=None,
         vk='https://vk.com/brightos',
         roadmap_int_id=roadmap1.int_id,
-        division_int_id=division2.int_id
+        division_int_id=division1.int_id
     ).document())
 
     db.event.insert_document(EventDBM(
         title='Встреча с коллективом',
         desc='Нужно подойти в 7 корпус к 413 кабинету в 13:00 для встречи с командой',
         dt=datetime.now() + timedelta(days=7),
-        to_user_int_ids=[0, 1]
+        to_user_int_ids=[0, 1],
+        division_int_id=division1.int_id
     ).document())
     db.event.insert_document(EventDBM(
         title='Встреча с HR',
         desc='Нужно подойти в 11 корпус в 111 кабинету в 11:00 для встречи с HR',
         dt=datetime.now() + timedelta(days=9),
-        to_user_int_ids=[0, 1]
+        to_user_int_ids=[0, 1],
+        division_int_id=division1.int_id
     ).document())
 
 
