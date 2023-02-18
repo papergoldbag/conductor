@@ -9,6 +9,13 @@ from conductor.core.misc import templates
 pages_router = APIRouter(tags=['pages'])
 
 
+@pages_router.get('/')
+async def auth(r: Request, user=Depends(get_current_user)):
+    if user:
+        return RedirectResponse('/roadmap', status_code=status.HTTP_302_FOUND)
+    return templates.TemplateResponse("auth.html", {'request': r})
+
+
 @pages_router.get('/auth')
 async def auth(r: Request, user=Depends(get_current_user)):
     if user:
