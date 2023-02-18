@@ -36,6 +36,7 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=None,
                     coins=5,
                     is_completed=False,
+                    is_good=None,
                     week_num=1,
                     day_num=1,
                     attachments=[Attachment(title="Наш сайт", url="https://myrosmol.ru/")],
@@ -63,6 +64,7 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=None,
                     coins=15,
                     is_completed=False,
+                    is_good=None,
                     week_num=1,
                     day_num=2,
                     attachments=[Attachment(title="Маршрут", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
@@ -76,6 +78,7 @@ def insert_test_data():
                     is_confirmed_by_hr_int_id=123,
                     coins=15,
                     is_completed=False,
+                    is_good=None,
                     week_num=1,
                     day_num=3,
                     attachments=[Attachment(title="Наш сайт", url="https://yandex.ru/maps/-/CCUGA8AMoC")],
@@ -89,7 +92,7 @@ def insert_test_data():
     db.user.insert_document(UserDBM(
         fullname='Илья',
         email='ilyakhakimov03@gmail.com',
-        tokens=[],
+        tokens=['123'],
         role=Roles.employee.value,
         coins=0,
         position='HTML/CSS/JS developer',
@@ -98,13 +101,13 @@ def insert_test_data():
         whatsapp=None,
         vk=None,
         roadmap_int_id=roadmap1.int_id,
-        division_int_id=division1.int_id
+        division_int_id=division1.int_id,
     ).document())
 
     db.user.insert_document(UserDBM(
         fullname='Денис',
         email='dbarov3@gmail.com',
-        tokens=[],
+        tokens=['123'],
         role=Roles.employee.value,
         coins=20,
         position='Android Kotlin Developer',

@@ -62,6 +62,7 @@ class TaskDBM(BaseModel):
     is_confirmed_by_hr_int_id: Optional[int]
     coins: int
     is_completed: bool
+    is_good: Optional[bool]
     week_num: int
     day_num: int
     attachments: list[Attachment]
