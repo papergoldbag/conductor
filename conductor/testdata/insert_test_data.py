@@ -276,11 +276,11 @@ def insert_test_data():
     roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
 
     db.user.insert_document(UserDBM(
-        fullname='Илья',
+        fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
         tokens=['123'],
         role=Roles.employee,
-        coins=5,
+        coins=0,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
         telegram='https://t.me/PirateThunder',
