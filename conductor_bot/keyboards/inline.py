@@ -1,5 +1,5 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton
 import emoji
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 main_menu = InlineKeyboardMarkup(row_width=1)
 found_menu = InlineKeyboardMarkup(row_width=1)
