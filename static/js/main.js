@@ -40,6 +40,7 @@ window.onload = () => {
             },
             body: JSON.stringify(json)
         }
+        console.log(json)
         
         fetch("/api/v1/send_answers.send_quizz", settings)
         .then(data => {
@@ -60,27 +61,29 @@ window.onload = () => {
         <p style="margin-top: 10px;">${task.text}</p>
         `
         if (taskType == "auto_test") {
-            htm += `
-                <div style="margin-top: 10px;">
-                    <h2 style="display: inline;">Тестирование</h2>
-                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
-                </div>
-                <div class="quizz">
-            `
-            for (let i = 0; i < task.quizzes.length; i++) {
+            if (!task.is_completed) {
                 htm += `
-                <div class="quizz-elem card grey" style="padding: 15px;">
-                <div class="quizz-question">
-                    ${i+1}) ${task.quizzes[i].question}
-                </div>
-                <div class="question-answer">
-                    <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
-                </div>
-                </div>
+                    <div style="margin-top: 10px;">
+                        <h2 style="display: inline;">Тестирование</h2>
+                        <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                    </div>
+                    <div class="quizz">
                 `
-            }
+                for (let i = 0; i < task.quizzes.length; i++) {
+                    htm += `
+                    <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        ${i+1}) ${task.quizzes[i].question}
+                    </div>
+                    <div class="question-answer">
+                        <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                    </div>
+                    `
+                }
 
-            htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
+                htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
+            }
         } else if (taskType == "hr_confirmation") {
             if (task.is_completed) {
                 htm += `<input type="checkbox" checked disabled><span>Ваш HR проверил это задание</span>`
@@ -88,21 +91,49 @@ window.onload = () => {
                 htm += `<input type="checkbox" disabled><span>Ваш HR ещё не проверил это задание</span>`
             }
         } else if (taskType == "feedback") {
-            htm +=  `
-            <div style="margin-top: 10px;">
-                <h2 style="display: inline;">Обратный отзыв</h2>
-                <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
-            </div>
-            <div class="quizz-elem card grey" style="padding: 15px;">
-            <div class="quizz-question">
-                Обратный отзыв
-            </div>
-            <div class="question-answer">
-                <input class="question-answer-input" type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
-            </div>
-            </div> 
-            <button class="primary sendTestButton" style="float: right;">Завершить тест</button>
-            `
+            if (!task.is_completed) {
+                htm += `
+                    <div style="margin-top: 10px;">
+                        <h2 style="display: inline;">Тестирование</h2>
+                        <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                    </div>
+                    <div class="quizz">
+                `
+                for (let i = 0; i < task.quizzes.length; i++) {
+                    htm += `
+                    <div class="quizz-elem card grey" style="padding: 15px;">
+                    <div class="quizz-question">
+                        ${i+1}) ${task.quizzes[i].question}
+                    </div>
+                    <div class="question-answer">
+                        <input class="question-answer-input" type="text" placeholder="Поле для ответа" style="width: 100%">
+                    </div>
+                    </div>
+                    `
+                }
+
+                htm += `</div><button class="primary sendTestButton" style="float: right;">Завершить тест</button>`
+                /*
+                htm +=  `
+                <div style="margin-top: 10px;">
+                    <h2 style="display: inline;">Обратный отзыв</h2>
+                    <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+${task.coins}</div>
+                </div>
+                <div class="quizz-elem card grey" style="padding: 15px;">
+                <div class="quizz-question">
+                    Обратный отзыв
+                </div>
+                <div class="question-answer">
+                    <input class="question-answer-input" type="text" placeholder="ваш обратный отзыв )" style="width: 100%">
+                </div>
+                </div> 
+                <button class="primary sendTestButton" style="float: right;">Завершить тест</button>
+                `*/
+            }
+        }
+        console.log(task.is_completed)
+        if (task.is_completed) {
+            htm += "<h1>Задание уже выполнено!</h1>"
         }
         // <div style="margin-top: 10px;">
         //     <h2 style="display: inline;">Тестирование</h2>
@@ -111,7 +142,7 @@ window.onload = () => {
         // `
         mainHTML.innerHTML = htm
 
-        if (taskType != 'hr_confirmation') {
+        if (taskType != 'hr_confirmation' && !task.is_completed) {
             let sendTestButton = document.querySelector('main .sendTestButton')
             sendTestButton.addEventListener('click', () => {
                 let inputs = document.querySelectorAll('.question-answer-input')
@@ -148,10 +179,15 @@ window.onload = () => {
                 let week = this.getAttribute("data-week")
                 let day = this.getAttribute("data-day")
                 let id = this.getAttribute("data-id")
-
-                curTaskId = id
-                //console.log(curTaskId)
-                loadRoadmapWeekDay(week, day)
+                let is_completed = (this.getAttribute("data-iscompleted") === 'true')
+                console.log(is_completed)
+                // if (!is_completed) {
+                    curTaskId = id
+                    //console.log(curTaskId)
+                    loadRoadmapWeekDay(week, day)
+                // } else {
+                    
+                // }
             })
         }
     }
@@ -216,7 +252,7 @@ window.onload = () => {
                 for (let task of day.tasks) {
                     //console.log(task)
                     htm +=  `
-                    <div class="task card purple task-card" data-week='${task.week_num}' data-day='${task.day_num}' data-id=${task.index}>
+                    <div class="task card purple task-card" data-iscompleted=${task.is_completed} data-week='${task.week_num}' data-day='${task.day_num}' data-id=${task.index}>
                     <div class="task-title" style="color: white;">
                         ${task.title}
                     </div>
