@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     mailru_server: str = 'smtp.mail.ru'
     mailru_port: int = 465
 
+    site_url: str = 'https://divarteam.ru/auth'
+
     @property
     def mongo_uri(self) -> str:
         return (

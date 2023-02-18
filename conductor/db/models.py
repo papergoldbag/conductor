@@ -25,9 +25,9 @@ class UserDBM(BaseInDB):
     coins: int
     position: str
     birth_date: datetime
-    telegram: str
-    whatsapp: str
-    vk: str
+    telegram: Optional[str]
+    whatsapp: Optional[str]
+    vk: Optional[str]
     roadmap_int_id: Optional[int]
     division_int_id: int
 

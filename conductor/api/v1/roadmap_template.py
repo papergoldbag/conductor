@@ -1,7 +1,5 @@
 from fastapi import APIRouter, Depends
 
-from fastapi import APIRouter, Depends
-
 from conductor.api.dependencies import make_strict_depends_on_roles
 from conductor.api.schemas.roadmap_template import CreateRoadmapTemplate
 from conductor.db.models import RoadmapDBM, UserDBM, Roles, TaskDBM
