@@ -15,9 +15,32 @@ window.onload = () => {
     let roadmap = []
     let roadmapHTML = document.querySelector(".roadmap")
     let dropdownTriggers
+    let mainHTML = document.querySelector("main")
 
     //let dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
     //console.log(dropdownTriggers)
+
+    function drawMain(task) {
+        console.log(task)
+        htm = `
+        <h1>${task.title}</h1>
+        <p style="margin-top: 10px;">${task.text}</p>
+        `
+        // <div style="margin-top: 10px;">
+        //     <h2 style="display: inline;">Тестирование</h2>
+        //     <div style="background: gold; border-radius: 15px; display: inline; padding: 5px; color: white;">+100500</div>
+        // </div>
+        // `
+        mainHTML.innerHTML = htm
+    }
+
+    async function loadRoadmapWeekDay(week, day) {
+        fetch(`/api/v1/taskweek_day_tasks?week_num=${week}&day_num=${day}`)
+        .then(response => response.json())
+        .then(data => {
+            drawMain(data[0])
+        })
+    }
 
     function jsTaskCards() {
         tasksCards = document.querySelectorAll("nav .task-card")
@@ -26,8 +49,8 @@ window.onload = () => {
             tasksCards[i].addEventListener("click", function() {
                 let week = this.getAttribute("data-week")
                 let day = this.getAttribute("data-day")
-                
-                //console.log(week, day)
+
+                loadRoadmapWeekDay(week, day)
             })
         }
     }
