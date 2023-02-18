@@ -28,6 +28,7 @@ class UserDBM(BaseInDB):
     telegram: Optional[str]
     whatsapp: Optional[str]
     vk: Optional[str]
+    byed_items: list[int]
     roadmap_int_id: Optional[int]
     division_int_id: int
 

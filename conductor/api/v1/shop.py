@@ -45,13 +45,18 @@ async def get_item_by_int_id(
 @shop_router.get('.by_item_by_int_id', response_model=OperationStatus)
 async def by_item_by_int_id(
     item_int_id: int,
-    user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+    current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
 ):
     item = db.shop.get_document_by_int_id(item_int_id)
     if item is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='wrong item int id')
-    item = ShopDBM.parse_document(item)
-    if user.coins < item.cost:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='suer coins < item cost')
-    user_items = []
+        return OperationStatus(is_done=False)
+    item: ShopDBM = ShopDBM.parse_document(item)
+    if current_user.coins < item.cost:
+        return OperationStatus(is_done=False)
+    current_user.byed_items.append(item_int_id)
+    current_user.coins = current_user.coins - item.cost
+
+    db.user.update_document_by_int_id(current_user.int_id, current_user.document())
+
+    return OperationStatus(is_done=True)
 

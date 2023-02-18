@@ -20,7 +20,7 @@ async def create_user(
 ):
     if user_to_create.role in (Roles.supervisor, Roles.hr) and user.role == Roles.hr:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor')
-    user_ = UserDBM(tokens=[], coins=0, **user_to_create.dict())
+    user_ = UserDBM(tokens=[], coins=0, byed_items=[], **user_to_create.dict())
     inserted = UserDBM.parse_document(db.user.insert_document(user_.document()))
 
     send_mail(user_.email, f'Приглашение', f'Входите в систему Кондуктор {settings.site_url}')
