@@ -149,10 +149,10 @@ def insert_test_data():
             created_by_int_id=123
         ).document())
     )
-    roadmap2 = db.roadmap.insert_document(roadmap1.document())
-    roadmap3 = db.roadmap.insert_document(roadmap1.document())
-    roadmap4 = db.roadmap.insert_document(roadmap1.document())
-    roadmap5 = db.roadmap.insert_document(roadmap1.document())
+    roadmap2 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1.document()))
+    roadmap3 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1.document()))
+    roadmap4 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1.document()))
+    roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1.document()))
 
     db.user.insert_document(UserDBM(
         fullname='Илья',
