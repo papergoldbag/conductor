@@ -40,13 +40,26 @@ window.onload = () => {
         
     })
 
+    async function loadTemplates() {
+        fetch("/api/v1/roadmap_template")
+        .then(data => data.json())
+        .then(data => {
+            for (let template_ of data) {
+                template.innerHTML += `<option value="${division_.int_id}">${division_.title}</option>`
+            }
+        })
+    }
+
     async function loadDivisions() {
         fetch("/api/v1/divisions")
         .then(data => data.json())
         .then(data => {
-            console.log(data)
+            for (let division_ of data) {
+                division.innerHTML += `<option value="${division_.int_id}">${division_.title}</option>`
+            }
         })
     }
 
+    loadTemplates()
     loadDivisions()
 }

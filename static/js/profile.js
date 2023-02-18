@@ -5,7 +5,7 @@ window.onload = () => {
         .then(data => data.json())
         .then(data => {
             let role = data.role
-            if (role == 'hr') {
+            if (role === 'hr') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
         })
