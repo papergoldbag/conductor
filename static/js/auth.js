@@ -35,9 +35,9 @@ window.onload = () => {
             fetch("/api/v1/auth", settings)
             .then(data => {
                 if (data.status == 200) {
-                    console.log('ok')
+                    window.location.replace("/roadmap");
                 } else {
-                    console.log(':(')
+                    alert('Некорректные данные!')
                 }
             })
         } else {
