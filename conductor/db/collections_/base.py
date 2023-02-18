@@ -6,7 +6,6 @@ from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
 from conductor.db.base import BaseFields, Document, BaseInDB
-from conductor.db.models import QuizDBM
 
 
 class BaseCollection:

@@ -5,7 +5,6 @@ from starlette import status
 
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.quizz import SendQuizz
-from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
 from conductor.db.models import RoadmapDBM, UserDBM, TaskTypes
 

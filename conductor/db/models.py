@@ -54,7 +54,8 @@ class Attachment(BaseModel):
     url: str
 
 
-class TaskDBM(BaseInDB):
+class TaskDBM(BaseModel):
+    index: int
     type: TaskTypes
     title: str
     text: str

@@ -25,6 +25,7 @@ def insert_test_data():
             title='Путь начинающего',
             tasks=[
                 TaskDBM(
+                    index=0,
                     type=TaskTypes.auto_test,
                     title='Ознакомиться с сайтом Россмолодёжы',
                     text=(
@@ -51,6 +52,7 @@ def insert_test_data():
                     ]
                 ),
                 TaskDBM(
+                    index=1,
                     type=TaskTypes.hr_confirmation,
                     title='Подпишите документы',
                     text=(
@@ -66,6 +68,7 @@ def insert_test_data():
                     quizzes=[]
                 ),
                 TaskDBM(
+                    index=2,
                     type=TaskTypes.feedback,
                     title='Дайте обратную связь о том, как провели данный день',
                     text='Нужно пройти опрос ниже )',
@@ -90,10 +93,9 @@ def insert_test_data():
         coins=0,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
-        description='ZZZ',
-        telegram='asf',
-        whatsapp='asf',
-        vk='asf',
+        telegram=None,
+        whatsapp=None,
+        vk=None,
         roadmap_int_id=roadmap1.int_id,
         division_int_id=division1.int_id
     ).document())
@@ -103,13 +105,13 @@ def insert_test_data():
         email='dbarov3@gmail.com',
         tokens=[],
         role=Roles.employee.value,
-        coins=0,
-        position='Android Developer',
+        coins=20,
+        position='Android Kotlin Developer',
         birth_date=datetime(year=2003, month=3, day=27),
         description='Я занимаюсь разработкой около 3 лет и мне это нравится',
-        telegram='asf',
-        whatsapp='asf',
+        telegram='https://t.me/BrightOS',
+        whatsapp=None,
         vk='https://vk.com/brightos',
-        roadmap_int_id=roadmap2.int_id,
+        roadmap_int_id=roadmap1.int_id,
         division_int_id=division2.int_id
     ).document())

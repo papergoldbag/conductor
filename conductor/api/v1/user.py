@@ -1,15 +1,14 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, Query
 from fastapi import HTTPException, Body
 from starlette import status
-from pydantic import BaseModel
 
 from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
 from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import UserDBM, Roles
 from conductor.utils.send_mail import send_mail
-from typing import Optional
-from datetime import datetime
 
 user_router = APIRouter()
 
