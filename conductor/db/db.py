@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 
 from conductor.db.collections_.division import DivisionCollection
+from conductor.db.collections_.event import EventCollection
 from conductor.db.collections_.mailcode import EmailCodeCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
 from conductor.db.collections_.roadmap_template import RoadmapTemplateCollection
@@ -17,13 +18,15 @@ class DB:
         self.mail_code = EmailCodeCollection(self.database.get_collection('email_code'))
         self.division = DivisionCollection(self.database.get_collection('division'))
         self.roadmap_template = RoadmapTemplateCollection(self.database.get_collection('roadmap_template'))
+        self.event = EventCollection(self.database.get_collection('event'))
 
         self.collections = [
             self.user,
             self.roadmap,
             self.mail_code,
             self.division,
-            self.roadmap_template
+            self.roadmap_template,
+            self.event
         ]
 
     def drop(self):

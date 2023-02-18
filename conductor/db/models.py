@@ -82,3 +82,10 @@ class RoadmapDBM(BaseInDB):
 class MailCodeDBM(BaseInDB):
     mail: str
     code: int
+
+
+class EventDBM(BaseInDB):
+    title: str
+    desc: str
+    dt: datetime
+    to_user_int_ids: list[int]

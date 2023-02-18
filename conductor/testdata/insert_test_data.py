@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from conductor.core.misc import db
-from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM, Attachment
+from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM, Attachment, \
+    EventDBM
 
 
 def insert_test_data():
@@ -115,3 +116,16 @@ def insert_test_data():
         roadmap_int_id=roadmap1.int_id,
         division_int_id=division2.int_id
     ).document())
+
+    db.event.insert_document(EventDBM(
+        title='Встреча с коллективом',
+        desc='',
+        dt=datetime.now()+timedelta(days=7),
+        to_user_int_ids=[0, 1]
+    ))
+    db.event.insert_document(EventDBM(
+        title='Встреча с HR',
+        desc='',
+        dt=datetime.now() + timedelta(days=9),
+        to_user_int_ids=[0, 1]
+    ))

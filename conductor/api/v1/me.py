@@ -6,7 +6,7 @@ from starlette import status
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM
+from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM
 
 me_router = APIRouter()
 
@@ -69,7 +69,7 @@ async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     return user
 
 
-@me_router.post('.get_task_by_index', response_model=Optional[TaskDBM])
+@me_router.get('.get_task_by_index', response_model=Optional[TaskDBM])
 async def get_task_by_index(
         index: int = Query(),
         current_user: UserDBM = Depends(get_strict_current_user),
@@ -87,3 +87,9 @@ async def get_task_by_index(
             return task
     return None
 
+
+@me_router.get('.get_my_events', response_model=list[EventDBM])
+async def get_my_events(
+        current_user: UserDBM = Depends(get_strict_current_user),
+):
+    db.event.pymongo_collection.find({'to_user_int_ids' : {'$in' : current_user.int_id}})
