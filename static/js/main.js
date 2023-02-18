@@ -24,7 +24,7 @@ window.onload = () => {
     //console.log(dropdownTriggers)
 
     async function sendTest(curTaskId, arr) {
-        console.log(curTaskId)
+        console.log(curTaskId)  
         console.log(arr)
         for (let x of arr) {
             if (x == '') return
