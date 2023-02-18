@@ -43,13 +43,17 @@ window.onload = () => {
     })
 
     async function loadRoles() {
-        fetch("/api/v1/roles.roles")
+        fetch("/api/v1/roles.roles_with_title")
         .then(data => data.json())
         .then(data => {
-            // console.log(data)
-            for (let role_ of data.roles) {
-                role.innerHTML += `<option value="${role_}">${role_}</option>`
+            // console.log(data.roles)
+            for (const [val, desc] of Object.entries(data.roles)) {
+                // console.log(`${key}: ${value}`);
+                role.innerHTML += `<option value="${val}">${desc}</option>`
             }
+            // for (let role_ of data.roles) {
+            //     role.innerHTML += `<option value="${role_.}">${role_}</option>`
+            // }
         })
     }
 
