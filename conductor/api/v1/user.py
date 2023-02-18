@@ -50,19 +50,3 @@ async def get_users(
     else:
         users = db.user.pymongo_collection.find({'division_int_id': division_int_id})
     return [SensitiveUser.parse_obj(user) for user in users]
-
-
-
-
-@user_router.get('.sign_out', response_model=OperationStatus)
-async def signout(
-     current_token: str = Depends(get_current_user_token),
-     current_user: UserDBM = Depends(get_current_user)
-    ):
-    print(current_user)
-    if current_user is None:
-        return OperationStatus(is_done=False)
-    tokens : list[str] = current_user.tokens
-    tokens.remove(current_token)
-    db.user.pymongo_collection.find_one_and_update({"int_id" : current_user.int_id}, {"$set" : {"tokens" : tokens}})
-    return OperationStatus(is_done=True)

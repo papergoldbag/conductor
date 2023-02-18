@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional, Union
 
+import pymongo
 from bson import ObjectId
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
@@ -11,6 +12,12 @@ from conductor.db.base import BaseFields, Document, BaseInDB
 class BaseCollection:
     def __init__(self, pymongo_collection: Collection):
         self.pymongo_collection = pymongo_collection
+
+    def ensure_indexes(self):
+        self.pymongo_collection.create_index(
+            [("int_id", pymongo.ASCENDING)],
+            unique=True
+        )
 
     def generate_int_id(self) -> int:
         docs = list(self.pymongo_collection.find())
