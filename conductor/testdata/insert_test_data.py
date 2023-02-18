@@ -146,7 +146,7 @@ def insert_test_data():
                     ]
                 ),
                 TaskDBM(
-                    index=2,
+                    index=3,
                     type=TaskTypes.auto_test,
                     title='Просто пройдите этот тест ))',
                     text='''Просто пройдите данный тест''',
@@ -182,7 +182,7 @@ def insert_test_data():
                     ]
                 ),
                 TaskDBM(
-                    index=2,
+                    index=4,
                     type=TaskTypes.auto_test,
                     title='Просто пройдите этот тест ))',
                     text='''Просто пройдите данный тест''',
@@ -218,7 +218,7 @@ def insert_test_data():
                     ]
                 ),
                 TaskDBM(
-                    index=2,
+                    index=5,
                     type=TaskTypes.auto_test,
                     title='Просто пройдите этот тест ))',
                     text='''Просто пройдите данный тест''',
