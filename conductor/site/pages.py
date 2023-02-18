@@ -40,12 +40,12 @@ async def roadmap(
     token2 = r.cookies.get('token')
 
     if token1 is not None:
-        db.user.pymongo_collection.update(
+        db.user.pymongo_collection.update_one(
             {'int_id': user.int_id},
             {'$pull': {'tokens': token1}}
         )
     if token2 is not None:
-        db.user.pymongo_collection.update(
+        db.user.pymongo_collection.update_one(
             {'int_id': user.int_id},
             {'$pull': {'tokens': token2}}
         )

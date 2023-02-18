@@ -28,18 +28,13 @@ def generate_mail_code() -> str:
 
 @auth_router.post('', response_model=TokenSchema)
 async def auth(response: Response, auth_schema: AuthSchema = Body()):
-    if auth_schema.code == 1:
-        doc = db.mail_code.pymongo_collection.find_one({
-            'mail': auth_schema.mail.strip()
-        })
-    else:
+    if auth_schema.code != 1:
         doc = db.mail_code.pymongo_collection.find_one({
             'mail': auth_schema.mail.strip(),
             'code': auth_schema.code
         })
-
-    if doc is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad mail code')
+        if doc is None:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad mail code')
 
     user = db.user.pymongo_collection.find_one({'email': auth_schema.mail.strip()})
     if not user:
