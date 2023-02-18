@@ -388,6 +388,20 @@ dnspython = ">=1.15.0"
 idna = ">=2.0.0"
 
 [[package]]
+name = "emoji"
+version = "2.2.0"
+description = "Emoji for Python"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+files = [
+    {file = "emoji-2.2.0.tar.gz", hash = "sha256:a2986c21e4aba6b9870df40ef487a17be863cb7778dcf1c01e25917b7cd210bb"},
+]
+
+[package.extras]
+dev = ["coverage", "coveralls", "pytest"]
+
+[[package]]
 name = "fastapi"
 version = "0.92.0"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
@@ -1028,4 +1042,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "daeaa6c7f83bc9acb4bfa79486d57d2f3649a204206f767ebe5c2fa4e4899696"
+content-hash = "cb251eced7c7622952c0274dee1a1848961c6192b007bf771c23b7486448103b"
