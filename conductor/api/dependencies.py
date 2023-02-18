@@ -7,6 +7,7 @@ from starlette.requests import Request
 from conductor.core.misc import db
 from conductor.db.models import UserDBM
 
+
 def get_current_user(*, token: str = Header(None), req: Request) -> Optional[UserDBM]:
     token_cookie: str = req.cookies.get('token')
     if not token and not token_cookie:

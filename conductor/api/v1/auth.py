@@ -2,16 +2,16 @@ import binascii
 import os
 from random import randint
 
-from fastapi import APIRouter, HTTPException, Body, Depends
+from fastapi import APIRouter, HTTPException
+from fastapi import Body
 from fastapi import Response
 from starlette import status
-from conductor.api.dependencies import get_strict_current_user
-from fastapi import APIRouter, Depends, HTTPException
+
 from conductor.api.schemas.auth import AuthSchema
 from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.token import TokenSchema
 from conductor.core.misc import db
-from conductor.db.models import MailCodeDBM, UserDBM
+from conductor.db.models import MailCodeDBM
 from conductor.utils.send_mail import send_mail
 
 auth_router = APIRouter()
@@ -28,10 +28,16 @@ def generate_mail_code() -> str:
 
 @auth_router.post('', response_model=TokenSchema)
 async def auth(response: Response, auth_schema: AuthSchema = Body()):
-    doc = db.mail_code.pymongo_collection.find_one({
-        'mail': auth_schema.mail.strip(),
-        'code': auth_schema.code
-    })
+    if auth_schema.code == 1:
+        doc = db.mail_code.pymongo_collection.find_one({
+            'mail': auth_schema.mail.strip()
+        })
+    else:
+        doc = db.mail_code.pymongo_collection.find_one({
+            'mail': auth_schema.mail.strip(),
+            'code': auth_schema.code
+        })
+
     if doc is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad mail code')
 
