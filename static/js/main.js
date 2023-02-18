@@ -12,9 +12,21 @@ window.onload = () => {
     // }
 
     // headerMenu.addEventListener("click", headerMenuLogic)
+    let roadmap = {
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: [],
+        7: [],
+        8: [],
+        9: [],
+        10: []
+    }
 
     const dropdownTriggers = document.querySelectorAll("nav .dropdown-trigger")
-    console.log(dropdownTriggers)
+    //console.log(dropdownTriggers)
 
     for (let i = 0; i < dropdownTriggers.length; i++) {
         dropdownTriggers[i].addEventListener("click", function() {
@@ -31,7 +43,24 @@ window.onload = () => {
         })
     }
 
-    function foo(el) {
-        console.log(el)
+    async function loadRoadmap() {
+        const settings = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+            //body: JSON.stringify(user)
+        }
+        fetch("/api/v1/me.my_roadmap", settings)
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data.tasks)
+            for (let task of data.tasks) {
+                roadmap[task.week_num].push(task)
+            }
+        })
+        console.log(roadmap)
     }
+
+    loadRoadmap()
 }
