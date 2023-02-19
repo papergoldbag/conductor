@@ -5,7 +5,7 @@ from starlette import status
 
 from conductor.api.dependencies import get_strict_current_user, make_strict_depends_on_roles
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, Roles, UserDBM, TaskDBM
+from conductor.db.models import RoadmapDBM, Roles, UserDBM, TaskDBM, TaskTypes
 
 task_router = APIRouter()
 
@@ -139,3 +139,10 @@ async def user_tasks(
     user_roadmap_dbm = RoadmapDBM.parse_document(user_roadmap_doc)
 
     return [task for task in user_roadmap_dbm.tasks]
+
+
+@task_router.get(".types", response_model=list[TaskTypes])
+async def user_tasks(
+        current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
+):
+    return [TaskTypes.hr_confirmation, TaskTypes.feedback, TaskTypes.auto_test]
