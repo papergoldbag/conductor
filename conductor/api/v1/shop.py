@@ -38,9 +38,9 @@ async def get_product_by_int_id(
     if product_doc is None:
         return None
 
-    bought = product_doc['int_id'] in current_user.purchased_product_int_ids
+    product_doc['already_bought'] = product_doc['int_id'] in current_user.purchased_product_int_ids
 
-    return InfoProductDBM.parse_obj(already_bought=bought, **product_doc)
+    return InfoProductDBM.parse_obj(product_doc)
 
 
 @shop_router.get('.buy_product', response_model=OperationStatus)

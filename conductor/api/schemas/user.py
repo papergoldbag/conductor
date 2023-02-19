@@ -36,6 +36,7 @@ class SensitiveUser(BaseModel):
     roadmap_int_id: Optional[int]
     division_int_id: int
     division_title: str
+    purchased_product_int_ids: list[int] = []
 
 
 class UserDBMWithDivision(UserDBM):
