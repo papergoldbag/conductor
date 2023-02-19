@@ -401,12 +401,12 @@ def insert_test_data():
     ).document())
     db.product.insert_document(ProductDBM(
         title='Фирменная футболка',
-        description='Фирменная футболка компании Россмолодёжь',
+        description='Фирменная футболка компании Росмолодёжь',
         cost=89
     ).document())
     db.product.insert_document(ProductDBM(
         title='Фирменная толстовка',
-        description='Фирменная толстовка компании Россмолодежб',
+        description='Фирменная толстовка компании Росмолодежь',
         cost=90
     ).document())
     db.product.insert_document(ProductDBM(
