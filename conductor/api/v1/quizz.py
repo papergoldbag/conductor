@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Body
 from starlette import status
-import aiogram
+from conductor.utils.send_mail import send_mail
 
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.quizz import SendQuizz
@@ -57,8 +57,10 @@ async def send_quizz(
     )
 
     roadmap_created_by: UserDBM = UserDBM.parse_document(db.user.get_document_by_int_id(user_roadmap.created_by_int_id))
-    tg = roadmap_created_by.telegram
-    tg = tg.split('t.me/')[-1]
-    
+    mail = roadmap_created_by.email
+    try:
+        send_mail(mail, 'Сотрудник прошел тест к задаче', f"{current_user.fullname} прошел тест к задаче {user_roadmap.tasks[send_quizz_.task_num].title}.")
+    except:
+        print('error in send mail')
 
     return user_roadmap
