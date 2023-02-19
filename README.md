@@ -133,11 +133,19 @@ db.createUser(
 ~~~
 
 
-### Приложение как сервис
-Нужно создать файл conductor.service и поместить его в /etc/systemd/system/
+### Сайт как сервис
+Нужно скопировать файл conductor.service в /etc/systemd/system/conductor.service
 ~~~
 sudo cp ./conductor.service /etc/systemd/system/conductor.service
 sudo systemctl start conductor
+~~~
+
+
+### Бот как сервис
+Нужно скопировать файл conductor_bot.service в /etc/systemd/system/conductor_bot.service
+~~~
+sudo cp ./conductor_bot.service /etc/systemd/system/conductor_bot.service
+sudo systemctl start conductor_bot
 ~~~
 
 
@@ -156,13 +164,14 @@ sudo cp ./conductor.nginx /etc/nginx/sites-enabled/conductor
 sudo systemctl restart nginx
 ~~~
 
+
 ### Запуск системы через Docker
 Систему также возможно запустить через Docker
 
 
 ### РАЗРАБОТЧИКИ
-<h4>Иван Ермолов - Data-Scientist https://t.me/ivan_20190721 </h4>
+<h4>Илья Хакимов - Frontend https://t.me/ilyakhakimov03 </h4>
 <h4>Денис Шайхльбарин - Android https://t.me/BrightOS </h4>
 <h4>Арсен Сабирзянов - Backend https://t.me/arpakit </h4>
-<h4>Илья Хакимов - Frontend https://t.me/ilyakhakimov03 </h4>
+<h4>Иван Ермолов - Data-Scientist https://t.me/ivan_20190721 </h4>
 <h4>Рустам Афанасьев - Project manager, Analytic https://t.me/rcr_tg </h4>
