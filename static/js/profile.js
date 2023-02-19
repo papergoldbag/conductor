@@ -65,6 +65,9 @@ window.onload = () => {
             if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
+            if (role === 'employee') {
+                document.querySelector('.header-links').innerHTML = `<a href="/roadmap"><button class="secondary">Roadmap</button></a>` + document.querySelector('.header-links').innerHTML
+            }
         })
     }
 

@@ -62,7 +62,7 @@ window.onload = () => {
         let taskType = task.type
         htm = `
         <h1>${task.title}</h1>
-        <p style="margin-top: 10px;">${task.text}</p>
+        <p style="margin-top: 10px; white-space: pre-line;">${task.text}</p>
         `
         if (taskType == "auto_test") {
             if (!task.is_completed) {
@@ -309,6 +309,9 @@ window.onload = () => {
             //role = 'it'
             if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
+            }
+            if (role === 'employee') {
+                document.querySelector('.header-links').innerHTML = `<a href="/roadmap"><button class="secondary">Roadmap</button></a>` + document.querySelector('.header-links').innerHTML
             }
         })
     }
