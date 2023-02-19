@@ -446,7 +446,7 @@ def insert_test_data():
         division_int_id=division1.int_id
     ).document())
     db.event.insert_document(EventDBM(
-        title='Coffee brake с командой',
+        title='Coffee break с командой',
         desc='Встреча будет в кафе у уровня 9',
         dt=datetime.now() + timedelta(days=4),
         division_int_id=division1.int_id
