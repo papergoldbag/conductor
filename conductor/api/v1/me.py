@@ -146,12 +146,12 @@ async def progress():
     pass
 
 
-@me_router.get('.my_products', response_model=list[ProductDBM])
+@me_router.get('.my_products', response_model=list[ProductDBM], tags=['Shop'])
 async def my_products(
         current_user: UserDBM = Depends(get_strict_current_user)
 ):
     res = []
-    for product_doc in db.user.get_all_docs():
+    for product_doc in db.product.get_all_docs():
         if product_doc['int_id'] in current_user.purchased_product_int_ids:
             res.append(ProductDBM.parse_document(product_doc))
     return res
