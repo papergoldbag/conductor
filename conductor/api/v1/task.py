@@ -75,7 +75,11 @@ async def make_confirmation(
     return True
 
 
-@task_router.get(".user_roadmap", response_model=Optional[RoadmapDBM])
+class EasyRoadmapDBM(RoadmapDBM):
+    easy_view2: dict
+
+
+@task_router.get(".user_roadmap", response_model=Optional[EasyRoadmapDBM])
 async def user_roadmap(
         user_int_id: int,
         current_user: UserDBM = Depends(make_strict_depends_on_roles(roles=[Roles.hr, Roles.supervisor]))
@@ -90,7 +94,33 @@ async def user_roadmap(
         return None
     user_roadmap = RoadmapDBM.parse_document(user_roadmap_doc)
 
-    return user_roadmap
+    week_to_days = {}
+    days = []
+    weeks = []
+    day_to_tasks = {}
+    for task in user_roadmap.tasks:
+        weeks.append(task.week_num)
+        days.append(task.day_num)
+        if task.week_num not in week_to_days:
+            week_to_days[task.week_num] = []
+        if task.day_num:
+            week_to_days[task.week_num].append(task.day_num)
+        if task.day_num not in day_to_tasks:
+            day_to_tasks[task.day_num] = []
+        day_to_tasks[task.day_num].append(task)
+
+    easy_view2 = {'weeks': []}
+    for week, days in week_to_days.items():
+        to_append = {'week': week, 'days': []}
+        for day in week_to_days[week]:
+            to_append['days'].append({'day': day, 'tasks': []})
+            for task in day_to_tasks[day]:
+                if task.week_num != week:
+                    continue
+                to_append['days'][-1]['tasks'].append(task)
+        easy_view2['weeks'].append(to_append)
+
+    return EasyRoadmapDBM(easy_view2=easy_view2, **user_roadmap.dict())
 
 
 @task_router.get(".user_tasks", response_model=list[TaskDBM])

@@ -9,7 +9,7 @@ from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.api.schemas.user import UpdateUser, UserDBMWithDivision
 from conductor.core.misc import db
-from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM, DivisionDBM
+from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM, DivisionDBM, ProductDBM
 
 me_router = APIRouter()
 
@@ -144,3 +144,14 @@ async def get_my_events(
 @me_router.get('.progress')
 async def progress():
     pass
+
+
+@me_router.get('.my_products', response_model=list[ProductDBM])
+async def my_products(
+    current_user: UserDBM = Depends(get_strict_current_user)
+):
+    res = []
+    for product_doc in db.user.get_all_docs():
+        if product_doc['int_id'] in current_user.purchased_product_int_ids:
+            res.append(ProductDBM.parse_document(product_doc))
+    return res
