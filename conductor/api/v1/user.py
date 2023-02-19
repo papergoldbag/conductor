@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query
 from fastapi import HTTPException, Body
 from starlette import status
 
-from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user
+from conductor.api.dependencies import make_strict_depends_on_roles, get_current_user, get_strict_current_user
 from conductor.api.schemas.user import CreateUser, SensitiveUser
 from conductor.core.misc import db, settings
 from conductor.db.models import RoadmapDBM, UserDBM, Roles
@@ -68,7 +68,7 @@ async def get_user_by_int_id(
 
 @user_router.get('', response_model=list[SensitiveUser])
 async def get_users(
-        current_user=Depends(get_current_user),
+        current_user: UserDBM = Depends(get_strict_current_user),
         division_int_id: Optional[int] = Query(None)
 ):
     if division_int_id is None:
@@ -82,6 +82,8 @@ async def get_users(
 
     res = []
     for user_doc in user_docs:
+        if user_doc['int_id'] == current_user.int_id:
+            continue
         user_doc['division_title'] = division_int_id_to_title[user_doc['division_int_id']]
         res.append(SensitiveUser.parse_obj(user_doc))
     return res
