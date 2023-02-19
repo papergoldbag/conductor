@@ -7,7 +7,7 @@ from conductor.api.dependencies import get_current_user
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.roadmap import RoadmapResponse
-from conductor.api.schemas.user import UpdateUser, UserDBMWithDivision
+from conductor.api.schemas.user import UpdateUser, InfoUserDBM
 from conductor.api.v1.shop import InfoProductDBM
 from conductor.core.misc import db
 from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM, DivisionDBM, ProductDBM
@@ -82,12 +82,16 @@ async def change_user_contacts(
     return OperationStatus(is_done=True)
 
 
-@me_router.get('.my_profile', response_model=UserDBMWithDivision)
+@me_router.get('.my_profile', response_model=InfoUserDBM)
 async def my_profile(user: UserDBM = Depends(get_strict_current_user)):
     division = db.division.get_document_by_int_id(user.division_int_id)
     data = user.dict()
     data['division_title'] = division['title']
-    user_with_division = UserDBMWithDivision.parse_obj(data)
+    data['purchased_products'] = []
+    for product_doc in db.product.get_all_docs():
+        if product_doc['int_id'] in user.purchased_product_int_ids:
+            data['purchased_products'].append(InfoProductDBM.parse_document({'already_bought': True, **product_doc}))
+    user_with_division = InfoUserDBM.parse_obj(data)
     return user_with_division
 
 

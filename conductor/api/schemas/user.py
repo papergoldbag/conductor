@@ -3,7 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
-from conductor.db.models import Roles, UserDBM
+from conductor.api.v1.shop import InfoProductDBM
+from conductor.db.models import Roles, UserDBM, ProductDBM
 
 
 class CreateUser(BaseModel):
@@ -39,5 +40,6 @@ class SensitiveUser(BaseModel):
     purchased_product_int_ids: list[int] = []
 
 
-class UserDBMWithDivision(UserDBM):
+class InfoUserDBM(UserDBM):
     division_title: str
+    purchased_products: list[InfoProductDBM]
