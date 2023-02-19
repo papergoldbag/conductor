@@ -14,5 +14,6 @@ venv
 
 # files
 test.py
+push.sh
 config.json
 .env
