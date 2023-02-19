@@ -18,23 +18,29 @@ window.onload = () => {
             <div style="margin-top: 10px;">
                 <div style="display: flex">
                     <div style="width: 50%;">
-                        <p>Telegram</p>
-                        <a href="${user.telegram}">${user.telegram}</a>
+                        <p>Telegram</p>`;
+                        if (user.telegram != null) htm += `<a href="${user.telegram}">${user.telegram}</a>`
+                        else htm += `<b>Не указано</b>`
+                        htm += `
                     </div>
                     <div style="width: 50%;">
-                        <p>WhatsApp</p>
-                        <a href=""></a>
+                        <!--<p>WhatsApp</p>
+                        <a href=""></a>-->
                     </div>
                 </div>
                 <div style="display: flex">
                     <div style="width: 50%;">
-                        <p>VK</p>
-                        <a href="${user.vk}">${user.vk}</a>
+                        <p>VK</p>`
+                        if (user.vk != null) htm += `<a href="${user.vk}">${user.vk}</a>`
+                        else htm += `<b>Не указано</b>`
+                        htm += `
                     </div>
                     <div style="width: 50%;">
                         <p>Email</p>
-                        <a href="mailto:${user.email}">${user.email}</a>
-                    </div>
+                        `
+                        if (user.email != null) htm += `<a href="mailto:${user.email}">${user.email}</a>`
+                        else htm += `<b>Не указано</b>`
+                    htm  += `</div>
                 </div>
             </div>
         </div>
