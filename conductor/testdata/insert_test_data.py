@@ -273,8 +273,15 @@ def insert_test_data():
             created_by_int_id=dmitry['int_id']
         ).document())
     )
-
-    db.roadmap_template.insert_document(template_roadmap.document())
+    template_doc = template_roadmap.document()
+    template_doc.pop('_id', None)
+    template_doc.pop('created', None)
+    template_doc.pop('int_id', None)
+    db.roadmap_template.insert_document(template_doc)
+    template_doc.pop('_id', None)
+    template_doc.pop('created', None)
+    template_doc.pop('int_id', None)
+    db.roadmap_template.insert_document(template_doc)
 
     roadmap1_doc = template_roadmap.document()
     roadmap1_doc.pop('int_id', None)
@@ -350,10 +357,10 @@ def insert_test_data():
         role=Roles.supervisor,
         coins=20,
         position='Python Backend Developer',
-        birth_date=datetime(year=2003, month=1, day=17),
-        telegram='https://t.me/arpakit',
+        birth_date=datetime(year=2003, month=9, day=2),
+        telegram='https://t.me/rcr_tg',
         whatsapp=None,
-        vk='https://vk.com/arpakit',
+        vk='https://vk.com/rcrvk',
         roadmap_int_id=roadmap4.int_id,
         division_int_id=division1.int_id
     ).document())
@@ -366,9 +373,9 @@ def insert_test_data():
         coins=20,
         position='Python Backend Developer',
         birth_date=datetime(year=2003, month=1, day=17),
-        telegram='https://t.me/arpakit',
+        telegram='https://t.me/ivan_20190721',
         whatsapp=None,
-        vk='https://vk.com/arpakit',
+        vk=None,
         roadmap_int_id=roadmap5.int_id,
         division_int_id=division1.int_id
     ).document())

@@ -56,7 +56,7 @@ async def buy_product(
     if product_doc['int_id'] in current_user.purchased_product_int_ids:
         return OperationStatus(is_done=False)
 
-    product_dbm = ProductDBM.parse_document(product_doc)
+    product_dbm:ProductDBM = ProductDBM.parse_document(product_doc)
     if current_user.coins < product_dbm.cost:
         return OperationStatus(is_done=False)
     current_user.purchased_product_int_ids.append(product_dbm.int_id)
