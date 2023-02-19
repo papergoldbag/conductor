@@ -15,7 +15,7 @@ window.onload = () => {
         .then(data => {
             console.log(data)
             fullname.innerHTML = data.fullname
-            coins.innerHTML = '$'+data.coins
+            coins.innerHTML = 'Монет: '+data.coins
             if (data.role === 'hr') role.innerHTML = 'HR'
             else if (data.role === 'employee') role.innerHTML = 'Сотрудник'
             else if (data.role === 'supervisor') role.innerHTML = 'Руководитель'
