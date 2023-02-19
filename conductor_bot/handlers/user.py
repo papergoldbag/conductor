@@ -1,7 +1,8 @@
 import emoji
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
-from time import sleep
+from asyncio import sleep
+
 
 from conductor_bot.config import User
 from conductor_bot.keyboards.inline import main_menu, found_menu
@@ -43,7 +44,7 @@ async def play_find_animation(call: CallbackQuery, tile = 0.2):
             message_id=call.message.message_id,
             reply_markup=found_menu
         )
-        sleep(tile)
+        # sleep(tile)
         await call.bot.edit_message_text(
             text=emoji.emojize("Идет поиск.."),
             chat_id=call.message.chat.id, 
@@ -54,7 +55,7 @@ async def play_find_animation(call: CallbackQuery, tile = 0.2):
             message_id=call.message.message_id,
             reply_markup=found_menu
         )
-        sleep(tile)
+        # sleep(tile)
         await call.bot.edit_message_text(
             text=emoji.emojize("Идет поиск..."),
             chat_id=call.message.chat.id, 
@@ -65,7 +66,7 @@ async def play_find_animation(call: CallbackQuery, tile = 0.2):
             message_id=call.message.message_id,
             reply_markup=found_menu
         )
-        sleep(tile)
+        # sleep(tile)
         await call.bot.edit_message_text(
             text=emoji.emojize("Режим ожидания включен :check_mark_button:"),
             chat_id=call.message.chat.id, 
