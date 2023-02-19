@@ -90,3 +90,9 @@ class EventDBM(BaseInDB):
     desc: str
     dt: datetime
     division_int_id: Optional[int]
+
+
+class ProductDBM(BaseInDB):
+    title: str
+    description: str
+    cost: int

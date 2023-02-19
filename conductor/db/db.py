@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from conductor.db.collections_.division import DivisionCollection
 from conductor.db.collections_.event import EventCollection
 from conductor.db.collections_.mailcode import EmailCodeCollection
+from conductor.db.collections_.product import ProductCollection
 from conductor.db.collections_.roadmap import RoadmapCollection
 from conductor.db.collections_.roadmap_template import RoadmapTemplateCollection
 from conductor.db.collections_.user import UserCollection
@@ -23,6 +24,7 @@ class DB:
         self.division = DivisionCollection(self.__mongo_database.get_collection('division'))
         self.roadmap_template = RoadmapTemplateCollection(self.__mongo_database.get_collection('roadmap_template'))
         self.event = EventCollection(self.__mongo_database.get_collection('event'))
+        self.product = ProductCollection(self.__mongo_database.get_collection('product'))
 
         self.collections = [
             self.user,
@@ -30,7 +32,8 @@ class DB:
             self.mail_code,
             self.division,
             self.roadmap_template,
-            self.event
+            self.event,
+            self.product
         ]
 
     def ensure_indexes(self):
