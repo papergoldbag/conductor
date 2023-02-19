@@ -2,8 +2,25 @@ window.onload = () => {
     let mainBlock = document.querySelector('main')
     let balance
 
-    async function getBalance() {
+    async function buyProduct(id) {
+        fetch("/api/v1/shop.buy_product?product_int_id=" + id)
+        .then(data => data.json())
+        .then(data => {
+            console.log(data.is_done)
+            location.reload()
+        })
+    }
 
+    function jsBuyButtons() {
+        let btns = document.querySelectorAll(".goodBuyButton")
+        console.log(btns)
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function() {
+                // console.log(this.getAttribute('data-id'))
+                let id = this.getAttribute('data-id')
+                buyProduct(id)
+            })
+        }
     }
 
     async function loadShop() {
@@ -26,16 +43,21 @@ window.onload = () => {
                         <div>
                             <h1>${good.title}</h1>
                             <p>${good.description}</p>
-                        </div>
-                        <button class="primary">$${good.cost}</button> 
-                    </div>
+                        </div>`
+                        if (good.already_bought) {
+                            htm += `<span>Уже куплено</span> `
+                        }
+                        else htm+=`<button class='goodBuyButton primary' data-id='${good.int_id}'>$${good.cost}</button> `
+                    htm +=`</div>
                 </div>
                 `
             }
             htm += '<br><br><br>'
             mainBlock.innerHTML += htm
+            jsBuyButtons()
         })
         // mainBlock.innerHTML += htm
+        
     }
 
     async function checkRole() {
@@ -46,11 +68,11 @@ window.onload = () => {
             if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
-            mainBlock.innerHTML += `<h1>$${data.coins}</h1>`
+            mainBlock.innerHTML += `<h1>Монет: ${data.coins}</h1>`
         })
     }
 
     checkRole()
     loadShop()
-    getBalance()
+    //getBalance()
 }

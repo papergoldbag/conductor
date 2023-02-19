@@ -269,9 +269,9 @@ window.onload = () => {
                                 // task.is_good = true
                                 if (task.is_good != null && task.type != 'feedback') {
                                     if (task.is_good) {
-                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: lime'></div>`
+                                        htm += `<div style='width: 13px; height: 13px; border-radius: 50%; background: lime; margin-top: 4px;'></div>`
                                     } else {
-                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: tomato'></div>`
+                                        htm += `<div style='width: 13px; height: 13px; border-radius: 50%; background: tomato; margin-top: 4px;'></div>`
                                     }
                                 }
                             } else {
