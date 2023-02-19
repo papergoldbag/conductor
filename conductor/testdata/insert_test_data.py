@@ -357,6 +357,53 @@ def insert_test_data():
 
     roadmap5 = RoadmapDBM.parse_document(db.roadmap.insert_document(roadmap1_doc))
 
+
+    db.user.insert_document(UserDBM(
+        fullname='Тестовый Руководитель',
+        email='test_supervisor@test.com',
+        tokens=['1'],
+        role=Roles.supervisor,
+        coins=0,
+        position='Руководитель',
+        birth_date=datetime(year=2003, month=3, day=27),
+        telegram=None,
+        whatsapp=None,
+        vk=None,
+        roadmap_int_id=template_roadmap.int_id,
+        division_int_id=division1.int_id,
+    ).document())
+
+    db.user.insert_document(UserDBM(
+        fullname='Тестовый HR',
+        email='test_hr@test.com',
+        tokens=['1'],
+        role=Roles.hr,
+        coins=0,
+        position='HR',
+        birth_date=datetime(year=2003, month=3, day=27),
+        telegram=None,
+        whatsapp=None,
+        vk=None,
+        roadmap_int_id=template_roadmap.int_id,
+        division_int_id=division1.int_id,
+    ).document())
+
+    db.user.insert_document(UserDBM(
+        fullname='Тестовый Новый Сотрудник',
+        email='test_employee@test.com',
+        tokens=['1'],
+        role=Roles.employee,
+        coins=0,
+        position='Сотрудник отдела',
+        birth_date=datetime(year=2003, month=3, day=27),
+        telegram=None,
+        whatsapp=None,
+        vk=None,
+        roadmap_int_id=template_roadmap.int_id,
+        division_int_id=division1.int_id,
+    ).document())
+
+
     db.user.insert_document(UserDBM(
         fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
