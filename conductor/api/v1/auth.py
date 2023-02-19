@@ -57,7 +57,7 @@ async def send_mail_code(mail: str):
 
     mail_code = MailCodeDBM(mail=mail, code=generate_mail_code())
     doc = db.mail_code.insert_document(mail_code.document())
-    fast_auth_url = settings.site_url + f"?code={mail_code.code}&mail={mail_code.mail}"
+    fast_auth_url = settings.site_url + f"/auth?code={mail_code.code}&mail={mail_code.mail}"
     send_mail(
         mail_code.mail,
         f'Вход в систему Conductor',
