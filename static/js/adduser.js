@@ -34,6 +34,14 @@ window.onload = () => {
                 console.log(data)
                 if (data.status == 200) {
                     alert('Сотрудник успешно создан')
+                    fio.value = ''
+                    email.value = ''
+                    // role: role.options[role.selectedIndex].value,
+                    // position: position.value,
+                    // birth_date: birth.value + "T23:06:47.155Z",
+                    birth.value = ''
+                    // roadmap_template_int_id: parseInt(template.options[template.selectedIndex].value),
+                    // division_int_id: parseInt(division.options[division.selectedIndex].value)
                 } else {
                     alert('Ошибка')
                 }
