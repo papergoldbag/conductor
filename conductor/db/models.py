@@ -78,7 +78,7 @@ class TaskDBM(BaseModel):
 class RoadmapDBM(BaseInDB):
     title: str
     tasks: list[TaskDBM]
-    created_by_int_id: str
+    created_by_int_id: int
 
 
 class MailCodeDBM(BaseInDB):

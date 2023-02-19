@@ -24,9 +24,9 @@ def insert_test_data():
         db.division.insert_document(DivisionDBM(title='ЦСМС').document())
     )
 
-    owner = db.user.insert_document(UserDBM(
+    dmitry = db.user.insert_document(UserDBM(
         fullname='Дмитрий Алексеевич',
-        email='dmitry@gmail.com',
+        email='sabarse@gmail.com',
         tokens=['6'],
         role=Roles.supervisor,
         coins=0,
@@ -270,7 +270,7 @@ def insert_test_data():
                     ]
                 )
             ],
-            created_by_int_id=owner['int_id']
+            created_by_int_id=dmitry['int_id']
         ).document())
     )
 
