@@ -69,28 +69,28 @@ async def roadmap(r: Request, user=Depends(get_current_user)):
 @pages_router.get('/shop')
 async def roadmap(r: Request, user=Depends(get_current_user)):
     if not user:
-        return RedirectResponse('/shop', status_code=status.HTTP_302_FOUND)
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse("shop.html", {'request': r})
 
 
 @pages_router.get('/events')
 async def roadmap(r: Request, user=Depends(get_current_user)):
     if not user:
-        return RedirectResponse('/events', status_code=status.HTTP_302_FOUND)
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse("events.html", {'request': r})
 
 
 @pages_router.get('/network')
 async def roadmap(r: Request, user=Depends(get_current_user)):
     if not user:
-        return RedirectResponse('/network', status_code=status.HTTP_302_FOUND)
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse("network.html", {'request': r})
 
 
 @pages_router.get('/adduser')
 async def adduser(r: Request, user=Depends(get_current_user)):
     if not user:
-        return RedirectResponse('/adduser', status_code=status.HTTP_302_FOUND)
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse("adduser.html", {'request': r})
 
 
@@ -99,6 +99,8 @@ async def roadmap(
         r: Request,
         user: UserDBM = Depends(get_current_user)
 ):
+    if not user:
+        return RedirectResponse('/auth', status_code=status.HTTP_302_FOUND)
     token1 = r.headers.get('token')
     token2 = r.cookies.get('token')
 
