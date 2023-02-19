@@ -3,18 +3,102 @@ window.onload = () => {
     let mainHTML = document.querySelector('main')
     let isNotUser
 
+    function jsRoadmap() {
+        dropdownTriggers = document.querySelectorAll(".dropdown-trigger")
+
+        for (let i = 0; i < dropdownTriggers.length; i++) {
+            dropdownTriggers[i].addEventListener("click", function() {
+                let flag = (this.getAttribute("data-isopen") === 'true')
+                console.log(flag)
+                console.log(this.nextElementSibling)
+                if (flag) {
+                    this.nextElementSibling.style.display = "none"
+                } else {
+                    this.nextElementSibling.style.display = "block"
+                }
+                this.setAttribute("data-isopen", (!flag).toString())
+                console.log(this)
+            })
+        }
+    }
+
+    function drawRoadmap(weeks) {
+        htm = ''
+        for (let week of weeks) {
+            weekNumber = week.week
+            htm += `
+            <div class="dropdown-trigger" data-isopen="true">
+                <b>Неделя ${weekNumber}</b>
+            </div>
+            <div class="dropdown-content">
+            `
+
+            for (let day of week.days) {
+                dayNumber = day.day
+                htm += `
+                <div class="card grey dropdown">
+                <div class="dropdown-trigger" data-isopen="true">
+                    <b>День ${dayNumber}</b>
+                </div>
+                <div class="dropdown-content">
+                `
+                for (let task of day.tasks) {
+                    //console.log(task)
+                    htm +=  `
+                    <div class="task card purple task-card" data-iscompleted=${task.is_completed} data-week='${task.week_num}' data-day='${task.day_num}' data-id=${task.index}>
+                    <div class="task-title" style="color: white;">
+                        ${task.title}
+                    </div>
+                    <div class="task-status">
+                        <div class="task-status-isdone" style="color: white; display: flex">
+                            <input type="checkbox" onclick="return false;"`;
+                            // task.is_completed = true
+                            if (task.is_completed) {
+                                htm += ' checked>';
+                                // task.is_good = true
+                                if (task.is_good != null && task.type != 'feedback') {
+                                    if (task.is_good) {
+                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: lime'></div>`
+                                    } else {
+                                        htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: tomato'></div>`
+                                    }
+                                }
+                            } else {
+                                htm += '>'
+                            }
+                            //htm += ` style="color: white;">
+                        htm += `</div>
+                        <div class="task-status-reward" style="color: white;">
+                            +${task.coins}
+                        </div>
+                        </div>
+                    </div>
+                    `
+                }
+                htm += `
+                </div>
+                </div>
+                `
+            }
+            htm += `</div><br><br><br>`
+        }
+        //console.log(htm)
+        mainHTML.innerHTML += htm
+        jsRoadmap()
+    }
+
     async function loadRoadmap(id) {
         fetch('/api/v1/task.user_roadmap?user_int_id='+id)
         .then(data => data.json())
         .then(roadmap => {
-            console.log(roadmap)
-            //drawUserProfile(user)
+            //console.log(roadmap.easy_view2)
+            drawRoadmap(roadmap.easy_view2.weeks)
         })
     }
 
     function drawUserProfile(user) {
         htm = `
-        <div class="profile card grey" style="width: 95%;">
+        <div class="profile card grey" style="width: 95%; height: 174px;">
             <h1>${user.fullname}</h1>
             <div>
                 <div style="background: lime; border-radius: 15px; display: inline; padding: 5px; color: white;">`;
