@@ -1,5 +1,6 @@
 window.onload = () => {
     const fullname = document.querySelector("#fullname")
+    const coins = document.querySelector("#coins")
     const role = document.querySelector("#role")
     const birth_date = document.querySelector("#date")
     const position = document.querySelector("#position")
@@ -14,6 +15,7 @@ window.onload = () => {
         .then(data => {
             console.log(data)
             fullname.innerHTML = data.fullname
+            coins.innerHTML = '$'+data.coins
             if (data.role === 'hr') role.innerHTML = 'HR'
             else if (data.role === 'employee') role.innerHTML = 'Сотрудник'
             else if (data.role === 'supervisor') role.innerHTML = 'Руководитель'
