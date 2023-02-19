@@ -17,7 +17,8 @@ async def start_handler(message: Message):
             reply_markup=main_menu)
         await UserState.user_in_system.set()
     else:
-        await message.answer(emoji.emojize(":red_exclamation_mark: Вас нету в системе :red_exclamation_mark:"))
+        await message.answer(emoji.emojize(":red_exclamation_mark: Вас нету в системе :locked_with_key:\nПредлагаем вам посетить наш сайт https://divarteam.ru"))
+
 
 
 async def user_base_handler(message: Message):
@@ -28,7 +29,8 @@ async def user_base_handler(message: Message):
             reply_markup=main_menu)
         await UserState.user_in_system.set()
     else:
-        await message.answer(emoji.emojize(":red_exclamation_mark: Вас нету в системе :red_exclamation_mark:"))
+        await message.answer(emoji.emojize(":red_exclamation_mark: Вас нету в системе :locked_with_key:\nПредлагаем вам посетить наш сайт https://divarteam.ru"))
+
 
 
 async def find_handler(call: CallbackQuery):
@@ -58,13 +60,7 @@ async def cancel_handler(call: CallbackQuery):
         reply_markup=main_menu)
 
 
-# async def ok(message: Message):
-#     print(get_user_description(message.chat.username))
-#     await message.answer("Ok")
-
 def register_user_handlers(dp: Dispatcher):
-    # dp.register_message_handler(ok, state=None)
-
     dp.register_callback_query_handler(find_handler, state=UserState.user_in_system, text="btnFind")
     dp.register_callback_query_handler(cancel_handler, state=UserState.user_in_system, text="btnCancel")
     dp.register_message_handler(start_handler, commands=["/start"], state="*")
