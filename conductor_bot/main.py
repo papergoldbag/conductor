@@ -20,7 +20,7 @@ def register_all_handlers(dp):
 
 async def on_startup(*args, **kwargs):
     logger.info('on_startup')
-    await bot.set_my_commands(BotCommand('start', 'Начать'))
+    await bot.set_my_commands([BotCommand('start', 'Начать')])
     await send_to_admins('Старт')
 
 
