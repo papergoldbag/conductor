@@ -1,5 +1,6 @@
 import binascii
 import os
+from datetime import datetime, timedelta
 from random import randint
 
 from fastapi import APIRouter, HTTPException
@@ -38,6 +39,17 @@ async def auth(
         })
         if doc is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='bad mail code')
+
+        db.mail_code.pymongo_collection.delete_one({
+            'mail': auth_schema.mail.strip(),
+            'code': auth_schema.code
+        })
+
+        if doc['created'] <= datetime.utcnow() - timedelta(minutes=settings.code_minutes):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="doc['created'] <= datetime.now() - timedelta(minutes=5)"
+            )
 
     user = db.user.pymongo_collection.find_one({'email': auth_schema.mail.strip()})
     if not user:

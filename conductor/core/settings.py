@@ -28,10 +28,12 @@ class Settings(BaseSettings):
     mailru_server: str = 'smtp.mail.ru'
     mailru_port: int = 465
 
-    site_url: str = 'http://127.0.0.1:8081/auth'
+    site_url: str = 'http://127.0.0.1:8081'
 
     tg_bot_token: str
     tg_admin_ids: list[int]
+
+    code_minutes: int = 5
 
     @property
     def mongo_uri(self) -> str:

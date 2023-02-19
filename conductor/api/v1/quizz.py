@@ -37,6 +37,9 @@ async def send_quizz(
             passed += 1
         quizzes_[i].answer = send_quizz_.answers[i]
 
+    if user_roadmap.tasks[send_quizz_.task_num].is_completed:
+        return user_roadmap
+
     user_roadmap.tasks[send_quizz_.task_num].is_completed = True
     if user_roadmap.tasks[send_quizz_.task_num].type == TaskTypes.auto_test.value:
         if passed >= len(user_roadmap.tasks[send_quizz_.task_num].quizzes) // 2:
