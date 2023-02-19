@@ -1,11 +1,18 @@
 window.onload = () => {
     let navHTML = document.querySelector('nav')
     let mainHTML = document.querySelector('main')
+    let curID
     let isNotUser
+
+    async function taskConfirmation(url) {
+        fetch(url)
+        .then(data => {
+            console.log(data)
+        })
+    }
 
     function jsRoadmap() {
         dropdownTriggers = document.querySelectorAll(".dropdown-trigger")
-
         for (let i = 0; i < dropdownTriggers.length; i++) {
             dropdownTriggers[i].addEventListener("click", function() {
                 let flag = (this.getAttribute("data-isopen") === 'true')
@@ -20,7 +27,27 @@ window.onload = () => {
                 console.log(this)
             })
         }
-    }
+
+        hrCheckboxes = document.querySelectorAll(".hr-checkbox")
+        console.log(hrCheckboxes)
+        for (let i = 0; i < dropdownTriggers.length; i++) {
+            hrCheckboxes[i].addEventListener('click', function() {
+                //console.log(this.getAttribute("data-id"))
+                console.log(this.checked)
+                if (!this.checked) {
+                    this.checked = true
+                    return
+                }
+                let userID = curID
+                let taskID = this.getAttribute("data-index")
+                let url = "/api/v1/task.confirmation?user_int_id=" + userID + "&task_index="+taskID
+                console.log(url)
+                taskConfirmation(url)
+                //fetch("/api/v1/task.confirmation?user_int_id=" + userID + "&task_index="+taskID)    
+            })
+        }
+     }
+    
 
     function drawRoadmap(weeks) {
         htm = ''
@@ -63,8 +90,21 @@ window.onload = () => {
                                         htm += `<div style='width: 15px; height: 15px; border-radius: 50%; background: tomato'></div>`
                                     }
                                 }
+                                htm += '<span>Сотрудник выполнил это задание</span>'
+                                if (task.type === 'hr_confirmation') {
+                                    htm += '<br><input data-index="'+task.index+'" class="hr-checkbox" type="checkbox"'
+                                    if (task.is_confirmed_by_int_id !== null) htm += 'checked'
+                                    htm +='><b>Подтвердить выполнение задания</b>'
+                                }
                             } else {
                                 htm += '>'
+
+                                htm += '<span>Сотрудник не выполнил это задание</span>'
+                                if (task.type === 'hr_confirmation') {
+                                    htm += '<br><input data-index="'+task.index+'" class="hr-checkbox" type="checkbox"'
+                                    if (task.is_confirmed_by_int_id !== null) htm += 'checked'
+                                    htm +='><b>Подтвердить выполнение задания</b>'
+                                }
                             }
                             //htm += ` style="color: white;">
                         htm += `</div>
@@ -157,6 +197,7 @@ window.onload = () => {
         for (let user of usersHTML) {
             user.addEventListener('click', function() {
                 let id = this.getAttribute('data-id')
+                curID = id
                 getUserById(id)
             })
         }
