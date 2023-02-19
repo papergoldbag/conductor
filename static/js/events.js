@@ -16,7 +16,7 @@ window.onload = () => {
                 </div>
                 `
             }
-            //console.log(mainHTML)
+            //  console.log(mainHTML)
             mainHTML.innerHTML = htm
         })
     }
