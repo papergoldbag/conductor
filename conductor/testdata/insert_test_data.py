@@ -268,7 +268,58 @@ def insert_test_data():
                             correct_answer='5'
                         )
                     ]
+                ),
+                TaskDBM(
+                    index=6,
+                    type=TaskTypes.auto_test,
+                    title='Просто пройдите этот тест часть 2))',
+                    text='''Просто пройдите данный тест.''',
+                    is_confirmed_by_hr_int_id=None,
+                    coins=20,
+                    is_completed=False,
+                    is_good=None,
+                    week_num=3,
+                    day_num=1,
+                    attachments=[],
+                    quizzes=[
+                        QuizDBM(
+                            question='1',
+                            answer=None,
+                            correct_answer='1'
+                        ), QuizDBM(
+                            question='2',
+                            answer=None,
+                            correct_answer='2'
+                        ), QuizDBM(
+                            question='3',
+                            answer=None,
+                            correct_answer='3'
+                        ), QuizDBM(
+                            question='4',
+                            answer=None,
+                            correct_answer='4'
+                        ), QuizDBM(
+                            question='5',
+                            answer=None,
+                            correct_answer='5'
+                        )
+                    ]
+                ),
+                TaskDBM(
+                    index=6,
+                    type=TaskTypes.hr_confirmation,
+                    title='Получить доступы к корпоративным системам',
+                    text='Получите доступы к корпоративным система.',
+                    is_confirmed_by_int_id=None,
+                    coins=50,
+                    is_completed=False,
+                    is_good=None,
+                    week_num=3,
+                    day_num=2,
+                    attachments=[],
+                    quizzes=[]
                 )
+            
             ],
             created_by_int_id=dmitry['int_id']
         ).document())
@@ -281,6 +332,7 @@ def insert_test_data():
     template_doc.pop('_id', None)
     template_doc.pop('created', None)
     template_doc.pop('int_id', None)
+    template_doc['title'] = 'Шаблон дорожной карты 2'
     db.roadmap_template.insert_document(template_doc)
 
     roadmap1_doc = template_roadmap.document()
