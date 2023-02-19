@@ -53,7 +53,7 @@ window.onload = () => {
                 `
             }
             htm += '<br><br><br>'
-            mainBlock.innerHTML += htm
+            document.querySelector('#shop').innerHTML = htm
             jsBuyButtons()
         })
         // mainBlock.innerHTML += htm
@@ -68,7 +68,7 @@ window.onload = () => {
             if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
-            mainBlock.innerHTML += `<h1>Монет: ${data.coins}</h1>`
+            document.querySelector("#balance").innerHTML += `<h1>Монет: ${data.coins}</h1>`
         })
     }
 
