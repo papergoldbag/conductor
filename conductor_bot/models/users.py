@@ -8,8 +8,11 @@ class UserInDb:
         self.__db: dict[str, User] = database
 
     async def delete_user(self, username: str):
-        self.__db.pop(username)
-
+        try:
+            self.__db.pop(username)
+        except:
+            ...
+            
     async def add_user(self, username: str, chat_id: str, id: str):
         self.__db[username] = User(username, chat_id, id)
 
