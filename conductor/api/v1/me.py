@@ -8,6 +8,7 @@ from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.roadmap import RoadmapResponse
 from conductor.api.schemas.user import UpdateUser, UserDBMWithDivision
+from conductor.api.v1.shop import InfoProductDBM
 from conductor.core.misc import db
 from conductor.db.models import RoadmapDBM, UserDBM, TaskDBM, EventDBM, DivisionDBM, ProductDBM
 
@@ -146,12 +147,13 @@ async def progress():
     pass
 
 
-@me_router.get('.my_products', response_model=list[ProductDBM], tags=['Shop'])
+@me_router.get('.my_products', response_model=list[InfoProductDBM], tags=['Shop'])
 async def my_products(
         current_user: UserDBM = Depends(get_strict_current_user)
 ):
     res = []
     for product_doc in db.product.get_all_docs():
         if product_doc['int_id'] in current_user.purchased_product_int_ids:
-            res.append(ProductDBM.parse_document(product_doc))
+            product_doc['already_bought'] = True
+            res.append(InfoProductDBM.parse_document(product_doc))
     return res
