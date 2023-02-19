@@ -92,6 +92,9 @@ mongo_db_name = "..."
 
 mailru_login = '...'
 mailru_password = '.'
+
+tg_bot_token = '...'
+tg_admin_ids = [...]
 ~~~
 
 
