@@ -21,15 +21,6 @@ def get_current_user(*, token: str = Header(None), req: Request) -> Optional[Use
     return UserDBM.parse_document(user)
 
 
-def get_current_user_token(*, token: str = Header(None), req: Request) -> str:
-    token_cookie: str = req.cookies.get('token')
-    if not token and not token_cookie:
-        return None
-
-    token = token if token else token_cookie
-    return token
-
-
 def get_strict_current_user(user: UserDBM = Depends(get_current_user)) -> UserDBM:
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='no user')

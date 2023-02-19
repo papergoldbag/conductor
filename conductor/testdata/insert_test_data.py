@@ -393,7 +393,6 @@ def insert_test_data():
         division_int_id=division1.int_id
     ).document())
 
-
     # SHOP
     db.product.insert_document(ProductDBM(
         title='Курсы Skillbox',

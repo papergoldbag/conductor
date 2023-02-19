@@ -20,16 +20,17 @@ class Roles(str, Enum):
 class UserDBM(BaseInDB):
     fullname: str
     email: str
-    tokens: list[str]
+    tokens: list[str] = []
     role: Roles
     coins: int
     position: str
     birth_date: datetime
-    telegram: Optional[str]
-    whatsapp: Optional[str]
-    vk: Optional[str]
-    roadmap_int_id: Optional[int]
+    telegram: Optional[str] = None
+    whatsapp: Optional[str] = None
+    vk: Optional[str] = None
+    roadmap_int_id: Optional[int] = None
     division_int_id: int
+    purchased_product_int_ids: list[int] = []
 
     def document(self) -> Document:
         doc = super().document()
