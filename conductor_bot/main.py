@@ -20,7 +20,7 @@ def register_all_handlers(dp):
 
 async def on_startup(*args, **kwargs):
     logger.info('on_startup')
-    bot.set_my_commands(BotCommand('start', 'Начать'))
+    await bot.set_my_commands(BotCommand('start', 'Начать'))
     await send_to_admins('Старт')
 
 
@@ -33,7 +33,7 @@ def start_bot():
     setup_logging()
 
     executor.on_startup(on_startup)
-    executor.on_startup(on_shutdown)
+    executor.on_shutdown(on_shutdown)
 
     register_all_filters(dp)
     register_all_handlers(dp)
