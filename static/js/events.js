@@ -17,7 +17,7 @@ window.onload = () => {
                 `
             }
             //  console.log(mainHTML)
-            mainHTML.innerHTML = htm
+            mainHTML.innerHTML += htm
         })
     }
 
