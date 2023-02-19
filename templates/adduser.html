@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://myrosmol.ru/2022/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon.png">
     <!-- <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}"> -->
     <link rel="stylesheet" href="/static/css/main.css">
     <title>Добавить сотрудника</title>
@@ -19,7 +19,7 @@
                     <div class="menu-button-line"></div>
                     <div class="menu-button-line"></div>
                 </div> -->
-                <img src="/static/img/logo.png" height="20px" style="margin-left: 10px; margin-top: 10px; margin-right: 5px;" alt="logo"/>   <!-- height: 20px -->
+                <a href="/"><img src="/static/img/logo.png" height="20px" style="margin-left: 10px; margin-top: 10px; margin-right: 5px;" alt="logo"/></a>
                 <div class="header-links">
                     <a href="/roadmap"><button class="secondary">Roadmap</button></a>
                     <a href="/events"><button class="secondary">События</button></a>
@@ -62,7 +62,7 @@
                         <div style="width: 50%;">
                             <p>Роль</p>
                             <!-- <input id="role" style="width: 90%;"> -->
-                            <select id="role" style="width: 95%; height: 35px;">
+                            <select id="role" style="width: 91%; margin-left: 5px; height: 50px; border-radius: 5px">
                                 <!-- <option value="hr">HR</option> -->
                             </select>
                         </div>
@@ -76,11 +76,11 @@
                     <!-- <input id="birth" style="width: 90%;"> -->
                     <input id="birth" style="width: 95%;" type="date">
                     <p>Шаблоны</p>
-                    <select id="template" style="width: 95%; height: 35px;">
+                    <select id="template" style="width: 95%; margin-left: 5px; height: 50px; border-radius: 5px">
                         <!-- <option id="0">Универсальный</option> -->
                     </select>
-                    <p>Подразделение</p>
-                    <select id="division" style="width: 95%; height: 35px;">
+                    <p style="margin-top: 5px">Подразделение</p>
+                    <select id="division" style="width: 95%; margin-left: 5px; height: 50px; border-radius: 5px;">
                         <!-- <option value="0">Продажи</option> -->
                     </select>
                     <button id="createEmployeeButton" class="primary">Создать</button>
