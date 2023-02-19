@@ -1,9 +1,8 @@
 import binascii
 import os
 from random import randint
-from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from fastapi import Body
 from fastapi import Response
 from starlette import status
@@ -58,9 +57,11 @@ async def send_mail_code(mail: str):
 
     mail_code = MailCodeDBM(mail=mail, code=generate_mail_code())
     doc = db.mail_code.insert_document(mail_code.document())
+    fast_auth_url = settings.site_url + f"?code={mail_code.code}&mail={mail_code.mail}"
     send_mail(
         mail_code.mail,
-        'Вход в систему Conductor',
-        f'Никому не сообщайте свой код {mail_code.code}'
+        f'Вход в систему Conductor',
+        f'Никому не сообщайте свой код {mail_code.code}\n'
+        f'Быстрый вход: {fast_auth_url}'
     )
     return OperationStatus(is_done=True)

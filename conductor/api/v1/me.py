@@ -148,7 +148,7 @@ async def progress():
 
 @me_router.get('.my_products', response_model=list[ProductDBM])
 async def my_products(
-    current_user: UserDBM = Depends(get_strict_current_user)
+        current_user: UserDBM = Depends(get_strict_current_user)
 ):
     res = []
     for product_doc in db.user.get_all_docs():
