@@ -307,7 +307,7 @@ window.onload = () => {
             let role = data.role
             //console.log(role)
             //role = 'it'
-            if (role === 'hr') {
+            if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
             }
         })
