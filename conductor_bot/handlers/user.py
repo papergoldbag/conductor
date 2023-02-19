@@ -34,38 +34,38 @@ async def user_base_handler(message: Message):
         await message.answer(emoji.emojize(":red_exclamation_mark: Вас нету в системе :locked_with_key:\nПредлагаем вам посетить наш сайт https://divarteam.ru"))
 
 async def play_find_animation(call: CallbackQuery, tile = 0.2):
-        await call.bot.edit_message_text(
-            text=emoji.emojize("Идет поиск."),
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id
-            )
-        await call.bot.edit_message_reply_markup(
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id,
-            reply_markup=found_menu
-        )
-        # sleep(tile)
-        await call.bot.edit_message_text(
-            text=emoji.emojize("Идет поиск.."),
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id
-            )
-        await call.bot.edit_message_reply_markup(
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id,
-            reply_markup=found_menu
-        )
-        # sleep(tile)
-        await call.bot.edit_message_text(
-            text=emoji.emojize("Идет поиск..."),
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id
-            )
-        await call.bot.edit_message_reply_markup(
-            chat_id=call.message.chat.id, 
-            message_id=call.message.message_id,
-            reply_markup=found_menu
-        )
+        # await call.bot.edit_message_text(
+        #     text=emoji.emojize("Идет поиск."),
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id
+        #     )
+        # await call.bot.edit_message_reply_markup(
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id,
+        #     reply_markup=found_menu
+        # )
+        # # sleep(tile)
+        # await call.bot.edit_message_text(
+        #     text=emoji.emojize("Идет поиск.."),
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id
+        #     )
+        # await call.bot.edit_message_reply_markup(
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id,
+        #     reply_markup=found_menu
+        # )
+        # # sleep(tile)
+        # await call.bot.edit_message_text(
+        #     text=emoji.emojize("Идет поиск..."),
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id
+        #     )
+        # await call.bot.edit_message_reply_markup(
+        #     chat_id=call.message.chat.id, 
+        #     message_id=call.message.message_id,
+        #     reply_markup=found_menu
+        # )
         # sleep(tile)
         await call.bot.edit_message_text(
             text=emoji.emojize("Режим ожидания включен :check_mark_button:"),
