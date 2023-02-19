@@ -62,7 +62,7 @@ window.onload = () => {
         let taskType = task.type
         htm = `
         <h1>${task.title}</h1>
-        <p style="margin-top: 10px;">${task.text}</p>
+        <p style="margin-top: 10px; white-space: pre-line;">${task.text}</p>
         `
         if (taskType == "auto_test") {
             if (!task.is_completed) {
