@@ -1,6 +1,16 @@
 window.onload = () => {
     let navHTML = document.querySelector('nav')
     let mainHTML = document.querySelector('main')
+    let isNotUser
+
+    async function loadRoadmap(id) {
+        fetch('/api/v1/task.user_roadmap?user_int_id='+id)
+        .then(data => data.json())
+        .then(roadmap => {
+            console.log(roadmap)
+            //drawUserProfile(user)
+        })
+    }
 
     function drawUserProfile(user) {
         htm = `
@@ -46,6 +56,7 @@ window.onload = () => {
         </div>
         `
         mainHTML.innerHTML = htm
+        if (user.roadmap_int_id != null && isNotUser) loadRoadmap(user.int_id)
     }
 
     async function getUserById(id) {
@@ -107,6 +118,9 @@ window.onload = () => {
             let role = data.role
             if (role === 'hr' || role === 'supervisor') {
                 document.querySelector('.header-links').innerHTML += `<a href="/adduser"><button class="secondary">Управление</button></a>`
+                isNotUser = true
+            } else {
+                isNotUser = false
             }
         })
     }
