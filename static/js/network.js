@@ -90,20 +90,20 @@ window.onload = () => {
                                         htm += `<div style='width: 13px; height: 13px; border-radius: 50%; background: tomato; margin-top: 4px;'></div>`
                                     }
                                 }
-                                htm += '<span>Сотрудник выполнил это задание</span>'
+                                htm += '<span style="color: #f0f0f0">Сотрудник выполнил это задание</span>'
                                 if (task.type === 'hr_confirmation') {
                                     htm += '<br><input data-index="'+task.index+'" class="hr-checkbox" type="checkbox"'
                                     if (task.is_confirmed_by_int_id !== null) htm += 'checked'
-                                    htm +='><b>Подтвердить выполнение задания</b>'
+                                    htm +='><b style="color: #f0f0f0">Подтвердить выполнение задания</b>'
                                 }
                             } else {
                                 htm += '>'
 
-                                htm += '<span>Сотрудник не выполнил это задание</span>'
+                                htm += '<span  style="color: #f0f0f0">Сотрудник не выполнил это задание</span>'
                                 if (task.type === 'hr_confirmation') {
                                     htm += '<br><input data-index="'+task.index+'" class="hr-checkbox" type="checkbox"'
                                     if (task.is_confirmed_by_int_id !== null) htm += 'checked'
-                                    htm +='><b>Подтвердить выполнение задания</b>'
+                                    htm +='><b style="color: #f0f0f0">Подтвердить выполнение задания</b>'
                                 }
                             }
                             //htm += ` style="color: white;">
@@ -246,6 +246,9 @@ window.onload = () => {
                 isNotUser = true
             } else {
                 isNotUser = false
+            }
+            if (role === 'employee') {
+                document.querySelector('.header-links').innerHTML = `<a href="/roadmap"><button class="secondary">Roadmap</button></a>` + document.querySelector('.header-links').innerHTML
             }
         })
     }
