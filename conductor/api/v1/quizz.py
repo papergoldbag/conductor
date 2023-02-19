@@ -2,10 +2,11 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Body
 from starlette import status
+import aiogram
 
 from conductor.api.dependencies import get_strict_current_user
 from conductor.api.schemas.quizz import SendQuizz
-from conductor.core.misc import db
+from conductor.core.misc import db, settings
 from conductor.db.models import RoadmapDBM, UserDBM, TaskTypes
 
 quizz_router = APIRouter()
@@ -54,5 +55,10 @@ async def send_quizz(
         current_user.int_id,
         {'coins': new_user_balance}
     )
+
+    roadmap_created_by: UserDBM = UserDBM.parse_document(db.user.get_document_by_int_id(user_roadmap.created_by_int_id))
+    tg = roadmap_created_by.telegram
+    tg = tg.split('t.me/')[-1]
+    
 
     return user_roadmap
