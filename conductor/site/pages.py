@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends
+from typing import Optional
+
+from fastapi import APIRouter, Depends, Query
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 
 from conductor.api.dependencies import get_current_user
+from conductor.api.v1.auth import generate_token
 from conductor.core.misc import templates, db
 from conductor.db.models import UserDBM
 
@@ -11,9 +14,31 @@ pages_router = APIRouter(tags=['pages'])
 
 
 @pages_router.get('/')
-async def auth(r: Request, user=Depends(get_current_user)):
+async def auth(
+        r: Request,
+        mail: Optional[str] = Query(None),
+        code: Optional[int] = Query(None),
+        user=Depends(get_current_user)
+):
     if user:
         return RedirectResponse('/roadmap', status_code=status.HTTP_302_FOUND)
+
+    if mail is not None and code is not None:
+        doc = db.mail_code.pymongo_collection.find_one({
+            'mail': mail.strip(),
+            'code': code
+        })
+        if doc is not None:
+            user = db.user.pymongo_collection.find_one({'email': mail.strip()})
+            if user is not None:
+                token = generate_token()
+                db.user.pymongo_collection.update_one({'int_id': user['int_id']}, {'$push': {'tokens': token}})
+
+                response = RedirectResponse('/roadmap', status_code=status.HTTP_302_FOUND)
+                response.set_cookie(key="token", value=token)
+
+                return RedirectResponse('/roadmap', status_code=status.HTTP_302_FOUND)
+
     return templates.TemplateResponse("auth.html", {'request': r})
 
 

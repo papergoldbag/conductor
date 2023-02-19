@@ -1,8 +1,9 @@
 import binascii
 import os
 from random import randint
+from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from fastapi import Body
 from fastapi import Response
 from starlette import status
@@ -10,7 +11,7 @@ from starlette import status
 from conductor.api.schemas.auth import AuthSchema
 from conductor.api.schemas.mailcode import OperationStatus
 from conductor.api.schemas.token import TokenSchema
-from conductor.core.misc import db
+from conductor.core.misc import db, settings
 from conductor.db.models import MailCodeDBM
 from conductor.utils.send_mail import send_mail
 
@@ -27,7 +28,10 @@ def generate_mail_code() -> str:
 
 
 @auth_router.post('', response_model=TokenSchema)
-async def auth(response: Response, auth_schema: AuthSchema = Body()):
+async def auth(
+        response: Response,
+        auth_schema: AuthSchema = Body()
+):
     if auth_schema.code != 1:
         doc = db.mail_code.pymongo_collection.find_one({
             'mail': auth_schema.mail.strip(),

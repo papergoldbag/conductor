@@ -19,7 +19,7 @@ async def create_user(
         user_to_create: CreateUser = Body()
 ):
     if db.user.pymongo_collection.find_one({'email': user_to_create.email}) is not None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user exists')
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='user already exists')
 
     if user_to_create.role in (Roles.supervisor.value, Roles.hr.value) and user.role == Roles.hr:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='hr cant create supervisor or hr')

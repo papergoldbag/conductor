@@ -8,10 +8,12 @@ from conductor.api.v1.me import me_router
 from conductor.api.v1.quizz import quizz_router
 from conductor.api.v1.roadmap_template import roadmap_template_router
 from conductor.api.v1.role import role_router
+from conductor.api.v1.shop import shop_router
 from conductor.api.v1.task import task_router
 from conductor.api.v1.user import user_router
 
 api_v1_router = APIRouter(prefix='/v1')
+api_v1_router.include_router(shop_router, prefix='/shop', tags=['Shop'])
 api_v1_router.include_router(echo_router, prefix='/echo', tags=['Echo'])
 api_v1_router.include_router(auth_router, prefix='/auth', tags=['Auth'])
 api_v1_router.include_router(me_router, prefix='/me', tags=['Me'])

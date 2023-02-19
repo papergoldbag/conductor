@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from conductor.core.misc import db
 from conductor.db.models import UserDBM, Roles, DivisionDBM, RoadmapDBM, TaskDBM, TaskTypes, QuizDBM, Attachment, \
-    EventDBM
+    EventDBM, ProductDBM
 
 log = logging.getLogger(__name__)
 
@@ -302,7 +302,7 @@ def insert_test_data():
         fullname='Илья Хакимов',
         email='ilyakhakimov03@gmail.com',
         tokens=['1'],
-        role=Roles.employee,
+        role=Roles.supervisor,
         coins=0,
         position='HTML/CSS/JS developer',
         birth_date=datetime(year=2003, month=3, day=27),
@@ -391,6 +391,28 @@ def insert_test_data():
         desc='Встреча будет в кафе у уровня 9',
         dt=datetime.now() + timedelta(days=4),
         division_int_id=division1.int_id
+    ).document())
+
+    # SHOP
+    db.product.insert_document(ProductDBM(
+        title='Курсы Skillbox',
+        description='Специальная карточка на 4 месяца обучения в школе skillbox',
+        cost=50
+    ).document())
+    db.product.insert_document(ProductDBM(
+        title='Фирменная футболка',
+        description='Фирменная футболка компании Россмолодёжь',
+        cost=89
+    ).document())
+    db.product.insert_document(ProductDBM(
+        title='Фирменная толстовка',
+        description='Фирменная толстовка компании Россмолодежб',
+        cost=90
+    ).document())
+    db.product.insert_document(ProductDBM(
+        title='Поездка на море',
+        description='Попробуйте на себе незабываемое ощущение волн, закатов и соленой воды',
+        cost=500
     ).document())
 
     log.info('test_data were inserted')

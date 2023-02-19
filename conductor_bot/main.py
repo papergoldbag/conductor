@@ -29,7 +29,7 @@ async def on_shutdown(*args, **kwargs):
     await send_to_admins('Конец')
 
 
-def main():
+def start_bot():
     setup_logging()
 
     executor.on_startup(on_startup)
@@ -44,6 +44,6 @@ def main():
 
 if __name__ == '__main__':
     try:
-        main()
+        start_bot()
     except (KeyboardInterrupt, SystemExit):
         logger.error("Bot stopped!")
